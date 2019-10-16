@@ -24,4 +24,11 @@
 	16. Fulfilled - ??
 	17. Fulfilled - ??
 	18. Not Fulfilled - ??
-	
+2. They are too broad and much is left for the developer to decide and not the
+stakeholder.
+
+3.
+	- Extensibility: Since almost all logic is in the KingTokyoPowerUpServer the logic is 
+		lacks way too much cohesiveness (i.e. it does not focus on single category of things 
+		to do/represent). Instead the game logic and server/client-side communication could 
+		be in a separate classes/packages. 
