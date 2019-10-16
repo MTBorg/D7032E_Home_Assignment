@@ -1,3 +1,4 @@
 classpath=out
+inputdir=src
 mkdir -p $classpath
-javac -d $classpath KingTokyoPowerUpServer.java && java -cp $classpath KingTokyoPowerUpServer
+javac -d $classpath $inputdir/*.java && java -cp $classpath KingTokyoPowerUpServer
