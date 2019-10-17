@@ -74,7 +74,7 @@ public class Game {
           result.put(unique, Collections.frequency(dices, unique));
         }
         String ok = KingTokyoPowerUpServer.sendMessage(
-          this.monsters.get(i),
+          this.monsters.get(i).stream,
           "ROLLED:You rolled " + result + " Press [ENTER]\n"
         );
 
@@ -99,7 +99,7 @@ public class Game {
               //Current support is only for the Red Dawn card
               //Add support for keeping it secret until played
               String power = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(i),
+                this.monsters.get(i).stream,
                 "POWERUP:Deal 2 damage to all others\n"
               );
               for (int mon = 0; mon < this.monsters.size(); mon++) {
@@ -113,7 +113,7 @@ public class Game {
               //Current support is only for the Radioactive Waste
               //Add support for keeping it secret until played
               String power = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(i),
+                this.monsters.get(i).stream,
                 "POWERUP:Receive 2 energy and 1 health\n"
               );
               currentMonster.energy += 2;
@@ -130,7 +130,7 @@ public class Game {
               //Current support is only for the Alien Scourge
               //Add support for keeping it secret until played
               String power = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(i),
+                this.monsters.get(i).stream,
                 "POWERUP:Receive 2 stars\n"
               );
               currentMonster.stars += 2;
@@ -175,7 +175,7 @@ public class Game {
 
                 // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
                 String answer = KingTokyoPowerUpServer.sendMessage(
-                  this.monsters.get(mon),
+                  this.monsters.get(mon).stream,
                   "ATTACKED:You have " +
                     this.monsters.get(mon).currentHealth +
                     " health left. Do you wish to leave Tokyo? [YES/NO]\n"
@@ -206,7 +206,7 @@ public class Game {
             this.deck +
             "\n";
         String answer = KingTokyoPowerUpServer.sendMessage(
-          this.monsters.get(i),
+          this.monsters.get(i).stream,
           msg
         );
         int buy = Integer.parseInt(answer);
@@ -252,7 +252,7 @@ public class Game {
           if (this.monsters.get(mon).stars >= 20) {
             for (int victory = 0; victory < this.monsters.size(); victory++) {
               String victoryByStars = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(victory),
+                this.monsters.get(victory).stream,
                 "Victory: " +
                   this.monsters.get(mon).name +
                   " has won by stars\n"
@@ -268,7 +268,7 @@ public class Game {
         if (alive == 1) {
           for (int victory = 0; victory < this.monsters.size(); victory++) {
             String victoryByKills = KingTokyoPowerUpServer.sendMessage(
-              this.monsters.get(victory),
+              this.monsters.get(victory).stream,
               "Victory: " +
                 aliveMonster +
                 " has won by being the only one alive\n"
@@ -285,14 +285,27 @@ public class Game {
     for (int allDice = 0; allDice < dices.size(); allDice++) {
       rolledDice += "\t[" + dices.get(allDice) + "]";
     }
-    rolledDice +=
+    String choices =
       ":Choose which dices to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
     String[] reroll = KingTokyoPowerUpServer
-      .sendMessage(monster, rolledDice)
+      .sendMessage(monster.stream, rolledDice + choices)
       .split(",");
-    if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
-      reroll.length; j++) {
-      dices.remove(Integer.parseInt(reroll[j]) - 1);
+    while (true) {
+      try {
+        if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
+          reroll.length; j++) {
+          dices.remove(Integer.parseInt(reroll[j]) - 1);
+        }
+        break;
+      } catch (NumberFormatException e) {
+        reroll =
+          KingTokyoPowerUpServer
+            .sendMessage(
+              monster.stream,
+              "Please enter a valid number! \n" + choices
+            )
+            .split(",");
+      }
     }
   }
 
@@ -331,7 +344,7 @@ public class Game {
           " energy, and owns the following cards:";
       statusUpdate += this.monsters.get(count).cardsToString();
     }
-    KingTokyoPowerUpServer.sendMessage(recipient, statusUpdate + "\n");
+    KingTokyoPowerUpServer.sendMessage(recipient.stream, statusUpdate + "\n");
   }
 
   private String checkVictoryConditionsAlive(ArrayList<Monster> monsters) {

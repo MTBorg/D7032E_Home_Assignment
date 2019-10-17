@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.Scanner;
 import src.game.Game;
 import src.game.Monster;
+import src.network.Stream;
 
 public class KingTokyoPowerUpServer {
 
@@ -67,29 +68,24 @@ public class KingTokyoPowerUpServer {
         "Waiting for " + (PLAYER_AMOUNT - onlineClient) + " more players"
       );
       Socket connectionSocket = aSocket.accept();
-      BufferedReader inFromClient = new BufferedReader(
-        new InputStreamReader(connectionSocket.getInputStream())
+      Stream stream = new Stream(connectionSocket);
+
+      stream.writeBytes(
+        " You are the monster: " + monsters.get(onlineClient).name + "\n"
       );
-      DataOutputStream outToClient = new DataOutputStream(
-        connectionSocket.getOutputStream()
-      );
-      outToClient.writeBytes(
-        "You are the monster: " + monsters.get(onlineClient).name + "\n"
-      );
-      monsters.get(onlineClient).connection = connectionSocket;
-      monsters.get(onlineClient).inFromClient = inFromClient;
-      monsters.get(onlineClient).outToClient = outToClient;
+      monsters.get(onlineClient).stream = stream;
+
       System.out.println("Connected to " + monsters.get(onlineClient).name);
     }
   }
 
-  public static String sendMessage(Monster recipient, String message) {
+  public static String sendMessage(Stream stream, String message) {
     Scanner sc = new Scanner(System.in);
     String response = "";
-    if (recipient.connection != null) {
+    if (stream != null) {
       try {
-        recipient.outToClient.writeBytes(message);
-        response = recipient.inFromClient.readLine();
+        stream.writeBytes(message);
+        response = stream.readLine();
       } catch (Exception e) {
         System.out.println(e);
       }

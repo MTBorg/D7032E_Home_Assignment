@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import src.network.Stream;
 
 public class Monster {
   public int maxHealth = 10;
@@ -13,10 +14,11 @@ public class Monster {
   public int stars = 0;
   public boolean inTokyo = false;
   ArrayList<Card> cards = new ArrayList<Card>();
-  public Socket connection = null;
-  public BufferedReader inFromClient = null;
-  public DataOutputStream outToClient = null;
+  public Stream stream;
 
+  // public Socket connection = null;
+  // public BufferedReader inFromClient = null;
+  // public DataOutputStream outToClient = null;
   public Monster(String name) {
     this.name = name;
   }
