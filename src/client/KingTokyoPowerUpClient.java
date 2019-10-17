@@ -28,7 +28,9 @@ public class KingTokyoPowerUpClient {
       System.out.println(name);
 
       messageLoop(aSocket, outToServer, inFromServer);
-    } catch (Exception e) {}
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 
   private void messageLoop(
