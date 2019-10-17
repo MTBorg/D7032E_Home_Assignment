@@ -8,7 +8,7 @@ import java.util.Scanner;
 import src.network.Stream;
 
 public class KingTokyoPowerUpClient {
-  private final int SOCKET_HOST = 2048;
+  private final int SOCKET_PORT = 2048;
   private Scanner sc = new Scanner(System.in);
   private boolean bot;
 
@@ -18,7 +18,7 @@ public class KingTokyoPowerUpClient {
 
     //Server stuffs
     try {
-      Stream stream = new Stream(new Socket("localhost", SOCKET_HOST));
+      Stream stream = new Stream(new Socket("localhost", SOCKET_PORT));
       name = stream.readLine();
 
       System.out.println(name);
