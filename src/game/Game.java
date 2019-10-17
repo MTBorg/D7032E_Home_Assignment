@@ -50,80 +50,28 @@ public class Game {
         if (currentMonster.inTokyo) {
           currentMonster.stars += 1;
         }
-        String statusUpdate =
-          "You are " +
-            currentMonster.name +
-            " and it is your turn. Here are the stats";
-        for (int count = 0; count < 3; count++) {
-          statusUpdate +=
-            ":" +
-              this.monsters.get(count).name +
-              (
-                this.monsters.get(count).inTokyo ? " is in Tokyo "
-                  : " is not in Tokyo "
-              );
-          statusUpdate +=
-            "with " +
-              this.monsters.get(count).currentHealth +
-              " health, " +
-              this.monsters.get(count).stars +
-              " stars, ";
-          statusUpdate +=
-            this.monsters.get(count).energy +
-              " energy, and owns the following cards:";
-          statusUpdate += this.monsters.get(count).cardsToString();
-        }
-        KingTokyoPowerUpServer.sendMessage(
-          this.monsters.get(i),
-          statusUpdate + "\n"
-        );
 
-        // 1. Roll 6 dice
-        ArrayList<Dice> dice = new ArrayList<Dice>();
-        dice = Dice.diceRoll(6);
+        // 1. Roll 6 dices
+        ArrayList<Dice> dices = new ArrayList<Dice>();
+        dices = Dice.diceRoll(6);
 
         // 2. Decide which dice to keep
-        String rolledDice = "ROLLED:You rolled:\t[1]\t[2]\t[3]\t[4]\t[5]\t[6]:";
-        for (int allDice = 0; allDice < dice.size(); allDice++) {
-          rolledDice += "\t[" + dice.get(allDice) + "]";
-        }
-        rolledDice +=
-          ":Choose which dice to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
-        String[] reroll = KingTokyoPowerUpServer
-          .sendMessage(this.monsters.get(i), rolledDice)
-          .split(",");
-        if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
-          reroll.length; j++) {
-          dice.remove(Integer.parseInt(reroll[j]) - 1);
-        }
+        keepDices(dices, currentMonster);
 
         // 3. Reroll remaining dice
-        dice.addAll(Dice.diceRoll(6 - dice.size()));
+        dices.addAll(Dice.diceRoll(6 - dices.size()));
 
         // 4. Decide which dice to keep
-        rolledDice = "ROLLED:You rolled:\t[1]\t[2]\t[3]\t[4]\t[5]\t[6]:";
-        for (int allDice = 0; allDice < dice.size(); allDice++) {
-          rolledDice += "\t[" + dice.get(allDice) + "]";
-        }
-        rolledDice +=
-          ":Choose which dice to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
-        reroll =
-          KingTokyoPowerUpServer
-            .sendMessage(this.monsters.get(i), rolledDice)
-            .split(",");
-        if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
-          reroll.length; j++) {
-          dice.remove(Integer.parseInt(reroll[j]) - 1);
-        }
+        keepDices(dices, currentMonster);
 
         // 5. Reroll remaining dice
-        dice.addAll(Dice.diceRoll(6 - dice.size()));
+        dices.addAll(Dice.diceRoll(6 - dices.size()));
 
         // 6. Sum up totals
-        Collections.sort(dice);
+        Collections.sort(dices);
         HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
-        for (Dice unique : new HashSet<Dice>(dice)) {
-          result.put(unique, Collections.frequency(dice, unique));
+        for (Dice unique : new HashSet<Dice>(dices)) {
+          result.put(unique, Collections.frequency(dices, unique));
         }
         String ok = KingTokyoPowerUpServer.sendMessage(
           this.monsters.get(i),
@@ -332,6 +280,22 @@ public class Game {
     }
   }
 
+  private void keepDices(ArrayList<Dice> dices, Monster monster) {
+    String rolledDice = "ROLLED:You rolled:\t[1]\t[2]\t[3]\t[4]\t[5]\t[6]:";
+    for (int allDice = 0; allDice < dices.size(); allDice++) {
+      rolledDice += "\t[" + dices.get(allDice) + "]";
+    }
+    rolledDice +=
+      ":Choose which dices to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
+    String[] reroll = KingTokyoPowerUpServer
+      .sendMessage(monster, rolledDice)
+      .split(",");
+    if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
+      reroll.length; j++) {
+      dices.remove(Integer.parseInt(reroll[j]) - 1);
+    }
+  }
+
   private String checkVictoryConditionsStar(ArrayList<Monster> monsters) {
     //8. Check victory conditions
     for (int mon = 0; mon < monsters.size(); mon++) {
@@ -340,6 +304,34 @@ public class Game {
       }
     }
     return "";
+  }
+
+  private void sendStatusMessage(
+    Monster recipient,
+    ArrayList<Monster> monsters
+  ) {
+    String statusUpdate =
+      "You are " + recipient.name + " and it is your turn. Here are the stats";
+    for (int count = 0; count < 3; count++) {
+      statusUpdate +=
+        ":" +
+          this.monsters.get(count).name +
+          (
+            this.monsters.get(count).inTokyo ? " is in Tokyo "
+              : " is not in Tokyo "
+          );
+      statusUpdate +=
+        "with " +
+          this.monsters.get(count).currentHealth +
+          " health, " +
+          this.monsters.get(count).stars +
+          " stars, ";
+      statusUpdate +=
+        this.monsters.get(count).energy +
+          " energy, and owns the following cards:";
+      statusUpdate += this.monsters.get(count).cardsToString();
+    }
+    KingTokyoPowerUpServer.sendMessage(recipient, statusUpdate + "\n");
   }
 
   private String checkVictoryConditionsAlive(ArrayList<Monster> monsters) {
