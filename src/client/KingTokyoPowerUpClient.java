@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Scanner;
+import src.network.Stream;
 
 public class KingTokyoPowerUpClient {
   private final int SOCKET_HOST = 2048;
@@ -17,39 +18,29 @@ public class KingTokyoPowerUpClient {
 
     //Server stuffs
     try {
-      Socket aSocket = new Socket("localhost", SOCKET_HOST);
-      DataOutputStream outToServer = new DataOutputStream(
-        aSocket.getOutputStream()
-      );
-      BufferedReader inFromServer = new BufferedReader(
-        new InputStreamReader(aSocket.getInputStream())
-      );
-      name = inFromServer.readLine();
+      Stream stream = new Stream(new Socket("localhost", SOCKET_HOST));
+      name = stream.readLine();
+
       System.out.println(name);
 
-      messageLoop(aSocket, outToServer, inFromServer);
+      messageLoop(stream);
     } catch (Exception e) {
       System.out.println(e);
     }
   }
 
-  private void messageLoop(
-    Socket aSocket,
-    DataOutputStream outToServer,
-    BufferedReader inFromServer
-  )
-    throws Exception {
+  private void messageLoop(Stream stream) throws Exception {
     Random rnd = ThreadLocalRandom.current();
     while (true) {
-      String[] message = inFromServer.readLine().split(":");
+      String[] message = stream.readLine().split(":");
       for (int i = 0; i < message.length; i++) {
         System.out.println(message[i].toString());
       }
       if (message[0].equalsIgnoreCase("VICTORY")) {
-        outToServer.writeBytes("Bye!\n");
+        stream.writeBytes("Bye!\n");
       } else if (message[0].equalsIgnoreCase("ATTACKED")) {
-        if (bot) outToServer.writeBytes("YES\n"); else {
-          outToServer.writeBytes(sc.nextLine() + "\n");
+        if (bot) stream.writeBytes("YES\n"); else {
+          stream.writeBytes(sc.nextLine() + "\n");
         }
       } else if (message[0].equalsIgnoreCase("ROLLED")) {
         if (bot) {
@@ -57,19 +48,19 @@ public class KingTokyoPowerUpClient {
           int num1 = rnd.nextInt(2) + 4;
           int num2 = rnd.nextInt(2) + 1;
           String reroll = "" + num1 + "," + num2 + "\n";
-          outToServer.writeBytes(reroll); // Some randomness at least
+          stream.writeBytes(reroll); // Some randomness at least
         } else {
-          outToServer.writeBytes(sc.nextLine() + "\n");
+          stream.writeBytes(sc.nextLine() + "\n");
         }
       } else if (message[0].equalsIgnoreCase("PURCHASE")) {
-        if (bot) outToServer.writeBytes("-1\n"); else outToServer.writeBytes(
+        if (bot) stream.writeBytes("-1\n"); else stream.writeBytes(
           sc.nextLine() + "\n"
         );
       } else {
-        if (bot) outToServer.writeBytes("OK\n"); else {
+        if (bot) stream.writeBytes("OK\n"); else {
           System.out.println("Press [ENTER]");
           sc.nextLine();
-          outToServer.writeBytes("OK\n");
+          stream.writeBytes("OK\n");
         }
       }
       System.out.println("\n");
