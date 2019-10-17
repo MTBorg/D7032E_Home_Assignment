@@ -64,8 +64,8 @@ public class KingTokyoPowerUpServer {
 
     //Shuffle the starting order
     Collections.shuffle(monsters);
-    Game game = new Game();
-    game.loop(monsters);
+    Game game = new Game(monsters);
+    game.loop();
   }
 
   public static String sendMessage(Monsters recipient, String message) {

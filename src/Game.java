@@ -5,12 +5,14 @@ import java.util.HashSet;
 
 public class Game {
   private Deck deck;
+  private ArrayList<Monsters> monsters;
 
-  Game() {
+  Game(ArrayList<Monsters> monsters) {
+    this.monsters = monsters;
     this.deck = new Deck();
   }
 
-  public void loop(ArrayList<Monsters> monsters) {
+  public void loop() {
     /*
             Game loop:
             pre: Award a monster in Tokyo 1 star
@@ -31,8 +33,8 @@ public class Game {
             8. Check victory conditions
         */
     while (true) {
-      for (int i = 0; i < monsters.size(); i++) {
-        Monsters currentMonster = monsters.get(i);
+      for (int i = 0; i < this.monsters.size(); i++) {
+        Monsters currentMonster = this.monsters.get(i);
         if (currentMonster.currentHealth <= 0) {
           currentMonster.inTokyo = false;
           continue;
@@ -49,24 +51,24 @@ public class Game {
         for (int count = 0; count < 3; count++) {
           statusUpdate +=
             ":" +
-              monsters.get(count).name +
+              this.monsters.get(count).name +
               (
-                monsters.get(count).inTokyo ? " is in Tokyo "
+                this.monsters.get(count).inTokyo ? " is in Tokyo "
                   : " is not in Tokyo "
               );
           statusUpdate +=
             "with " +
-              monsters.get(count).currentHealth +
+              this.monsters.get(count).currentHealth +
               " health, " +
-              monsters.get(count).stars +
+              this.monsters.get(count).stars +
               " stars, ";
           statusUpdate +=
-            monsters.get(count).energy +
+            this.monsters.get(count).energy +
               " energy, and owns the following cards:";
-          statusUpdate += monsters.get(count).cardsToString();
+          statusUpdate += this.monsters.get(count).cardsToString();
         }
         KingTokyoPowerUpServer.sendMessage(
-          monsters.get(i),
+          this.monsters.get(i),
           statusUpdate + "\n"
         );
 
@@ -82,7 +84,7 @@ public class Game {
         rolledDice +=
           ":Choose which dice to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
         String[] reroll = KingTokyoPowerUpServer
-          .sendMessage(monsters.get(i), rolledDice)
+          .sendMessage(this.monsters.get(i), rolledDice)
           .split(",");
         if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
           reroll.length; j++) {
@@ -101,7 +103,7 @@ public class Game {
           ":Choose which dice to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
         reroll =
           KingTokyoPowerUpServer
-            .sendMessage(monsters.get(i), rolledDice)
+            .sendMessage(this.monsters.get(i), rolledDice)
             .split(",");
         if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
           reroll.length; j++) {
@@ -118,7 +120,7 @@ public class Game {
           result.put(unique, Collections.frequency(dice, unique));
         }
         String ok = KingTokyoPowerUpServer.sendMessage(
-          monsters.get(i),
+          this.monsters.get(i),
           "ROLLED:You rolled " + result + " Press [ENTER]\n"
         );
 
@@ -143,12 +145,12 @@ public class Game {
               //Current support is only for the Red Dawn card
               //Add support for keeping it secret until played
               String power = KingTokyoPowerUpServer.sendMessage(
-                monsters.get(i),
+                this.monsters.get(i),
                 "POWERUP:Deal 2 damage to all others\n"
               );
-              for (int mon = 0; mon < monsters.size(); mon++) {
+              for (int mon = 0; mon < this.monsters.size(); mon++) {
                 if (mon != i) {
-                  monsters.get(mon).currentHealth += -2;
+                  this.monsters.get(mon).currentHealth += -2;
                 }
               }
             }
@@ -157,7 +159,7 @@ public class Game {
               //Current support is only for the Radioactive Waste
               //Add support for keeping it secret until played
               String power = KingTokyoPowerUpServer.sendMessage(
-                monsters.get(i),
+                this.monsters.get(i),
                 "POWERUP:Receive 2 energy and 1 health\n"
               );
               currentMonster.energy += 2;
@@ -174,7 +176,7 @@ public class Game {
               //Current support is only for the Alien Scourge
               //Add support for keeping it secret until played
               String power = KingTokyoPowerUpServer.sendMessage(
-                monsters.get(i),
+                this.monsters.get(i),
                 "POWERUP:Receive 2 stars\n"
               );
               currentMonster.stars += 2;
@@ -196,35 +198,36 @@ public class Game {
           currentMonster.stars +=
             currentMonster.cardEffect("starsWhenAttacking"); //Alpha Monster
           if (currentMonster.inTokyo) {
-            for (int mon = 0; mon < monsters.size(); mon++) {
+            for (int mon = 0; mon < this.monsters.size(); mon++) {
               int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
               int totalDamage = result.get(aClaw).intValue() + moreDamage;
               if (
-                mon != i && totalDamage > monsters.get(mon).cardEffect("armor")
+                mon != i &&
+                totalDamage > this.monsters.get(mon).cardEffect("armor")
               ) { //Armor Plating
-                monsters.get(mon).currentHealth += -totalDamage;
+                this.monsters.get(mon).currentHealth += -totalDamage;
               }
             }
           } else {
             boolean monsterInTokyo = false;
-            for (int mon = 0; mon < monsters.size(); mon++) {
-              if (monsters.get(mon).inTokyo) {
+            for (int mon = 0; mon < this.monsters.size(); mon++) {
+              if (this.monsters.get(mon).inTokyo) {
                 monsterInTokyo = true;
                 int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
                 int totalDamage = result.get(aClaw).intValue() + moreDamage;
                 if (
-                  totalDamage > monsters.get(mon).cardEffect("armor")
-                ) monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
+                  totalDamage > this.monsters.get(mon).cardEffect("armor")
+                ) this.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
 
                 // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
                 String answer = KingTokyoPowerUpServer.sendMessage(
-                  monsters.get(mon),
+                  this.monsters.get(mon),
                   "ATTACKED:You have " +
-                    monsters.get(mon).currentHealth +
+                    this.monsters.get(mon).currentHealth +
                     " health left. Do you wish to leave Tokyo? [YES/NO]\n"
                 );
                 if (answer.equalsIgnoreCase("YES")) {
-                  monsters.get(mon).inTokyo = false;
+                  this.monsters.get(mon).inTokyo = false;
                   monsterInTokyo = false;
                 }
               }
@@ -249,7 +252,7 @@ public class Game {
             this.deck +
             "\n";
         String answer = KingTokyoPowerUpServer.sendMessage(
-          monsters.get(i),
+          this.monsters.get(i),
           msg
         );
         int buy = Integer.parseInt(answer);
@@ -275,41 +278,43 @@ public class Game {
         }
 
         //8. Check victory conditions
-        // String winner = checkVictoryConditionsStar(monsters);
+        // String winner = checkVictoryConditionsStar(this.monsters);
         // if (winner != ""){
-        // for(int player=0; player<monsters.size(); player++) {
+        // for(int player=0; player<this.monsters.size(); player++) {
         // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
         // }
         //     System.exit(0);
         // }
-        // winner = checkVictoryConditionsAlive(monsters);
+        // winner = checkVictoryConditionsAlive(this.monsters);
         // if (winner != ""){
-        // for(int player=0; player<monsters.size(); player++) {
+        // for(int player=0; player<this.monsters.size(); player++) {
         // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
         // }
         //     System.exit(0);
         // }
         int alive = 0;
         String aliveMonster = "";
-        for (int mon = 0; mon < monsters.size(); mon++) {
-          if (monsters.get(mon).stars >= 20) {
-            for (int victory = 0; victory < monsters.size(); victory++) {
+        for (int mon = 0; mon < this.monsters.size(); mon++) {
+          if (this.monsters.get(mon).stars >= 20) {
+            for (int victory = 0; victory < this.monsters.size(); victory++) {
               String victoryByStars = KingTokyoPowerUpServer.sendMessage(
-                monsters.get(victory),
-                "Victory: " + monsters.get(mon).name + " has won by stars\n"
+                this.monsters.get(victory),
+                "Victory: " +
+                  this.monsters.get(mon).name +
+                  " has won by stars\n"
               );
             }
             System.exit(0);
           }
-          if (monsters.get(mon).currentHealth > 0) {
+          if (this.monsters.get(mon).currentHealth > 0) {
             alive++;
-            aliveMonster = monsters.get(mon).name;
+            aliveMonster = this.monsters.get(mon).name;
           }
         }
         if (alive == 1) {
-          for (int victory = 0; victory < monsters.size(); victory++) {
+          for (int victory = 0; victory < this.monsters.size(); victory++) {
             String victoryByKills = KingTokyoPowerUpServer.sendMessage(
-              monsters.get(victory),
+              this.monsters.get(victory),
               "Victory: " +
                 aliveMonster +
                 " has won by being the only one alive\n"
