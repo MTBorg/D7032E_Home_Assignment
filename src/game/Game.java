@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import src.game.Deck;
-import src.game.Monsters;
+import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
 
 public class Game {
   private Deck deck;
-  private ArrayList<Monsters> monsters;
+  private ArrayList<Monster> monsters;
   private final int VICTORY_STARS = 20;
 
-  public Game(ArrayList<Monsters> monsters) {
+  public Game(ArrayList<Monster> monsters) {
     this.monsters = monsters;
     this.deck = new Deck();
   }
@@ -40,7 +40,7 @@ public class Game {
         */
     while (true) {
       for (int i = 0; i < this.monsters.size(); i++) {
-        Monsters currentMonster = this.monsters.get(i);
+        Monster currentMonster = this.monsters.get(i);
         if (currentMonster.currentHealth <= 0) {
           currentMonster.inTokyo = false;
           continue;
@@ -332,7 +332,7 @@ public class Game {
     }
   }
 
-  private String checkVictoryConditionsStar(ArrayList<Monsters> monsters) {
+  private String checkVictoryConditionsStar(ArrayList<Monster> monsters) {
     //8. Check victory conditions
     for (int mon = 0; mon < monsters.size(); mon++) {
       if (monsters.get(mon).stars >= VICTORY_STARS) {
@@ -342,7 +342,7 @@ public class Game {
     return "";
   }
 
-  private String checkVictoryConditionsAlive(ArrayList<Monsters> monsters) {
+  private String checkVictoryConditionsAlive(ArrayList<Monster> monsters) {
     int alive = 0;
     String aliveMonster = "";
     for (int mon = 0; mon < monsters.size(); mon++) {

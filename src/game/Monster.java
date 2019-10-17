@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Monsters {
+public class Monster {
   public int maxHealth = 10;
   public int currentHealth = 10;
   public String name;
@@ -17,7 +17,7 @@ public class Monsters {
   public BufferedReader inFromClient = null;
   public DataOutputStream outToClient = null;
 
-  public Monsters(String name) {
+  public Monster(String name) {
     this.name = name;
   }
 

@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import src.game.Game;
-import src.game.Monsters;
+import src.game.Monster;
 
 public class KingTokyoPowerUpServer {
 
@@ -27,7 +27,7 @@ public class KingTokyoPowerUpServer {
     new KingTokyoPowerUpServer();
   }
 
-  private ArrayList<Monsters> monsters = new ArrayList<Monsters>();
+  private ArrayList<Monster> monsters = new ArrayList<Monster>();
   private final int PLAYER_AMOUNT = 2;
   private final int SERVER_SOCKET = 2048;
 
@@ -52,9 +52,9 @@ public class KingTokyoPowerUpServer {
   }
 
   private void waitForPlayers() throws Exception {
-    Monsters kong = new Monsters("Kong");
-    Monsters gigazaur = new Monsters("Gigazaur");
-    Monsters alien = new Monsters("Alienoid");
+    Monster kong = new Monster("Kong");
+    Monster gigazaur = new Monster("Gigazaur");
+    Monster alien = new Monster("Alienoid");
     monsters.add(kong);
     monsters.add(gigazaur);
     monsters.add(alien);
@@ -83,7 +83,7 @@ public class KingTokyoPowerUpServer {
     }
   }
 
-  public static String sendMessage(Monsters recipient, String message) {
+  public static String sendMessage(Monster recipient, String message) {
     Scanner sc = new Scanner(System.in);
     String response = "";
     if (recipient.connection != null) {
