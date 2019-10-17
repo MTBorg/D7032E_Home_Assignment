@@ -1,1 +1,1 @@
-javac $(find . -name "*.java") && java src.client.KingTokyoPowerUpClient
+javac $(find . -name "*.java") && java src.client.KingTokyoPowerUpClient bot
