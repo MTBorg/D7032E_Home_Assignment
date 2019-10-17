@@ -32,41 +32,14 @@ public class KingTokyoPowerUpServer {
   private final int SERVER_SOCKET = 2048;
 
   public KingTokyoPowerUpServer() {
-    Monsters kong = new Monsters("Kong");
-    Monsters gigazaur = new Monsters("Gigazaur");
-    Monsters alien = new Monsters("Alienoid");
-    monsters.add(kong);
-    monsters.add(gigazaur);
-    monsters.add(alien);
+    System.out.println("Server started");
 
     //Shuffle which player is which monster
     Collections.shuffle(monsters);
 
     //Server stuffs
     try {
-      System.out.println("Server started");
-      ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
-
-      //assume two online clients
-      for (int onlineClient = 0; onlineClient < PLAYER_AMOUNT; onlineClient++) {
-        System.out.println(
-          "Waiting for " + (PLAYER_AMOUNT - onlineClient) + " more players"
-        );
-        Socket connectionSocket = aSocket.accept();
-        BufferedReader inFromClient = new BufferedReader(
-          new InputStreamReader(connectionSocket.getInputStream())
-        );
-        DataOutputStream outToClient = new DataOutputStream(
-          connectionSocket.getOutputStream()
-        );
-        outToClient.writeBytes(
-          "You are the monster: " + monsters.get(onlineClient).name + "\n"
-        );
-        monsters.get(onlineClient).connection = connectionSocket;
-        monsters.get(onlineClient).inFromClient = inFromClient;
-        monsters.get(onlineClient).outToClient = outToClient;
-        System.out.println("Connected to " + monsters.get(onlineClient).name);
-      }
+      waitForPlayers();
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -76,6 +49,38 @@ public class KingTokyoPowerUpServer {
 
     Game game = new Game(monsters);
     game.loop();
+  }
+
+  private void waitForPlayers() throws Exception {
+    Monsters kong = new Monsters("Kong");
+    Monsters gigazaur = new Monsters("Gigazaur");
+    Monsters alien = new Monsters("Alienoid");
+    monsters.add(kong);
+    monsters.add(gigazaur);
+    monsters.add(alien);
+
+    ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
+
+    //assume two online clients
+    for (int onlineClient = 0; onlineClient < PLAYER_AMOUNT; onlineClient++) {
+      System.out.println(
+        "Waiting for " + (PLAYER_AMOUNT - onlineClient) + " more players"
+      );
+      Socket connectionSocket = aSocket.accept();
+      BufferedReader inFromClient = new BufferedReader(
+        new InputStreamReader(connectionSocket.getInputStream())
+      );
+      DataOutputStream outToClient = new DataOutputStream(
+        connectionSocket.getOutputStream()
+      );
+      outToClient.writeBytes(
+        "You are the monster: " + monsters.get(onlineClient).name + "\n"
+      );
+      monsters.get(onlineClient).connection = connectionSocket;
+      monsters.get(onlineClient).inFromClient = inFromClient;
+      monsters.get(onlineClient).outToClient = outToClient;
+      System.out.println("Connected to " + monsters.get(onlineClient).name);
+    }
   }
 
   public static String sendMessage(Monsters recipient, String message) {
