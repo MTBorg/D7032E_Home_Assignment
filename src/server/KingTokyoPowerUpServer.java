@@ -73,12 +73,11 @@ public class KingTokyoPowerUpServer {
 
   public static String sendMessage(Monsters recipient, String message) {
     Scanner sc = new Scanner(System.in);
-    Monsters aMonster = recipient;
     String response = "";
-    if (aMonster.connection != null) {
+    if (recipient.connection != null) {
       try {
-        aMonster.outToClient.writeBytes(message);
-        response = aMonster.inFromClient.readLine();
+        recipient.outToClient.writeBytes(message);
+        response = recipient.inFromClient.readLine();
       } catch (Exception e) {}
     } else {
       String[] theMessage = message.split(":");
