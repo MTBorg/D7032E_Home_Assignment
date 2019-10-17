@@ -1,4 +1,4 @@
 classpath=out
 inputdir=src
 mkdir -p $classpath
-javac -d $classpath $inputdir/*.java && java -cp $classpath KingTokyoPowerUpServer
+javac -d $classpath $(find . -name "*.java") && java -cp $classpath KingTokyoPowerUpServer

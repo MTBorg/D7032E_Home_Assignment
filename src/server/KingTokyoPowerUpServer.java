@@ -1,3 +1,5 @@
+package src.server;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -10,6 +12,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
+import src.game.Game;
+import src.game.Monsters;
 
 public class KingTokyoPowerUpServer {
 

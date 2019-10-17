@@ -1,14 +1,19 @@
+package src.game;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import src.game.Deck;
+import src.game.Monsters;
+import src.server.KingTokyoPowerUpServer;
 
 public class Game {
   private Deck deck;
   private ArrayList<Monsters> monsters;
   private final int VICTORY_STARS = 20;
 
-  Game(ArrayList<Monsters> monsters) {
+  public Game(ArrayList<Monsters> monsters) {
     this.monsters = monsters;
     this.deck = new Deck();
   }
