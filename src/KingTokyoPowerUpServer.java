@@ -24,6 +24,9 @@ public class KingTokyoPowerUpServer {
   }
 
   private ArrayList<Monsters> monsters = new ArrayList<Monsters>();
+  private final int PLAYER_AMOUNT = 2;
+  private final int SERVER_SOCKET = 2048;
+  private final int VICTORY_STARS = 20;
 
   public KingTokyoPowerUpServer() {
     Monsters kong = new Monsters("Kong");
@@ -35,14 +38,13 @@ public class KingTokyoPowerUpServer {
 
     //Shuffle which player is which monster
     Collections.shuffle(monsters);
-    Deck deck = new Deck();
 
     //Server stuffs
     try {
-      ServerSocket aSocket = new ServerSocket(2048);
+      ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
 
       //assume two online clients
-      for (int onlineClient = 0; onlineClient < 2; onlineClient++) {
+      for (int onlineClient = 0; onlineClient < PLAYER_AMOUNT; onlineClient++) {
         Socket connectionSocket = aSocket.accept();
         BufferedReader inFromClient = new BufferedReader(
           new InputStreamReader(connectionSocket.getInputStream())
@@ -95,7 +97,7 @@ public class KingTokyoPowerUpServer {
   private String checkVictoryConditionsStar(ArrayList<Monsters> monsters) {
     //8. Check victory conditions
     for (int mon = 0; mon < monsters.size(); mon++) {
-      if (monsters.get(mon).stars >= 20) {
+      if (monsters.get(mon).stars >= VICTORY_STARS) {
         return monsters.get(mon).name;
       }
     }
