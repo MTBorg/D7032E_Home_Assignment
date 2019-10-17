@@ -44,7 +44,7 @@ public class KingTokyoPowerUpServer {
 
     //Server stuffs
     try {
-			System.out.println("Server started");
+      System.out.println("Server started");
       ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
 
       //assume two online clients
@@ -67,10 +67,13 @@ public class KingTokyoPowerUpServer {
         monsters.get(onlineClient).outToClient = outToClient;
         System.out.println("Connected to " + monsters.get(onlineClient).name);
       }
-    } catch (Exception e) {}
+    } catch (Exception e) {
+      System.out.println(e);
+    }
 
     //Shuffle the starting order
     Collections.shuffle(monsters);
+
     Game game = new Game(monsters);
     game.loop();
   }
@@ -82,8 +85,10 @@ public class KingTokyoPowerUpServer {
       try {
         recipient.outToClient.writeBytes(message);
         response = recipient.inFromClient.readLine();
-      } catch (Exception e) {}
-    } else {
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+    } else { //If null send to localhost
       String[] theMessage = message.split(":");
       for (int i = 0; i < theMessage.length; i++) {
         System.out.println(theMessage[i].toString());
