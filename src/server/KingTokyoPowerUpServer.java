@@ -44,10 +44,14 @@ public class KingTokyoPowerUpServer {
 
     //Server stuffs
     try {
+			System.out.println("Server started");
       ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
 
       //assume two online clients
       for (int onlineClient = 0; onlineClient < PLAYER_AMOUNT; onlineClient++) {
+        System.out.println(
+          "Waiting for " + (PLAYER_AMOUNT - onlineClient) + " more players"
+        );
         Socket connectionSocket = aSocket.accept();
         BufferedReader inFromClient = new BufferedReader(
           new InputStreamReader(connectionSocket.getInputStream())
