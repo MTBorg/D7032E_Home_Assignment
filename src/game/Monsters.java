@@ -22,6 +22,7 @@ public class Monsters {
   }
 
   // search all available cards and return the effect value of an effect
+  // TODO: This should be a part of the card class
   public int cardEffect(String effectName) {
     for (int i = 0; i < cards.size(); i++) {
       try {
