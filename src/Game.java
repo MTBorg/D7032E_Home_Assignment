@@ -6,6 +6,7 @@ import java.util.HashSet;
 public class Game {
   private Deck deck;
   private ArrayList<Monsters> monsters;
+  private final int VICTORY_STARS = 20;
 
   Game(ArrayList<Monsters> monsters) {
     this.monsters = monsters;
@@ -324,5 +325,27 @@ public class Game {
         }
       }
     }
+  }
+
+  private String checkVictoryConditionsStar(ArrayList<Monsters> monsters) {
+    //8. Check victory conditions
+    for (int mon = 0; mon < monsters.size(); mon++) {
+      if (monsters.get(mon).stars >= VICTORY_STARS) {
+        return monsters.get(mon).name;
+      }
+    }
+    return "";
+  }
+
+  private String checkVictoryConditionsAlive(ArrayList<Monsters> monsters) {
+    int alive = 0;
+    String aliveMonster = "";
+    for (int mon = 0; mon < monsters.size(); mon++) {
+      if (monsters.get(mon).currentHealth > 0) {
+        alive++;
+        aliveMonster = monsters.get(mon).name;
+      }
+    }
+    return alive == 1 ? aliveMonster : "";
   }
 }

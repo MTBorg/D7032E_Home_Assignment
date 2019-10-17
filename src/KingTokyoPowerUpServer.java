@@ -26,7 +26,6 @@ public class KingTokyoPowerUpServer {
   private ArrayList<Monsters> monsters = new ArrayList<Monsters>();
   private final int PLAYER_AMOUNT = 2;
   private final int SERVER_SOCKET = 2048;
-  private final int VICTORY_STARS = 20;
 
   public KingTokyoPowerUpServer() {
     Monsters kong = new Monsters("Kong");
@@ -92,27 +91,5 @@ public class KingTokyoPowerUpServer {
       response = sc.nextLine();
     }
     return response;
-  }
-
-  private String checkVictoryConditionsStar(ArrayList<Monsters> monsters) {
-    //8. Check victory conditions
-    for (int mon = 0; mon < monsters.size(); mon++) {
-      if (monsters.get(mon).stars >= VICTORY_STARS) {
-        return monsters.get(mon).name;
-      }
-    }
-    return "";
-  }
-
-  private String checkVictoryConditionsAlive(ArrayList<Monsters> monsters) {
-    int alive = 0;
-    String aliveMonster = "";
-    for (int mon = 0; mon < monsters.size(); mon++) {
-      if (monsters.get(mon).currentHealth > 0) {
-        alive++;
-        aliveMonster = monsters.get(mon).name;
-      }
-    }
-    return alive == 1 ? aliveMonster : "";
   }
 }
