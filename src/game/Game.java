@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import src.factories.EvolutionCardFactory;
+import src.game.cards.*;
 import src.game.Deck;
 import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
@@ -94,46 +96,35 @@ public class Game {
           // 6b. 3 hearts = power-up
           if (result.get(aHeart).intValue() >= 3) {
             // Deal a power-up card to the currentMonster
-            if (currentMonster.name.equals("Kong")) {
-              //Todo: Add support for more cards.
-              //Current support is only for the Red Dawn card
-              //Add support for keeping it secret until played
-              String power = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(i).stream,
-                "POWERUP:Deal 2 damage to all others\n"
-              );
-              for (int mon = 0; mon < this.monsters.size(); mon++) {
-                if (mon != i) {
-                  this.monsters.get(mon).currentHealth += -2;
-                }
-              }
+            //Todo: Add support for more cards.
+            //Current support is only for the Red Dawn card
+            //Add support for keeping it secret until played
+            EvolutionCardFactory factory = new EvolutionCardFactory();
+            String card = "";
+            switch (currentMonster.name) {
+              case "Kong":
+                card = "Red Dawn";
+                break;
+              case "Gigazaur":
+                card = "Radioactive Waste";
+                break;
+              case "Alienoid":
+                card = "Alien Scourge";
+                break;
             }
-            if (currentMonster.name.equals("Gigazaur")) {
-              //Todo: Add support for more cards.
-              //Current support is only for the Radioactive Waste
-              //Add support for keeping it secret until played
-              String power = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(i).stream,
-                "POWERUP:Receive 2 energy and 1 health\n"
-              );
-              currentMonster.energy += 2;
-              if (
-                currentMonster.currentHealth + 1 >= currentMonster.maxHealth
-              ) {
-                currentMonster.currentHealth = currentMonster.maxHealth;
-              } else {
-                currentMonster.currentHealth += 1;
-              }
+
+            // Get a card from the factory and execute it's effect
+            EvolutionCard powerUpCard = null;
+            try {
+              powerUpCard = factory.getCard(card);
+            } catch (Exception e) {
+              System.out.println(e);
+              System.exit(0);
             }
-            if (currentMonster.name.equals("Alienoid")) {
-              //Todo: Add support for more cards.
-              //Current support is only for the Alien Scourge
-              //Add support for keeping it secret until played
-              String power = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(i).stream,
-                "POWERUP:Receive 2 stars\n"
-              );
-              currentMonster.stars += 2;
+            if (
+              powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary
+            ) {
+              powerUpCard.executeEffect(this.monsters);
             }
           }
         }

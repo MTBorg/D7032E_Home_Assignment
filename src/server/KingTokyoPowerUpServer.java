@@ -29,7 +29,7 @@ public class KingTokyoPowerUpServer {
   }
 
   private ArrayList<Monster> monsters = new ArrayList<Monster>();
-  private final int PLAYER_AMOUNT = 2;
+  private final int PLAYER_AMOUNT = 2; //TODO: Change this back to two
   private final int SERVER_SOCKET = 2048;
 
   public KingTokyoPowerUpServer() {
