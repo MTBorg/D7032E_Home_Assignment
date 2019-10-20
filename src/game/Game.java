@@ -225,7 +225,7 @@ public class Game {
             msg
           );
           int buy = Integer.parseInt(answer);
-          if (buy > 0) {
+          if (buy > 0 && buy <= 2) {
             if (
               (
                 currentMonster.energy >=
@@ -262,6 +262,11 @@ public class Game {
                 "Message:You cannot afford that item \n"
               );
             }
+          } else if (buy > 2) {
+            KingTokyoPowerUpServer.sendOneWayMessage(
+              currentMonster.stream,
+              "Message:Please enter a valid input\n"
+            );
           } else if (buy <= -1) {
             validInput = true;
           }
