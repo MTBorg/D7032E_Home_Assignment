@@ -105,4 +105,16 @@ public class KingTokyoPowerUpServer {
     }
     return response;
   }
+
+  public static void sendOneWayMessage(Stream stream, String message) {
+    if (stream != null) {
+      try {
+        stream.writeBytes(message);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+    } else { //If null send to localhost
+      System.out.println(message);
+    }
+  }
 }

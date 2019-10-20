@@ -56,6 +56,9 @@ public class KingTokyoPowerUpClient {
         if (bot) stream.writeBytes("-1\n"); else stream.writeBytes(
           sc.nextLine() + "\n"
         );
+      } else if (message[0].equalsIgnoreCase("MESSAGE")) {
+				// TODO: This is a hack
+        // If there is a  message do nothing
       } else {
         if (bot) stream.writeBytes("OK\n"); else {
           System.out.println("Press [ENTER]");

@@ -218,35 +218,53 @@ public class Game {
             " energy) [#/-1]:" +
             this.deck +
             "\n";
-        String answer = KingTokyoPowerUpServer.sendMessage(
-          this.monsters.get(i).stream,
-          msg
-        );
-        int buy = Integer.parseInt(answer);
-        if (
-          buy > 0 &&
-          (
-            currentMonster.energy >=
-            (deck.store[buy].cost - currentMonster.cardEffect("cardsCostLess"))
-          )
-        ) {
-          System.out.println(
-            "Alien Metabolism " + currentMonster.cardEffect("cardsCostLess")
+        boolean validInput = false;
+        while (!validInput) {
+          String answer = KingTokyoPowerUpServer.sendMessage(
+            this.monsters.get(i).stream,
+            msg
           );
+          int buy = Integer.parseInt(answer);
+          if (buy > 0) {
+            if (
+              (
+                currentMonster.energy >=
+                (
+                  deck.store[buy].cost -
+                  currentMonster.cardEffect("cardsCostLess")
+                )
+              )
+            ) {
+              System.out.println(
+                "Alien Metabolism " + currentMonster.cardEffect("cardsCostLess")
+              );
 
-          //Alien Metabolism
-          if (deck.store[buy].discard) {
-            //7a. Play "DISCARD" cards immediately
-            currentMonster.stars += deck.store[buy].effect.stars;
-          } else currentMonster.cards.add(deck.store[buy]);
+              //Alien Metabolism
+              if (deck.store[buy].discard) {
+                //7a. Play "DISCARD" cards immediately
+                currentMonster.stars += deck.store[buy].effect.stars;
+              } else currentMonster.cards.add(deck.store[buy]);
 
-          //Deduct the cost of the card from energy
-          currentMonster.energy += -(
-              deck.store[buy].cost - currentMonster.cardEffect("cardsCostLess")
-            ); //Alient Metabolism
+              //Deduct the cost of the card from energy
+              currentMonster.energy += -(
+                  deck.store[buy].cost -
+                  currentMonster.cardEffect("cardsCostLess")
+                ); //Alient Metabolism
 
-          //Draw a new card from the deck to replace the card that was bought
-          deck.store[buy] = deck.deck.remove(0);
+              //Draw a new card from the deck to replace the card that was bought
+              deck.store[buy] =
+                deck.deck.remove(0);
+
+              validInput = true;
+            } else {
+              KingTokyoPowerUpServer.sendOneWayMessage(
+                currentMonster.stream,
+                "Message:You cannot afford that item \n"
+              );
+            }
+          } else if (buy <= -1) {
+            validInput = true;
+          }
         }
 
         //8. Check victory conditions
