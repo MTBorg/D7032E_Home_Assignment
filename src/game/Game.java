@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import src.events.AttackEvent;
+import src.events.Event;
 import src.factories.EvolutionCardFactory;
 import src.game.cards.*;
 import src.game.Deck;
@@ -11,6 +13,7 @@ import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
 
 public class Game {
+  private ArrayList<Event> eventQueue;
   private Deck deck;
   private ArrayList<Monster> monsters;
   private final int VICTORY_STARS = 20;
@@ -18,6 +21,7 @@ public class Game {
   public Game(ArrayList<Monster> monsters) {
     this.monsters = monsters;
     this.deck = new Deck();
+    this.eventQueue = new ArrayList<Event>();
   }
 
   public void loop() {
@@ -150,7 +154,16 @@ public class Game {
                 mon != i &&
                 totalDamage > this.monsters.get(mon).cardEffect("armor")
               ) { //Armor Plating
-                this.monsters.get(mon).currentHealth += -totalDamage;
+                this.eventQueue.add(
+                    new AttackEvent(
+                      this.eventQueue,
+                      currentMonster,
+                      this.monsters.get(mon),
+                      totalDamage
+                    )
+                  );
+                this.eventQueue.get(this.eventQueue.size() - 1).execute();
+              // this.monsters.get(mon).currentHealth += -totalDamage;
               }
             }
           } else {
@@ -160,9 +173,18 @@ public class Game {
                 monsterInTokyo = true;
                 int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
                 int totalDamage = result.get(aClaw).intValue() + moreDamage;
-                if (
-                  totalDamage > this.monsters.get(mon).cardEffect("armor")
-                ) this.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
+                if (totalDamage > this.monsters.get(mon).cardEffect("armor")) {
+                  this.eventQueue.add(
+                      new AttackEvent(
+                        this.eventQueue,
+                        currentMonster,
+                        this.monsters.get(mon),
+                        totalDamage
+                      )
+                    );
+                  this.eventQueue.get(this.eventQueue.size() - 1).execute();
+                // this.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
+                }
 
                 // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
                 String answer = KingTokyoPowerUpServer.sendMessage(
@@ -207,7 +229,12 @@ public class Game {
             currentMonster.energy >=
             (deck.store[buy].cost - currentMonster.cardEffect("cardsCostLess"))
           )
-        ) { //Alien Metabolism
+        ) {
+          System.out.println(
+            "Alien Metabolism " + currentMonster.cardEffect("cardsCostLess")
+          );
+
+          //Alien Metabolism
           if (deck.store[buy].discard) {
             //7a. Play "DISCARD" cards immediately
             currentMonster.stars += deck.store[buy].effect.stars;
