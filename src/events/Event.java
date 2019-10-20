@@ -1,12 +1,12 @@
 package src.events;
 
-import java.util.ArrayList;
+import src.game.EventQueue;
 
 public abstract class Event {
-  protected ArrayList<Event> queue;
+  protected EventQueue queue;
 
   // Events should be able to add other events to the queue
-  public Event(ArrayList<Event> queue) {
+  public Event(EventQueue queue) {
     this.queue = queue;
   }
 

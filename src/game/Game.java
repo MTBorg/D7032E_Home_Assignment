@@ -9,11 +9,12 @@ import src.events.Event;
 import src.factories.EvolutionCardFactory;
 import src.game.cards.*;
 import src.game.Deck;
+import src.game.EventQueue;
 import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
 
 public class Game {
-  private ArrayList<Event> eventQueue;
+  private EventQueue eventQueue;
   private Deck deck;
   private ArrayList<Monster> monsters;
   private final int VICTORY_STARS = 20;
@@ -21,7 +22,7 @@ public class Game {
   public Game(ArrayList<Monster> monsters) {
     this.monsters = monsters;
     this.deck = new Deck();
-    this.eventQueue = new ArrayList<Event>();
+    this.eventQueue = new EventQueue();
   }
 
   public void loop() {

@@ -3,6 +3,7 @@ package src.events;
 import java.util.ArrayList;
 import src.events.Event;
 import src.events.LoseHealthEvent;
+import src.game.EventQueue;
 import src.game.Monster;
 
 public class AttackEvent extends Event {
@@ -11,7 +12,7 @@ public class AttackEvent extends Event {
   int damage;
 
   public AttackEvent(
-    ArrayList<Event> queue,
+    EventQueue queue,
     Monster attacker,
     Monster attacked,
     int damage
