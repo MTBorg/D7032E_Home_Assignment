@@ -1,6 +1,8 @@
 package src.game;
 
-public class Card {
+import java.util.Observer;
+
+public abstract class Card implements Observer {
   public String name;
   public int cost;
   public boolean discard;

@@ -23,6 +23,12 @@ public class Game {
     this.monsters = monsters;
     this.deck = new Deck();
     this.eventQueue = new EventQueue();
+
+    for (Monster monster : monsters) {
+      for (Card card : monster.cards) {
+        eventQueue.addObserver(card);
+      }
+    }
   }
 
   public void loop() {
@@ -145,8 +151,9 @@ public class Game {
         // 6d. claws = attack (if in Tokyo attack everyone, else attack monster in Tokyo)
         Dice aClaw = new Dice(Dice.CLAWS);
         if (result.containsKey(aClaw)) {
-          currentMonster.stars +=
-            currentMonster.cardEffect("starsWhenAttacking"); //Alpha Monster
+          // TODO: Remove this comment once card mechanism has been fixed
+          // currentMonster.stars +=
+          //   currentMonster.cardEffect("starsWhenAttacking"); //Alpha Monster
           if (currentMonster.inTokyo) {
             for (int mon = 0; mon < this.monsters.size(); mon++) {
               int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
@@ -155,16 +162,11 @@ public class Game {
                 mon != i &&
                 totalDamage > this.monsters.get(mon).cardEffect("armor")
               ) { //Armor Plating
-                this.eventQueue.add(
-                    new AttackEvent(
-                      this.eventQueue,
-                      currentMonster,
-                      this.monsters.get(mon),
-                      totalDamage
-                    )
-                  );
-                this.eventQueue.get(this.eventQueue.size() - 1).execute();
-              // this.monsters.get(mon).currentHealth += -totalDamage;
+                currentMonster.attackMonster(
+                  this.monsters.get(mon),
+                  totalDamage,
+                  this.eventQueue
+                );
               }
             }
           } else {
@@ -175,14 +177,11 @@ public class Game {
                 int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
                 int totalDamage = result.get(aClaw).intValue() + moreDamage;
                 if (totalDamage > this.monsters.get(mon).cardEffect("armor")) {
-                  this.eventQueue.add(
-                      new AttackEvent(
-                        this.eventQueue,
-                        currentMonster,
-                        this.monsters.get(mon),
-                        totalDamage
-                      )
-                    );
+                  currentMonster.attackMonster(
+                    this.monsters.get(mon),
+                    totalDamage,
+                    this.eventQueue
+                  );
                   this.eventQueue.get(this.eventQueue.size() - 1).execute();
                 // this.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
                 }

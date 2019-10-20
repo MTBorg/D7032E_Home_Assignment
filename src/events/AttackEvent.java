@@ -7,9 +7,9 @@ import src.game.EventQueue;
 import src.game.Monster;
 
 public class AttackEvent extends Event {
-  Monster attacker;
+  private Monster attacker;
   Monster attacked;
-  int damage;
+  public int damage;
 
   public AttackEvent(
     EventQueue queue,
@@ -29,5 +29,9 @@ public class AttackEvent extends Event {
     );
     this.queue.add(new LoseHealthEvent(this.queue, attacked, damage));
     this.queue.get(this.queue.size() - 1).execute();
+  }
+
+  public Monster getAttacker() {
+    return this.attacker;
   }
 }

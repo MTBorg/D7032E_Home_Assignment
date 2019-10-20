@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import src.events.AttackEvent;
+import src.game.cards.store.AlphaMonster;
+import src.game.EventQueue;
 import src.network.Stream;
 
 public class Monster {
@@ -21,6 +24,10 @@ public class Monster {
   // public DataOutputStream outToClient = null;
   public Monster(String name) {
     this.name = name;
+
+    // Always give the player an alphamonster card
+    // TODO: Remove this once card buying functionality has been implemented
+    cards.add(new AlphaMonster());
   }
 
   // search all available cards and return the effect value of an effect
@@ -44,5 +51,14 @@ public class Monster {
       returnString += "\t[" + i + "] " + cards.get(i) + ":";
     }
     return returnString;
+  }
+
+  public void attackMonster(
+    Monster attacked,
+    int damage,
+    EventQueue eventQueue
+  ) {
+    eventQueue.add(new AttackEvent(eventQueue, this, attacked, damage));
+    eventQueue.get(eventQueue.size() - 1).execute();
   }
 }
