@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import src.game.Game;
@@ -29,11 +30,22 @@ public class KingTokyoPowerUpServer {
   }
 
   private ArrayList<Monster> monsters = new ArrayList<Monster>();
-  private final int PLAYER_AMOUNT = 2; //TODO: Change this back to two
+  private final int PLAYER_AMOUNT = 1; //TODO: Change this back to two
   private final int SERVER_SOCKET = 2048;
 
   public KingTokyoPowerUpServer() {
     System.out.println("Server started");
+
+    List<String> monsterNames = Arrays.asList(
+      new String[] { "Kong", "Gigazaur", "Alienoid" }
+    );
+
+    //Shuffle which monsters will played (if not all)
+    Collections.shuffle(monsterNames);
+
+    for (int i = 0; i <= PLAYER_AMOUNT; i++) {
+      this.monsters.add(new Monster(monsterNames.get(i)));
+    }
 
     //Shuffle which player is which monster
     Collections.shuffle(monsters);
@@ -53,13 +65,6 @@ public class KingTokyoPowerUpServer {
   }
 
   private void waitForPlayers() throws Exception {
-    Monster kong = new Monster("Kong");
-    Monster gigazaur = new Monster("Gigazaur");
-    Monster alien = new Monster("Alienoid");
-    monsters.add(kong);
-    monsters.add(gigazaur);
-    monsters.add(alien);
-
     ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
 
     //assume two online clients
