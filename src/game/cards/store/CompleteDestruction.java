@@ -9,7 +9,7 @@ import src.game.EventQueue;
 import src.game.EventQueue;
 import src.game.events.DiceRollEvent;
 import src.game.events.Event;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class CompleteDestruction extends StoreCard implements Observer {
 

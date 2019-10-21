@@ -3,7 +3,7 @@ package src.game.cards;
 import java.util.ArrayList;
 import src.game.cards.EvolutionCard;
 import src.game.Monster;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class RedDawn extends EvolutionCard {
 
@@ -20,7 +20,7 @@ public class RedDawn extends EvolutionCard {
         break;
       }
     }
-    String power = KingTokyoPowerUpServer.sendMessage(
+    String power = Server.sendMessage(
       monsters.get(kong).stream,
       "POWERUP:Deal 2 damage to all others\n"
     );

@@ -17,7 +17,7 @@ import src.game.Game;
 import src.game.Monster;
 import src.network.Stream;
 
-public class KingTokyoPowerUpServer {
+public class Server {
 
   /**
    * @param args the command line arguments
@@ -26,7 +26,7 @@ public class KingTokyoPowerUpServer {
     // TODO code application logic here
     // https://www.youtube.com/watch?v=HqdOaAzPtek
     // https://boardgamegeek.com/thread/1408893/categorizing-cards
-    KingTokyoPowerUpServer.start();
+    Server.start();
   }
 
   private static ArrayList<Monster> monsters = new ArrayList<Monster>();

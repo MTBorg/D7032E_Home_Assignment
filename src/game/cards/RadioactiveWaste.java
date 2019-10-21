@@ -3,7 +3,7 @@ package src.game.cards;
 import java.util.ArrayList;
 import src.game.cards.EvolutionCard;
 import src.game.Monster;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class RadioactiveWaste extends EvolutionCard {
 
@@ -26,7 +26,7 @@ public class RadioactiveWaste extends EvolutionCard {
     }
 
     Monster gigazaur = monsters.get(gigazaur_index);
-    String power = KingTokyoPowerUpServer.sendMessage(
+    String power = Server.sendMessage(
       gigazaur.stream,
       "POWERUP:Receive 2 energy and 1 health\n"
     );

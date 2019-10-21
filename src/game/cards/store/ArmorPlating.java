@@ -7,7 +7,6 @@ import src.game.Effect;
 import src.game.EventQueue;
 import src.game.events.AttackEvent;
 import src.game.events.Event;
-import src.server.KingTokyoPowerUpServer;
 
 public class ArmorPlating extends StoreCard implements Observer {
 

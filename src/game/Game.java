@@ -12,7 +12,7 @@ import src.game.events.DiceRollEvent;
 import src.game.events.Event;
 import src.game.factories.EvolutionCardFactory;
 import src.game.Monster;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class Game {
   private GameState state;
@@ -94,7 +94,7 @@ public class Game {
         for (Dice unique : new HashSet<Dice>(dices)) {
           result.put(unique, Collections.frequency(dices, unique));
         }
-        String ok = KingTokyoPowerUpServer.sendMessage(
+        String ok = Server.sendMessage(
           this.state.monsters.get(i).stream,
           "ROLLED:You rolled " + result + " Press [ENTER]\n"
         );
@@ -201,7 +201,7 @@ public class Game {
                 }
 
                 // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
-                String answer = KingTokyoPowerUpServer.sendMessage(
+                String answer = Server.sendMessage(
                   this.state.monsters.get(mon).stream,
                   "ATTACKED:You have " +
                     this.state.monsters.get(mon).currentHealth +
@@ -234,7 +234,7 @@ public class Game {
             "\n";
         boolean validInput = false;
         while (!validInput) {
-          String answer = KingTokyoPowerUpServer.sendMessage(
+          String answer = Server.sendMessage(
             this.state.monsters.get(i).stream,
             msg
           );
@@ -303,13 +303,13 @@ public class Game {
           //  }
           //  validInput = true;
           //} else {
-          //  KingTokyoPowerUpServer.sendOneWayMessage(
+          //  Server.sendOneWayMessage(
           //    currentMonster.stream,
           //    "Message:You cannot afford that item \n"
           //  );
           //}
           } else if (buy > 2) {
-            KingTokyoPowerUpServer.sendOneWayMessage(
+            Server.sendOneWayMessage(
               currentMonster.stream,
               "Message:Please enter a valid input\n"
             );
@@ -339,7 +339,7 @@ public class Game {
           if (this.state.monsters.get(mon).stars >= 20) {
             for (int victory = 0; victory <
               this.state.monsters.size(); victory++) {
-              String victoryByStars = KingTokyoPowerUpServer.sendMessage(
+              String victoryByStars = Server.sendMessage(
                 this.state.monsters.get(victory).stream,
                 "Victory: " +
                   this.state.monsters.get(mon).name +
@@ -356,7 +356,7 @@ public class Game {
         if (alive == 1) {
           for (int victory = 0; victory <
             this.state.monsters.size(); victory++) {
-            String victoryByKills = KingTokyoPowerUpServer.sendMessage(
+            String victoryByKills = Server.sendMessage(
               this.state.monsters.get(victory).stream,
               "Victory: " +
                 aliveMonster +
@@ -376,7 +376,7 @@ public class Game {
     }
     String choices =
       ":Choose which dices to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
-    String[] reroll = KingTokyoPowerUpServer
+    String[] reroll = Server
       .sendMessage(monster.stream, rolledDice + choices)
       .split(",");
     while (true) {
@@ -388,7 +388,7 @@ public class Game {
         break;
       } catch (NumberFormatException e) {
         reroll =
-          KingTokyoPowerUpServer
+          Server
             .sendMessage(
               monster.stream,
               "Please enter a valid number! \n" + choices
@@ -433,7 +433,7 @@ public class Game {
           " energy, and owns the following cards:";
       statusUpdate += this.state.monsters.get(count).cardsToString();
     }
-    KingTokyoPowerUpServer.sendMessage(recipient.stream, statusUpdate + "\n");
+    Server.sendMessage(recipient.stream, statusUpdate + "\n");
   }
 
   private String checkVictoryConditionsAlive(ArrayList<Monster> monsters) {

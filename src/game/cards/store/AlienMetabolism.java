@@ -7,7 +7,6 @@ import src.game.Effect;
 import src.game.EventQueue;
 import src.game.events.BuyRequestEvent;
 import src.game.events.Event;
-import src.server.KingTokyoPowerUpServer;
 
 public class AlienMetabolism extends StoreCard implements Observer {
 

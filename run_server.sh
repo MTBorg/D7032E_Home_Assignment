@@ -1,1 +1,1 @@
-javac $(find . -name "*.java") && java src.server.KingTokyoPowerUpServer
+javac $(find . -name "*.java") && java src.server.Server

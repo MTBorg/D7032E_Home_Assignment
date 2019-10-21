@@ -8,7 +8,7 @@ import src.game.events.LoseHealthEvent;
 import src.game.cards.store.StoreCard;
 import src.game.Effect;
 import src.game.EventQueue;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class AlphaMonster extends StoreCard implements Observer {
 

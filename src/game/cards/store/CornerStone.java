@@ -6,7 +6,7 @@ import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.game.GameState;
 import src.game.Monster;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class CornerStone extends DiscardCard implements Observer {
 
@@ -19,7 +19,7 @@ public class CornerStone extends DiscardCard implements Observer {
 
   @Override
   protected void effect(Monster monster, GameState gameState) {
-    KingTokyoPowerUpServer.sendOneWayMessage(
+    Server.sendOneWayMessage(
       monster.stream,
       "Message: You used the card " +
         this.name +

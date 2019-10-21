@@ -7,7 +7,7 @@ import src.game.EventQueue;
 import src.game.events.Event;
 import src.game.GameState;
 import src.game.Monster;
-import src.server.KingTokyoPowerUpServer;
+import src.server.Server;
 
 public class ApartmentBuilding extends DiscardCard implements Observer {
 
@@ -20,7 +20,7 @@ public class ApartmentBuilding extends DiscardCard implements Observer {
 
   @Override
   protected void effect(Monster monster, GameState gameState) {
-    KingTokyoPowerUpServer.sendOneWayMessage(
+    Server.sendOneWayMessage(
       monster.stream,
       "Message: You used the card " +
         this.name +
