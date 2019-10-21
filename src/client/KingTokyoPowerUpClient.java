@@ -34,7 +34,10 @@ public class KingTokyoPowerUpClient {
     while (true) {
       String[] message = stream.readLine().split(":");
       for (int i = 0; i < message.length; i++) {
-        System.out.println(message[i].toString());
+        // Don't print message tag
+        if (i != 0 || !message[0].equalsIgnoreCase("MESSAGE")) {
+          System.out.println(message[i].toString());
+        }
       }
       if (message[0].equalsIgnoreCase("VICTORY")) {
         stream.writeBytes("Bye!\n");
@@ -57,8 +60,8 @@ public class KingTokyoPowerUpClient {
           sc.nextLine() + "\n"
         );
       } else if (message[0].equalsIgnoreCase("MESSAGE")) {
-				// TODO: This is a hack
-        // If there is a  message do nothing
+        // TODO: This is a hack
+      // If there is a  message do nothing
       } else {
         if (bot) stream.writeBytes("OK\n"); else {
           System.out.println("Press [ENTER]");

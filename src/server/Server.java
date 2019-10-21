@@ -97,7 +97,10 @@ public class Server {
     } else { //If null send to localhost
       String[] theMessage = message.split(":");
       for (int i = 0; i < theMessage.length; i++) {
-        System.out.println(theMessage[i].toString());
+        // Don't print message tag
+        if (i != 0 || !theMessage[0].equalsIgnoreCase("MESSAGE")) {
+          System.out.println(theMessage[i].toString());
+        }
       }
       if (
         !(
@@ -119,7 +122,13 @@ public class Server {
         System.out.println(e);
       }
     } else { //If null send to localhost
-      System.out.println(message);
+      String[] theMessage = message.split(":");
+      for (int i = 0; i < theMessage.length; i++) {
+        // Don't print message tag
+        if (i != 0 || !theMessage[0].equalsIgnoreCase("MESSAGE")) {
+          System.out.println(theMessage[i].toString());
+        }
+      }
     }
   }
 }
