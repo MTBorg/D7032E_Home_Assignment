@@ -15,7 +15,7 @@ public class BuyEvent extends Event {
     super(queue);
     this.buyer = buyer;
     this.card = card;
-    this.cost = card.cost;
+    this.cost = cost;
   }
 
   public void execute() {
