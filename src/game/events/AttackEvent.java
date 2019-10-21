@@ -5,6 +5,7 @@ import src.game.EventQueue;
 import src.game.events.Event;
 import src.game.events.LoseHealthEvent;
 import src.game.Monster;
+import src.server.Server;
 
 public class AttackEvent extends Event {
   private Monster attacker;
@@ -24,8 +25,17 @@ public class AttackEvent extends Event {
   }
 
   public void execute() {
-    System.out.println(
-      "You attacked " + attacked.name + " for " + damage + " damage"
+    Server.sendOneWayMessage(
+      attacker.stream,
+      "Message:You attacked " + attacked.name + " for " + damage + " damage\n"
+    );
+    Server.sendOneWayMessage(
+      attacked.stream,
+      "Message:You were attacked by " +
+        attacker.name +
+        " for " +
+        damage +
+        " damage\n"
     );
     this.queue.add(new LoseHealthEvent(this.queue, attacked, damage));
     this.queue.get(this.queue.size() - 1).execute();
