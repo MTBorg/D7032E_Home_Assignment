@@ -29,6 +29,7 @@ public class BuyEvent extends Event {
     ); //TODO: Remove this eventually
 
     this.buyer.giveCard(card);
+    this.queue.addObserver(card);
     this.buyer.energy -= this.cost;
   }
 }

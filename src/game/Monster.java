@@ -5,7 +5,11 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import src.events.AttackEvent;
+import src.events.BuyEvent;
+import src.events.BuyRequestEvent;
+import src.events.Event;
 import src.game.cards.store.AlphaMonster;
+import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.network.Stream;
 
@@ -72,5 +76,12 @@ public class Monster {
 
   public void giveCard(Card card) {
     this.cards.add(card);
+  }
+
+  public boolean buyCard(EventQueue eventQueue, StoreCard card) {
+    Event buyRequestEvent = new BuyRequestEvent(eventQueue, this, card);
+    eventQueue.add(buyRequestEvent);
+    buyRequestEvent.execute();
+    return eventQueue.get(eventQueue.size() - 1) instanceof BuyEvent;
   }
 }

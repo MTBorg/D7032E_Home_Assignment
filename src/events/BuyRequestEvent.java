@@ -33,8 +33,4 @@ public class BuyRequestEvent extends Event {
     }
     this.queue.get(this.queue.size() - 1).execute();
   }
-
-  public Monster getBuyer() {
-    return this.buyer;
-  }
 }

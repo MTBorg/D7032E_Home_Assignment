@@ -229,36 +229,13 @@ public class Game {
           );
           int buy = Integer.parseInt(answer);
           if (buy >= 0 && buy <= 2) {
-            if (
-              (
-                currentMonster.energy >=
-                (
-                  deck.store[buy].cost -
-                  currentMonster.cardEffect("cardsCostLess")
-                )
-              )
-            ) {
-              System.out.println(
-                "Alien Metabolism " + currentMonster.cardEffect("cardsCostLess")
-              );
-
-              //Alien Metabolism
-              if (deck.store[buy].discard) {
-                //7a. Play "DISCARD" cards immediately
-              // currentMonster.stars += deck.store[buy].effect.stars;
-              } else {
-                Card card = deck.store[buy];
-                currentMonster.cards.add(card);
-                eventQueue.addObserver(card);
-              }
-
-              //Deduct the cost of the card from energy
-              currentMonster.energy += -(
-                  deck.store[buy].cost -
-                  currentMonster.cardEffect("cardsCostLess")
-                ); //Alient Metabolism
+            //If card was bought Successfully
+            if (currentMonster.buyCard(this.eventQueue, deck.store[buy])) {
+              System.out.println("Successfully bought card");
 
               //Draw a new card from the deck to replace the card that was bought
+              deck.store[buy] =
+                null;
               if (deck.deck.size() != 0) {
                 deck.store[buy] = deck.deck.remove(0);
               } else {
@@ -266,14 +243,49 @@ public class Game {
                 System.out.println("Out of cards");
               // System.exit(0);
               }
-
-              validInput = true;
-            } else {
-              KingTokyoPowerUpServer.sendOneWayMessage(
-                currentMonster.stream,
-                "Message:You cannot afford that item \n"
-              );
             }
+            validInput = true;
+          //if (
+          //  (
+          //    currentMonster.energy >=
+          //    (
+          //      deck.store[buy].cost -
+          //      currentMonster.cardEffect("cardsCostLess")
+          //    )
+          //  )
+          //) {
+          //  System.out.println(
+          //    "Alien Metabolism " + currentMonster.cardEffect("cardsCostLess")
+          //  );
+          //  //Alien Metabolism
+          //  if (deck.store[buy].discard) {
+          //    //7a. Play "DISCARD" cards immediately
+          //  // currentMonster.stars += deck.store[buy].effect.stars;
+          //  } else {
+          //    Card card = deck.store[buy];
+          //    currentMonster.cards.add(card);
+          //    eventQueue.addObserver(card);
+          //  }
+          //  //Deduct the cost of the card from energy
+          //  currentMonster.energy += -(
+          //      deck.store[buy].cost -
+          //      currentMonster.cardEffect("cardsCostLess")
+          //    ); //Alient Metabolism
+          //  //Draw a new card from the deck to replace the card that was bought
+          //  if (deck.deck.size() != 0) {
+          //    deck.store[buy] = deck.deck.remove(0);
+          //  } else {
+          //    //TODO: This should not happen
+          //    System.out.println("Out of cards");
+          //  // System.exit(0);
+          //  }
+          //  validInput = true;
+          //} else {
+          //  KingTokyoPowerUpServer.sendOneWayMessage(
+          //    currentMonster.stream,
+          //    "Message:You cannot afford that item \n"
+          //  );
+          //}
           } else if (buy > 2) {
             KingTokyoPowerUpServer.sendOneWayMessage(
               currentMonster.stream,
