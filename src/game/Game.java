@@ -265,8 +265,14 @@ public class Game {
                 //TODO: This should not happen
                 System.out.println("Out of cards");
               }
+              validInput = true;
+            } else {
+              Server.sendOneWayMessage(
+                currentMonster.stream,
+                "You cannot afford that item\n"
+              );
+              validInput = false;
             }
-            validInput = true;
           //if (
           //  (
           //    currentMonster.energy >=
