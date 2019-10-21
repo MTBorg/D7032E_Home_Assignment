@@ -34,4 +34,8 @@ public class AttackEvent extends Event {
   public Monster getAttacker() {
     return this.attacker;
   }
+
+  public Monster getAttacked() {
+    return this.attacked;
+  }
 }
