@@ -27,15 +27,11 @@ public class AttackEvent extends Event {
   public void execute() {
     Server.sendOneWayMessage(
       attacker.stream,
-      "Message:You attacked " + attacked.name + " for " + damage + " damage\n"
+      "You attacked " + attacked.name + " for " + damage + " damage\n"
     );
     Server.sendOneWayMessage(
       attacked.stream,
-      "Message:You were attacked by " +
-        attacker.name +
-        " for " +
-        damage +
-        " damage\n"
+      "You were attacked by " + attacker.name + " for " + damage + " damage\n"
     );
     this.queue.add(new LoseHealthEvent(this.queue, attacked, damage));
     this.queue.get(this.queue.size() - 1).execute();

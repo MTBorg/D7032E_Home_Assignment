@@ -305,13 +305,13 @@ public class Game {
           //} else {
           //  Server.sendOneWayMessage(
           //    currentMonster.stream,
-          //    "Message:You cannot afford that item \n"
+          //    "You cannot afford that item \n"
           //  );
           //}
           } else if (buy > 2) {
             Server.sendOneWayMessage(
               currentMonster.stream,
-              "Message:Please enter a valid input\n"
+              "Please enter a valid input\n"
             );
           } else if (buy <= -1) {
             validInput = true;

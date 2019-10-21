@@ -93,6 +93,6 @@ public class Server {
   }
 
   public static void sendOneWayMessage(Stream stream, String message) {
-    stream.writeBytes(message);
+    stream.writeBytes("Message:" + message);
   }
 }
