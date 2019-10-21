@@ -26,14 +26,14 @@ public class KingTokyoPowerUpServer {
     // TODO code application logic here
     // https://www.youtube.com/watch?v=HqdOaAzPtek
     // https://boardgamegeek.com/thread/1408893/categorizing-cards
-    new KingTokyoPowerUpServer();
+    KingTokyoPowerUpServer.start();
   }
 
-  private ArrayList<Monster> monsters = new ArrayList<Monster>();
-  private final int PLAYER_AMOUNT = 1; //TODO: Change this back to two
-  private final int SERVER_SOCKET = 2048;
+  private static ArrayList<Monster> monsters = new ArrayList<Monster>();
+  private static final int PLAYER_AMOUNT = 1; //TODO: Change this back to two
+  private static final int SERVER_SOCKET = 2048;
 
-  public KingTokyoPowerUpServer() {
+  public static void start() {
     System.out.println("Server started");
 
     List<String> monsterNames = Arrays.asList(
@@ -44,7 +44,7 @@ public class KingTokyoPowerUpServer {
     Collections.shuffle(monsterNames);
 
     for (int i = 0; i <= PLAYER_AMOUNT; i++) {
-      this.monsters.add(new Monster(monsterNames.get(i)));
+      monsters.add(new Monster(monsterNames.get(i)));
     }
 
     //Shuffle which player is which monster
@@ -64,7 +64,7 @@ public class KingTokyoPowerUpServer {
     game.loop();
   }
 
-  private void waitForPlayers() throws Exception {
+  private static void waitForPlayers() throws Exception {
     ServerSocket aSocket = new ServerSocket(SERVER_SOCKET);
 
     //assume two online clients
