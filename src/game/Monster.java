@@ -24,10 +24,9 @@ public class Monster {
   // public DataOutputStream outToClient = null;
   public Monster(String name) {
     this.name = name;
-
-    // Always give the player an alphamonster card
-    // TODO: Remove this once card buying functionality has been implemented
-    cards.add(new AlphaMonster());
+  // Always give the player an alphamonster card
+  // TODO: Remove this once card buying functionality has been implemented
+  // cards.add(new AlphaMonster());
   }
 
   // search all available cards and return the effect value of an effect
@@ -69,5 +68,9 @@ public class Monster {
       }
     }
     return false;
+  }
+
+  public void giveCard(Card card) {
+    this.cards.add(card);
   }
 }
