@@ -28,5 +28,6 @@ public abstract class Card implements Observer {
     return this.name;
   }
 
+  // Override this if the card needs to receive updates about the event queue
   public void update(Observable o, Object arg) {}
 }

@@ -61,4 +61,13 @@ public class Monster {
     eventQueue.add(new AttackEvent(eventQueue, this, attacked, damage));
     eventQueue.get(eventQueue.size() - 1).execute();
   }
+
+  public boolean hasCard(String cardName) {
+    for (Card card : this.cards) {
+      if (card.name == cardName) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

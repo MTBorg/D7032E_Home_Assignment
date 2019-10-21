@@ -12,15 +12,16 @@ public abstract class StoreCard extends Card {
     this.cost = cost;
     this.discard = discard;
   }
-// public String toString() {
-//   return (
-//     name +
-//     ", Cost " +
-//     cost +
-//     ", " +
-//     (discard ? "DISCARD" : "KEEP") +
-//     ", Effect " +
-//     description
-//   );
-// }
+
+  public String toString() {
+    //TODO: This should print the card description as well
+    return (
+      name +
+      ", Cost " +
+      cost +
+      ", " +
+      (discard ? "DISCARD" : "KEEP") +
+      ", Effect "
+    );
+  }
 }

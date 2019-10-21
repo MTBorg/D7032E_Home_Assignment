@@ -22,9 +22,18 @@ public class AlphaMonster extends StoreCard implements Observer {
     Event e = (Event) event;
     if (e instanceof AttackEvent) {
       AttackEvent attackEvent = (AttackEvent) e;
-
-      System.out.println("Applied card: " + this.name); //TODO: Remove this eventually
-      attackEvent.getAttacker().stars++; //Gain 1[Star] when you attack.
+      if (attackEvent.getAttacker().hasCard(this.name)) {
+        System.out.println(
+          attackEvent.getAttacker().name + "Applied card: " + this.name
+        ); //TODO: Remove this eventually
+        attackEvent.getAttacker().stars++; //Gain 1[Star] when you attack.
+      } else {
+        System.out.println(
+          "Attacker " +
+            attackEvent.getAttacker().name +
+            " does not have AlphaMonster"
+        );
+      }
     }
   }
 }
