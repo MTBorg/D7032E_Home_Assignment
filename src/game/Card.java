@@ -1,37 +1,32 @@
 package src.game;
 
+import java.util.Observable;
 import java.util.Observer;
 
 public abstract class Card implements Observer {
-  public String name;
-  public int cost;
-  public boolean discard;
-  public Effect effect;
-  public String description;
+  protected final String name;
 
-  public Card(
-    String name,
-    int cost,
-    boolean discard,
-    Effect effect,
-    String description
-  ) {
+  // public String description; //TODO: Add back eventually
+  public Card(String name) {
     this.name = name;
-    this.cost = cost;
-    this.discard = discard;
-    this.effect = effect;
-    this.description = description;
+  // this.description = description;
   }
 
-  public String toString() {
-    return (
-      name +
-      ", Cost " +
-      cost +
-      ", " +
-      (discard ? "DISCARD" : "KEEP") +
-      ", Effect " +
-      description
-    );
+  // public String toString() {
+  //   return (
+  //     name +
+  //     ", Cost " +
+  //     cost +
+  //     ", " +
+  //     (discard ? "DISCARD" : "KEEP") +
+  //     ", Effect " +
+  //     description
+  //   );
+  // }
+  //
+  public String getName() {
+    return this.name;
   }
+
+  public void update(Observable o, Object arg) {}
 }

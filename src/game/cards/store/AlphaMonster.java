@@ -5,15 +5,15 @@ import java.util.Observer;
 import src.events.AttackEvent;
 import src.events.Event;
 import src.events.LoseHealthEvent;
-import src.game.Card;
+import src.game.cards.store.StoreCard;
 import src.game.Effect;
 import src.game.EventQueue;
 import src.server.KingTokyoPowerUpServer;
 
-public class AlphaMonster extends Card implements Observer {
+public class AlphaMonster extends StoreCard implements Observer {
 
   public AlphaMonster() {
-    super("Alpha Monster", 5, false, new Effect(), "");
+    super("Alpha Monster", 5, false);
   }
 
   @Override

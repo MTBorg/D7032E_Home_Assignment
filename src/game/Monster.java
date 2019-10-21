@@ -33,14 +33,14 @@ public class Monster {
   // search all available cards and return the effect value of an effect
   // TODO: This should be a part of the card class
   public int cardEffect(String effectName) {
-    for (int i = 0; i < cards.size(); i++) {
-      try {
-        //Find variable by "name"
-        if (Effect.class.getField(effectName).getInt(cards.get(i).effect) > 0) {
-          return Effect.class.getField(effectName).getInt(cards.get(i).effect);
-        }
-      } catch (Exception e) {}
-    }
+    //for (int i = 0; i < cards.size(); i++) {
+    //  try {
+    //    //Find variable by "name"
+    //    if (Effect.class.getField(effectName).getInt(cards.get(i).effect) > 0) {
+    //      return Effect.class.getField(effectName).getInt(cards.get(i).effect);
+    //    }
+    //  } catch (Exception e) {}
+    //}
     return 0;
   }
 

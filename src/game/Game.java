@@ -156,7 +156,8 @@ public class Game {
           //   currentMonster.cardEffect("starsWhenAttacking"); //Alpha Monster
           if (currentMonster.inTokyo) {
             for (int mon = 0; mon < this.monsters.size(); mon++) {
-              int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
+              // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
+              int moreDamage = 0;
               int totalDamage = result.get(aClaw).intValue() + moreDamage;
               if (
                 mon != i &&
@@ -174,7 +175,9 @@ public class Game {
             for (int mon = 0; mon < this.monsters.size(); mon++) {
               if (this.monsters.get(mon).inTokyo) {
                 monsterInTokyo = true;
-                int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
+
+                // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
+                int moreDamage = 0;
                 int totalDamage = result.get(aClaw).intValue() + moreDamage;
                 if (totalDamage > this.monsters.get(mon).cardEffect("armor")) {
                   currentMonster.attackMonster(
@@ -242,7 +245,7 @@ public class Game {
               //Alien Metabolism
               if (deck.store[buy].discard) {
                 //7a. Play "DISCARD" cards immediately
-                currentMonster.stars += deck.store[buy].effect.stars;
+              // currentMonster.stars += deck.store[buy].effect.stars;
               } else currentMonster.cards.add(deck.store[buy]);
 
               //Deduct the cost of the card from energy

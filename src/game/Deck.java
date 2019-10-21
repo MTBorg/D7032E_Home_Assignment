@@ -2,26 +2,27 @@ package src.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import src.game.cards.store.StoreCard;
 
 class Deck {
-  public ArrayList<Card> deck = new ArrayList<Card>();
-  public Card[] store = new Card[3];
+  public ArrayList<StoreCard> deck = new ArrayList<StoreCard>();
+  public StoreCard[] store = new StoreCard[3];
 
   public Deck() {
-    Effect moreDamage = new Effect();
-    moreDamage.moreDamage = 1;
-    Effect cardsCostLess = new Effect();
-    cardsCostLess.cardsCostLess = 1;
-    Effect starsWhenAttacking = new Effect();
-    starsWhenAttacking.starsWhenAttacking = 1;
-    Effect stars3 = new Effect();
-    stars3.stars = 3;
-    Effect armor = new Effect();
-    armor.armor = 1;
-    Effect stars2 = new Effect();
-    stars2.stars = 2;
-    Effect stars1 = new Effect();
-    stars1.stars = 1;
+    // Effect moreDamage = new Effect();
+  // moreDamage.moreDamage = 1;
+  // Effect cardsCostLess = new Effect();
+  // cardsCostLess.cardsCostLess = 1;
+  // Effect starsWhenAttacking = new Effect();
+  // starsWhenAttacking.starsWhenAttacking = 1;
+  // Effect stars3 = new Effect();
+  // stars3.stars = 3;
+  // Effect armor = new Effect();
+  // armor.armor = 1;
+  // Effect stars2 = new Effect();
+  // stars2.stars = 2;
+  // Effect stars1 = new Effect();
+  // stars1.stars = 1;
   // deck.add(
   //   new Card(
   //     "Acid Attack",
