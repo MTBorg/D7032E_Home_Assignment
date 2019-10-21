@@ -30,7 +30,7 @@ public class Server {
   }
 
   private static ArrayList<Monster> monsters = new ArrayList<Monster>();
-  private static final int PLAYER_AMOUNT = 1; //TODO: Change this back to two
+  private static final int PLAYER_AMOUNT = 2; //TODO: Change this back to two
   private static final int SERVER_SOCKET = 2048;
 
   public static void start() {
@@ -43,7 +43,7 @@ public class Server {
     //Shuffle which monsters will played (if not all)
     Collections.shuffle(monsterNames);
 
-    for (int i = 0; i <= PLAYER_AMOUNT; i++) {
+    for (int i = 0; i < PLAYER_AMOUNT; i++) {
       monsters.add(new Monster(monsterNames.get(i)));
     }
 
@@ -87,48 +87,12 @@ public class Server {
   public static String sendMessage(Stream stream, String message) {
     Scanner sc = new Scanner(System.in);
     String response = "";
-    if (stream != null) {
-      try {
-        stream.writeBytes(message);
-        response = stream.readLine();
-      } catch (Exception e) {
-        System.out.println(e);
-      }
-    } else { //If null send to localhost
-      String[] theMessage = message.split(":");
-      for (int i = 0; i < theMessage.length; i++) {
-        // Don't print message tag
-        if (i != 0 || !theMessage[0].equalsIgnoreCase("MESSAGE")) {
-          System.out.println(theMessage[i].toString());
-        }
-      }
-      if (
-        !(
-          theMessage[0].equals("ATTACKED") ||
-          theMessage[0].equals("ROLLED") ||
-          theMessage[0].equals("PURCHASE")
-        )
-      ) System.out.println("Press [ENTER]");
-      response = sc.nextLine();
-    }
+    stream.writeBytes(message);
+    response = stream.readLine();
     return response;
   }
 
   public static void sendOneWayMessage(Stream stream, String message) {
-    if (stream != null) {
-      try {
-        stream.writeBytes(message);
-      } catch (Exception e) {
-        System.out.println(e);
-      }
-    } else { //If null send to localhost
-      String[] theMessage = message.split(":");
-      for (int i = 0; i < theMessage.length; i++) {
-        // Don't print message tag
-        if (i != 0 || !theMessage[0].equalsIgnoreCase("MESSAGE")) {
-          System.out.println(theMessage[i].toString());
-        }
-      }
-    }
+    stream.writeBytes(message);
   }
 }

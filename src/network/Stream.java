@@ -17,11 +17,23 @@ public class Stream {
       new BufferedReader(new InputStreamReader(socket.getInputStream()));
   }
 
-  public String readLine() throws Exception {
-    return in.readLine();
+  public String readLine() {
+    String result = "";
+    try {
+      result = in.readLine();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    return result;
   }
 
-  public void writeBytes(String bytes) throws Exception {
-    out.writeBytes(bytes);
+  public void writeBytes(String bytes) {
+    try {
+      out.writeBytes(bytes);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
   }
 }
