@@ -241,7 +241,6 @@ public class Game {
               } else {
                 //TODO: This should not happen
                 System.out.println("Out of cards");
-              // System.exit(0);
               }
             }
             validInput = true;

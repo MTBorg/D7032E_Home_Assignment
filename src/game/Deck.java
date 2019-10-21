@@ -8,7 +8,7 @@ import src.game.cards.store.StoreCard;
 class Deck {
   public ArrayList<StoreCard> deck = new ArrayList<StoreCard>();
   public StoreCard[] store = new StoreCard[3];
-  private static final int FACEUP_CARDS = 1; //TODO: Reset back to three once cards have been implemented
+  private static final int FACEUP_CARDS = 2; //TODO: Reset back to three once cards have been implemented
 
   public Deck() {
     // Effect moreDamage = new Effect();

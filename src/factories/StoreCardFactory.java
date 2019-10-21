@@ -12,7 +12,7 @@ public class StoreCardFactory {
   // match a card name in the CARD_PATH folder.
   // E.g. to include the card Alpha Monster in the file CARD_PATH/RedDawn.java place the
   // String "Alpha Monster" in the array below.
-  static private final String[] cards = { "Alpha Monster" };
+  static private final String[] cards = { "Alpha Monster", "Alien Metabolism" };
 
   public StoreCard getCard(String name) throws Exception {
     for (String card : StoreCardFactory.cards) {

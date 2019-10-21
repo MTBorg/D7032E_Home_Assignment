@@ -29,8 +29,12 @@ public class BuyRequestEvent extends Event {
     ); //TODO: Remove this eventually
 
     if (buyer.energy >= card.cost) {
-      this.queue.add(new BuyEvent(this.queue, buyer, card, cost));
+      this.queue.add(new BuyEvent(this.queue, buyer, card, this.cost));
     }
     this.queue.get(this.queue.size() - 1).execute();
+  }
+
+  public Monster getBuyer() {
+    return this.buyer;
   }
 }
