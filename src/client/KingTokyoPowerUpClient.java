@@ -10,11 +10,9 @@ import src.network.Stream;
 public class KingTokyoPowerUpClient {
   private final int SOCKET_PORT = 2048;
   private Scanner sc = new Scanner(System.in);
-  private boolean bot;
 
   public KingTokyoPowerUpClient(boolean bot) {
     String name = "";
-    this.bot = bot;
 
     //Server stuffs
     try {
@@ -23,9 +21,51 @@ public class KingTokyoPowerUpClient {
 
       System.out.println(name);
 
-      messageLoop(stream);
+      if (bot) {
+        messageLoopBot(stream);
+      } else {
+        messageLoop(stream);
+      }
     } catch (Exception e) {
       System.out.println(e);
+    }
+  }
+
+  private void messageLoopBot(Stream stream) {
+    Random rnd = ThreadLocalRandom.current();
+    while (true) {
+      String[] message = stream.readLine().split(":");
+      for (int i = 0; i < message.length; i++) {
+        // Don't print message tag
+        // TODO: This is pretty hacky
+        if (i != 0 || !message[0].equalsIgnoreCase("MESSAGE")) {
+          System.out.println(message[i].toString());
+        }
+      }
+      switch (message[0].toUpperCase()) {
+        case "VICTORY":
+          stream.writeBytes("Bye!\n");
+          break;
+        case "ATTACKED":
+          stream.writeBytes("YES\n");
+          break;
+        case "ROLLED":
+          rnd = ThreadLocalRandom.current();
+          int num1 = rnd.nextInt(2) + 4;
+          int num2 = rnd.nextInt(2) + 1;
+          String reroll = "" + num1 + "," + num2 + "\n";
+          stream.writeBytes(reroll); // Some randomness at least
+          break;
+        case "PURCHASE":
+          stream.writeBytes("-1\n");
+          break;
+        case "MESSAGE":
+          break;
+        default:
+          stream.writeBytes("OK\n");
+          break;
+      }
+      System.out.println("\n");
     }
   }
 
@@ -40,35 +80,22 @@ public class KingTokyoPowerUpClient {
           System.out.println(message[i].toString());
         }
       }
-      if (message[0].equalsIgnoreCase("VICTORY")) {
-        stream.writeBytes("Bye!\n");
-      } else if (message[0].equalsIgnoreCase("ATTACKED")) {
-        if (bot) stream.writeBytes("YES\n"); else {
+      switch (message[0].toUpperCase()) {
+        case "VICTORY":
+          stream.writeBytes("Bye!\n");
+          break;
+        case "ATTACKED":
+        case "ROLLED":
+        case "PURCHASE":
           stream.writeBytes(sc.nextLine() + "\n");
-        }
-      } else if (message[0].equalsIgnoreCase("ROLLED")) {
-        if (bot) {
-          rnd = ThreadLocalRandom.current();
-          int num1 = rnd.nextInt(2) + 4;
-          int num2 = rnd.nextInt(2) + 1;
-          String reroll = "" + num1 + "," + num2 + "\n";
-          stream.writeBytes(reroll); // Some randomness at least
-        } else {
-          stream.writeBytes(sc.nextLine() + "\n");
-        }
-      } else if (message[0].equalsIgnoreCase("PURCHASE")) {
-        if (bot) stream.writeBytes("-1\n"); else stream.writeBytes(
-          sc.nextLine() + "\n"
-        );
-      } else if (message[0].equalsIgnoreCase("MESSAGE")) {
-        // TODO: This is a hack
-      // If there is a  message do nothing
-      } else {
-        if (bot) stream.writeBytes("OK\n"); else {
+          break;
+        case "MESSAGE":
+          break;
+        default:
           System.out.println("Press [ENTER]");
           sc.nextLine();
           stream.writeBytes("OK\n");
-        }
+          break;
       }
       System.out.println("\n");
     }
