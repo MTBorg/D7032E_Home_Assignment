@@ -5,6 +5,7 @@ import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.game.events.Event;
 import src.game.Monster;
+import src.server.Server;
 
 public class BuyEvent extends Event {
   private Monster buyer;
@@ -19,14 +20,15 @@ public class BuyEvent extends Event {
   }
 
   public void execute() {
-    System.out.println(
-      this.buyer.name +
-        " buys card " +
+    String message =
+      "bought card \"" +
         this.card.getName() +
-        " for " +
+        "\" for " +
         this.cost +
-        " energy"
-    ); //TODO: Remove this eventually
+        " energy\n";
+    Server.broadCastMessage("Player " + this.buyer.name + message, this.buyer); // Send to other players
+    System.out.println("Player " + this.buyer.name + message); // Print on server
+    Server.sendOneWayMessage(this.buyer.stream, "You " + message); // Send to buyer
 
     this.buyer.giveCard(card);
     this.queue.addObserver(card);
