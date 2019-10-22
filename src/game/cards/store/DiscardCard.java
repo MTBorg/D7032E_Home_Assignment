@@ -14,7 +14,9 @@ abstract public class DiscardCard extends StoreCard {
   public void execute(Monster executor, GameState gameState) {
     effect(executor, gameState);
     executor.removeCard(this);
-  //TODO: Place back in deck
+
+    // Place back in deck
+    gameState.deck.deck.add(this);
   }
 
   abstract protected void effect(Monster executor, GameState gameState);

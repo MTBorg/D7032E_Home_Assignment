@@ -5,7 +5,7 @@ import java.util.Collections;
 import src.game.cards.store.StoreCard;
 import src.game.factories.StoreCardFactory;
 
-class Deck {
+public class Deck {
   public ArrayList<StoreCard> deck = new ArrayList<StoreCard>();
   public StoreCard[] store = new StoreCard[3];
   private static final int FACEUP_CARDS = 3; //TODO: Reset back to three once cards have been implemented
