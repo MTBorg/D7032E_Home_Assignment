@@ -2,6 +2,7 @@ package src.game.cards.store;
 
 import java.util.Observer;
 import src.game.Card;
+import src.game.Monster;
 
 public abstract class StoreCard extends Card {
   public int cost;
@@ -26,5 +27,5 @@ public abstract class StoreCard extends Card {
   }
 
   //Override this if the card should be executable (discard type)
-  public abstract void execute(Monster monster) {}
+  public void execute(Monster monster) {}
 }

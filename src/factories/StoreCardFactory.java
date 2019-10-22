@@ -15,7 +15,8 @@ public class StoreCardFactory {
   static private final String[] cards = {
     "Alpha Monster",
     "Alien Metabolism",
-    "Armor Plating"
+    "Armor Plating",
+    "Apartment Building"
   };
 
   public StoreCard getCard(String name) throws Exception {

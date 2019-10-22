@@ -236,7 +236,8 @@ public class Game {
               if (deck.store[buy].discard) {
                 //7a. Play "DISCARD" cards immediately
                 // currentMonster.stars += deck.store[buy].effect.stars;
-                deck.store[buy].execute();
+                //TODO: This should take in the entire game state
+                deck.store[buy].execute(currentMonster);
               }
 
               //Draw a new card from the deck to replace the card that was bought
