@@ -149,12 +149,7 @@ public class Game {
         }
 
         // 6c. 3 of a number = victory points
-        for (int num = 1; num < 4; num++) {
-          if (result.containsKey(new Dice(num))) if (
-            result.get(new Dice(num)).intValue() >= 3
-          ) currentMonster.stars +=
-            num + (result.get(new Dice(num)).intValue() - 3);
-        }
+        this.countVictoryPoints(currentMonster, result);
 
         // 6d. claws = attack (if in Tokyo attack everyone, else attack monster in Tokyo)
         Dice aClaw = new Dice(Dice.CLAWS);
@@ -401,6 +396,18 @@ public class Game {
             )
             .split(",");
       }
+    }
+  }
+
+  private void countVictoryPoints(
+    Monster monster,
+    HashMap<Dice, Integer> result
+  ) {
+    // 6c. 3 of a number = victory points
+    for (int num = 1; num < 4; num++) {
+      if (result.containsKey(new Dice(num))) if (
+        result.get(new Dice(num)).intValue() >= 3
+      ) monster.stars += num + (result.get(new Dice(num)).intValue() - 3);
     }
   }
 
