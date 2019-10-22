@@ -10,6 +10,7 @@ import src.game.EventQueue;
 import src.game.events.AttackEvent;
 import src.game.events.DiceRollEvent;
 import src.game.events.Event;
+import src.game.events.GainHealthEvent;
 import src.game.factories.EvolutionCardFactory;
 import src.game.Monster;
 import src.server.Server;
@@ -50,7 +51,7 @@ public class Game {
     while (true) {
       for (int i = 0; i < this.state.monsters.size(); i++) {
         Monster currentMonster = this.state.monsters.get(i);
-        if (currentMonster.currentHealth <= 0) {
+        if (currentMonster.getCurrentHealth() <= 0) {
           currentMonster.inTokyo = false;
           continue;
         }
@@ -102,15 +103,15 @@ public class Game {
         // 6a. Hearts = health (max 10 unless a cord increases it)
         Dice aHeart = new Dice(Dice.HEART);
         if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
-          if (
-            currentMonster.currentHealth +
-              result.get(aHeart).intValue() >=
-              currentMonster.getMaxHealth()
-          ) {
-            currentMonster.currentHealth = currentMonster.getMaxHealth();
-          } else {
-            currentMonster.currentHealth += result.get(aHeart).intValue();
-          }
+          // TODO: Maybe a gain health event shouldn't be added if already at max health
+          this.state.eventQueue.add(
+              new GainHealthEvent(
+                this.state.eventQueue,
+                currentMonster,
+                result.get(aHeart).intValue()
+              )
+            );
+          this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
 
           // 6b. 3 hearts = power-up
           if (result.get(aHeart).intValue() >= 3) {
@@ -192,14 +193,14 @@ public class Game {
                   );
                   this.state.eventQueue.get(this.state.eventQueue.size() - 1)
                     .execute();
-                // this.state.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
+                // this.state.monsters.get(mon).getCurrentHealth() += -totalDamage; //Armor Plating
                 }
 
                 // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
                 String answer = Server.sendMessage(
                   this.state.monsters.get(mon).stream,
                   "ATTACKED:You have " +
-                    this.state.monsters.get(mon).currentHealth +
+                    this.state.monsters.get(mon).getCurrentHealth() +
                     " health left. Do you wish to leave Tokyo? [YES/NO]\n"
                 );
                 if (answer.equalsIgnoreCase("YES")) {
@@ -308,7 +309,7 @@ public class Game {
             }
             System.exit(0);
           }
-          if (this.state.monsters.get(mon).currentHealth > 0) {
+          if (this.state.monsters.get(mon).getCurrentHealth() > 0) {
             alive++;
             aliveMonster = this.state.monsters.get(mon).getName();
           }
@@ -398,7 +399,7 @@ public class Game {
           );
       statusUpdate +=
         "with " +
-          this.state.monsters.get(count).currentHealth +
+          this.state.monsters.get(count).getCurrentHealth() +
           " health, " +
           this.state.monsters.get(count).stars +
           " stars, ";
@@ -414,7 +415,7 @@ public class Game {
     int alive = 0;
     String aliveMonster = "";
     for (int mon = 0; mon < monsters.size(); mon++) {
-      if (monsters.get(mon).currentHealth > 0) {
+      if (monsters.get(mon).getCurrentHealth() > 0) {
         alive++;
         aliveMonster = monsters.get(mon).getName();
       }

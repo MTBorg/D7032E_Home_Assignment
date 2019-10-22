@@ -16,6 +16,6 @@ public class LoseHealthEvent extends Event {
   }
 
   public void execute() {
-    monster.currentHealth -= loss;
+    monster.setCurrentHealth(monster.getCurrentHealth() - loss);
   }
 }

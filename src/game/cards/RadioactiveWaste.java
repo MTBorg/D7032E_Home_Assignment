@@ -2,6 +2,7 @@ package src.game.cards;
 
 import java.util.ArrayList;
 import src.game.cards.EvolutionCard;
+import src.game.events.GainHealthEvent;
 import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
@@ -32,10 +33,13 @@ public class RadioactiveWaste extends EvolutionCard {
       "POWERUP:Receive 2 energy and 1 health\n"
     );
     gigazaur.energy += 2;
-    if (gigazaur.currentHealth + 1 >= gigazaur.getMaxHealth()) {
-      gigazaur.currentHealth = gigazaur.getMaxHealth();
-    } else {
-      gigazaur.currentHealth += 1;
-    }
+    gameState.eventQueue.add(
+      new GainHealthEvent(
+        gameState.eventQueue,
+        executor,
+        gigazaur.getCurrentHealth() + 1
+      )
+    );
+    gameState.eventQueue.get(gameState.eventQueue.size() - 1).execute();
   }
 }

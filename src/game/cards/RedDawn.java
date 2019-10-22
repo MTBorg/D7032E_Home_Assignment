@@ -2,6 +2,7 @@ package src.game.cards;
 
 import java.util.ArrayList;
 import src.game.cards.EvolutionCard;
+import src.game.events.LoseHealthEvent;
 import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
@@ -27,7 +28,15 @@ public class RedDawn extends EvolutionCard {
     );
     for (int mon = 0; mon < gameState.monsters.size(); mon++) {
       if (mon != kong) {
-        gameState.monsters.get(mon).currentHealth += -2;
+        gameState.eventQueue.add(
+          new LoseHealthEvent(
+            gameState.eventQueue,
+            gameState.monsters.get(mon),
+            2
+          )
+        );
+        gameState.eventQueue.get(gameState.eventQueue.size() - 1).execute();
+      // gameState.monsters.get(mon).currentHealth += -2;
       }
     }
   }

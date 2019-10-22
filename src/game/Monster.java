@@ -15,7 +15,7 @@ import src.network.Stream;
 
 public class Monster {
   private final int maxHealth = 10;
-  public int currentHealth = 10;
+  private int currentHealth = 10;
   private final String name;
   public int energy = 0;
   public int stars = 0;
