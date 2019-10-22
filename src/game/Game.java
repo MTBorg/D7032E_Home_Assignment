@@ -233,6 +233,12 @@ public class Game {
             if (currentMonster.buyCard(this.eventQueue, deck.store[buy])) {
               System.out.println("Successfully bought card");
 
+              if (deck.store[buy].discard) {
+                //7a. Play "DISCARD" cards immediately
+                // currentMonster.stars += deck.store[buy].effect.stars;
+                deck.store[buy].execute();
+              }
+
               //Draw a new card from the deck to replace the card that was bought
               deck.store[buy] =
                 null;

@@ -24,4 +24,7 @@ public abstract class StoreCard extends Card {
       ", Effect "
     );
   }
+
+  //Override this if the card should be executable (discard type)
+  public abstract void execute(Monster monster) {}
 }
