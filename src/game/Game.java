@@ -14,19 +14,14 @@ import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
 
 public class Game {
-  private EventQueue eventQueue;
-  private Deck deck;
-  private ArrayList<Monster> monsters;
+  private GameState state;
   private final int VICTORY_STARS = 20;
 
   public Game(ArrayList<Monster> monsters) {
-    this.monsters = monsters;
-    this.deck = new Deck();
-    this.eventQueue = new EventQueue();
-
-    for (Monster monster : monsters) {
+    this.state = new GameState(monsters);
+    for (Monster monster : this.state.monsters) {
       for (Card card : monster.cards) {
-        eventQueue.addObserver(card);
+        this.state.eventQueue.addObserver(card);
       }
     }
   }
@@ -52,8 +47,8 @@ public class Game {
             8. Check victory conditions
         */
     while (true) {
-      for (int i = 0; i < this.monsters.size(); i++) {
-        Monster currentMonster = this.monsters.get(i);
+      for (int i = 0; i < this.state.monsters.size(); i++) {
+        Monster currentMonster = this.state.monsters.get(i);
         if (currentMonster.currentHealth <= 0) {
           currentMonster.inTokyo = false;
           continue;
@@ -87,7 +82,7 @@ public class Game {
           result.put(unique, Collections.frequency(dices, unique));
         }
         String ok = KingTokyoPowerUpServer.sendMessage(
-          this.monsters.get(i).stream,
+          this.state.monsters.get(i).stream,
           "ROLLED:You rolled " + result + " Press [ENTER]\n"
         );
 
@@ -135,7 +130,7 @@ public class Game {
             if (
               powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary
             ) {
-              powerUpCard.executeEffect(this.monsters);
+              powerUpCard.executeEffect(this.state.monsters);
             }
           }
         }
@@ -155,49 +150,52 @@ public class Game {
           // currentMonster.stars +=
           //   currentMonster.cardEffect("starsWhenAttacking"); //Alpha Monster
           if (currentMonster.inTokyo) {
-            for (int mon = 0; mon < this.monsters.size(); mon++) {
+            for (int mon = 0; mon < this.state.monsters.size(); mon++) {
               // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
               int moreDamage = 0;
               int totalDamage = result.get(aClaw).intValue() + moreDamage;
               if (
                 mon != i &&
-                totalDamage > this.monsters.get(mon).cardEffect("armor")
+                totalDamage > this.state.monsters.get(mon).cardEffect("armor")
               ) { //Armor Plating
                 currentMonster.attackMonster(
-                  this.monsters.get(mon),
+                  this.state.monsters.get(mon),
                   totalDamage,
-                  this.eventQueue
+                  this.state.eventQueue
                 );
               }
             }
           } else {
             boolean monsterInTokyo = false;
-            for (int mon = 0; mon < this.monsters.size(); mon++) {
-              if (this.monsters.get(mon).inTokyo) {
+            for (int mon = 0; mon < this.state.monsters.size(); mon++) {
+              if (this.state.monsters.get(mon).inTokyo) {
                 monsterInTokyo = true;
 
                 // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
                 int moreDamage = 0;
                 int totalDamage = result.get(aClaw).intValue() + moreDamage;
-                if (totalDamage > this.monsters.get(mon).cardEffect("armor")) {
+                if (
+                  totalDamage > this.state.monsters.get(mon).cardEffect("armor")
+                ) {
                   currentMonster.attackMonster(
-                    this.monsters.get(mon),
+                    this.state.monsters.get(mon),
                     totalDamage,
-                    this.eventQueue
+                    this.state.eventQueue
                   );
-                  this.eventQueue.get(this.eventQueue.size() - 1).execute();
-                // this.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
+                  this.state.eventQueue.get(this.state.eventQueue.size() - 1)
+                    .execute();
+                // this.state.monsters.get(mon).currentHealth += -totalDamage; //Armor Plating
                 }
 
                 // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
                 String answer = KingTokyoPowerUpServer.sendMessage(
-                  this.monsters.get(mon).stream,
+                  this.state.monsters.get(mon).stream,
                   "ATTACKED:You have " +
-                    this.monsters.get(mon).currentHealth +
+                    this.state.monsters.get(mon).currentHealth +
                     " health left. Do you wish to leave Tokyo? [YES/NO]\n"
                 );
                 if (answer.equalsIgnoreCase("YES")) {
-                  this.monsters.get(mon).inTokyo = false;
+                  this.state.monsters.get(mon).inTokyo = false;
                   monsterInTokyo = false;
                 }
               }
@@ -219,32 +217,37 @@ public class Game {
           "PURCHASE:Do you want to buy any of the cards from the store? (you have " +
             currentMonster.energy +
             " energy) [#/-1]:" +
-            this.deck +
+            this.state.deck +
             "\n";
         boolean validInput = false;
         while (!validInput) {
           String answer = KingTokyoPowerUpServer.sendMessage(
-            this.monsters.get(i).stream,
+            this.state.monsters.get(i).stream,
             msg
           );
           int buy = Integer.parseInt(answer);
           if (buy >= 0 && buy <= 2) {
             //If card was bought Successfully
-            if (currentMonster.buyCard(this.eventQueue, deck.store[buy])) {
+            if (
+              currentMonster.buyCard(
+                this.state.eventQueue,
+                this.state.deck.store[buy]
+              )
+            ) {
               System.out.println("Successfully bought card");
 
-              if (deck.store[buy].discard) {
+              if (this.state.deck.store[buy].discard) {
                 //7a. Play "DISCARD" cards immediately
                 // currentMonster.stars += deck.store[buy].effect.stars; //TODO: Remove this eventually
                 //TODO: This should take in the entire game state
-                deck.store[buy].execute(currentMonster);
+                this.state.deck.store[buy].execute(currentMonster);
               }
 
               //Draw a new card from the deck to replace the card that was bought
-              deck.store[buy] =
+              this.state.deck.store[buy] =
                 null;
-              if (deck.deck.size() != 0) {
-                deck.store[buy] = deck.deck.remove(0);
+              if (this.state.deck.deck.size() != 0) {
+                this.state.deck.store[buy] = this.state.deck.deck.remove(0);
               } else {
                 //TODO: This should not happen
                 System.out.println("Out of cards");
@@ -303,43 +306,45 @@ public class Game {
         }
 
         //8. Check victory conditions
-        // String winner = checkVictoryConditionsStar(this.monsters);
+        // String winner = checkVictoryConditionsStar(this.state.monsters);
         // if (winner != ""){
-        // for(int player=0; player<this.monsters.size(); player++) {
+        // for(int player=0; player<this.state.monsters.size(); player++) {
         // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
         // }
         //     System.exit(0);
         // }
-        // winner = checkVictoryConditionsAlive(this.monsters);
+        // winner = checkVictoryConditionsAlive(this.state.monsters);
         // if (winner != ""){
-        // for(int player=0; player<this.monsters.size(); player++) {
+        // for(int player=0; player<this.state.monsters.size(); player++) {
         // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
         // }
         //     System.exit(0);
         // }
         int alive = 0;
         String aliveMonster = "";
-        for (int mon = 0; mon < this.monsters.size(); mon++) {
-          if (this.monsters.get(mon).stars >= 20) {
-            for (int victory = 0; victory < this.monsters.size(); victory++) {
+        for (int mon = 0; mon < this.state.monsters.size(); mon++) {
+          if (this.state.monsters.get(mon).stars >= 20) {
+            for (int victory = 0; victory <
+              this.state.monsters.size(); victory++) {
               String victoryByStars = KingTokyoPowerUpServer.sendMessage(
-                this.monsters.get(victory).stream,
+                this.state.monsters.get(victory).stream,
                 "Victory: " +
-                  this.monsters.get(mon).name +
+                  this.state.monsters.get(mon).name +
                   " has won by stars\n"
               );
             }
             System.exit(0);
           }
-          if (this.monsters.get(mon).currentHealth > 0) {
+          if (this.state.monsters.get(mon).currentHealth > 0) {
             alive++;
-            aliveMonster = this.monsters.get(mon).name;
+            aliveMonster = this.state.monsters.get(mon).name;
           }
         }
         if (alive == 1) {
-          for (int victory = 0; victory < this.monsters.size(); victory++) {
+          for (int victory = 0; victory <
+            this.state.monsters.size(); victory++) {
             String victoryByKills = KingTokyoPowerUpServer.sendMessage(
-              this.monsters.get(victory).stream,
+              this.state.monsters.get(victory).stream,
               "Victory: " +
                 aliveMonster +
                 " has won by being the only one alive\n"
@@ -399,21 +404,21 @@ public class Game {
     for (int count = 0; count < 3; count++) {
       statusUpdate +=
         ":" +
-          this.monsters.get(count).name +
+          this.state.monsters.get(count).name +
           (
-            this.monsters.get(count).inTokyo ? " is in Tokyo "
+            this.state.monsters.get(count).inTokyo ? " is in Tokyo "
               : " is not in Tokyo "
           );
       statusUpdate +=
         "with " +
-          this.monsters.get(count).currentHealth +
+          this.state.monsters.get(count).currentHealth +
           " health, " +
-          this.monsters.get(count).stars +
+          this.state.monsters.get(count).stars +
           " stars, ";
       statusUpdate +=
-        this.monsters.get(count).energy +
+        this.state.monsters.get(count).energy +
           " energy, and owns the following cards:";
-      statusUpdate += this.monsters.get(count).cardsToString();
+      statusUpdate += this.state.monsters.get(count).cardsToString();
     }
     KingTokyoPowerUpServer.sendMessage(recipient.stream, statusUpdate + "\n");
   }
