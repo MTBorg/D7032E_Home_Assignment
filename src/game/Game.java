@@ -143,7 +143,7 @@ public class Game {
             if (
               powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary
             ) {
-              powerUpCard.executeEffect(this.state.monsters);
+              powerUpCard.executeEffect(this.state, currentMonster);
             }
           }
         }

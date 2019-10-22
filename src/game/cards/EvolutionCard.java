@@ -2,6 +2,7 @@ package src.game.cards;
 
 import java.util.ArrayList;
 import src.game.Card;
+import src.game.GameState;
 import src.game.Monster;
 
 public abstract class EvolutionCard extends Card {
@@ -28,5 +29,5 @@ public abstract class EvolutionCard extends Card {
     return this.duration;
   }
 
-  public abstract void executeEffect(ArrayList<Monster> monsters);
+  public abstract void executeEffect(GameState gameState, Monster executor);
 }

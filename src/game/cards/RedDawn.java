@@ -2,6 +2,7 @@ package src.game.cards;
 
 import java.util.ArrayList;
 import src.game.cards.EvolutionCard;
+import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
@@ -11,22 +12,22 @@ public class RedDawn extends EvolutionCard {
     super("Red Dawn", "Kong", EvolutionCard.CardDuration.Permanent);
   }
 
-  public void executeEffect(ArrayList<Monster> monsters) {
+  public void executeEffect(GameState gameState, Monster executor) {
     System.out.println("Played red dawn");
     int kong = 0;
-    for (int i = 0; i < monsters.size(); i++) {
-      if (monsters.get(i).getName() == this.getMonster()) {
+    for (int i = 0; i < gameState.monsters.size(); i++) {
+      if (gameState.monsters.get(i).getName() == this.getMonster()) {
         kong = i;
         break;
       }
     }
     String power = Server.sendMessage(
-      monsters.get(kong).stream,
+      gameState.monsters.get(kong).stream,
       "POWERUP:Deal 2 damage to all others\n"
     );
-    for (int mon = 0; mon < monsters.size(); mon++) {
+    for (int mon = 0; mon < gameState.monsters.size(); mon++) {
       if (mon != kong) {
-        monsters.get(mon).currentHealth += -2;
+        gameState.monsters.get(mon).currentHealth += -2;
       }
     }
   }
