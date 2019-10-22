@@ -240,7 +240,7 @@ public class Game {
                 //7a. Play "DISCARD" cards immediately
                 // currentMonster.stars += deck.store[buy].effect.stars; //TODO: Remove this eventually
                 //TODO: This should take in the entire game state
-                this.state.deck.store[buy].execute(currentMonster);
+                this.state.deck.store[buy].execute(currentMonster, this.state);
               }
 
               //Draw a new card from the deck to replace the card that was bought
