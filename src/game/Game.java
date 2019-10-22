@@ -105,9 +105,9 @@ public class Game {
           if (
             currentMonster.currentHealth +
               result.get(aHeart).intValue() >=
-              currentMonster.maxHealth
+              currentMonster.getMaxHealth()
           ) {
-            currentMonster.currentHealth = currentMonster.maxHealth;
+            currentMonster.currentHealth = currentMonster.getMaxHealth();
           } else {
             currentMonster.currentHealth += result.get(aHeart).intValue();
           }

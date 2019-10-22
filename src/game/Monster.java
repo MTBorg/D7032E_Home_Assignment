@@ -14,7 +14,7 @@ import src.game.events.Event;
 import src.network.Stream;
 
 public class Monster {
-  public int maxHealth = 10;
+  private final int maxHealth = 10;
   public int currentHealth = 10;
   private final String name;
   public int energy = 0;
@@ -95,7 +95,11 @@ public class Monster {
     return eventQueue.get(eventQueue.size() - 1) instanceof BuyEvent;
   }
 
-	public String getName(){
-		return this.name;
-	}
+  public String getName() {
+    return this.name;
+  }
+
+  public int getMaxHealth() {
+    return this.maxHealth;
+  }
 }

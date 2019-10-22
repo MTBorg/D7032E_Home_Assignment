@@ -31,8 +31,8 @@ public class RadioactiveWaste extends EvolutionCard {
       "POWERUP:Receive 2 energy and 1 health\n"
     );
     gigazaur.energy += 2;
-    if (gigazaur.currentHealth + 1 >= gigazaur.maxHealth) {
-      gigazaur.currentHealth = gigazaur.maxHealth;
+    if (gigazaur.currentHealth + 1 >= gigazaur.getMaxHealth()) {
+      gigazaur.currentHealth = gigazaur.getMaxHealth();
     } else {
       gigazaur.currentHealth += 1;
     }
