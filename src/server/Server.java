@@ -95,4 +95,15 @@ public class Server {
   public static void sendOneWayMessage(Stream stream, String message) {
     stream.writeBytes("Message:" + message);
   }
+
+  public static void broadCastMessage(String message, Monster exception) {
+    for (Monster monster : Server.monsters) {
+      if (exception != null) {
+        if (monster == exception) {
+          continue; //Don't write to the exception
+        }
+      }
+      sendOneWayMessage(monster.stream, message);
+    }
+  }
 }
