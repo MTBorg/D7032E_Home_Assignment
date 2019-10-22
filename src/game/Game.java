@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import src.events.AttackEvent;
-import src.events.Event;
 import src.factories.EvolutionCardFactory;
 import src.game.cards.*;
 import src.game.Deck;
 import src.game.EventQueue;
+import src.game.events.AttackEvent;
+import src.game.events.Event;
 import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
 

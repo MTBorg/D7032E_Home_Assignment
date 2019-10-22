@@ -2,13 +2,11 @@ package src.game.cards.store;
 
 import java.util.Observable;
 import java.util.Observer;
-import src.events.AttackEvent;
-import src.events.BuyRequestEvent;
-import src.events.Event;
-import src.events.LoseHealthEvent;
 import src.game.cards.store.StoreCard;
 import src.game.Effect;
 import src.game.EventQueue;
+import src.game.events.BuyRequestEvent;
+import src.game.events.Event;
 import src.server.KingTokyoPowerUpServer;
 
 public class AlienMetabolism extends StoreCard implements Observer {
@@ -34,7 +32,7 @@ public class AlienMetabolism extends StoreCard implements Observer {
             buyRequestEvent.getBuyer().name +
             " does not have Alien Metabolism"
         ); //TODO: Remove this eventually
-      } 
+      }
     }
   }
 }

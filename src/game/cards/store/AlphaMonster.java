@@ -2,9 +2,9 @@ package src.game.cards.store;
 
 import java.util.Observable;
 import java.util.Observer;
-import src.events.AttackEvent;
-import src.events.Event;
-import src.events.LoseHealthEvent;
+import src.game.events.AttackEvent;
+import src.game.events.Event;
+import src.game.events.LoseHealthEvent;
 import src.game.cards.store.StoreCard;
 import src.game.Effect;
 import src.game.EventQueue;

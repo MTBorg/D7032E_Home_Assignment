@@ -2,7 +2,7 @@ package src.game;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import src.events.Event;
+import src.game.events.Event;
 
 public class EventQueue extends Observable {
   private ArrayList<Event> queue;

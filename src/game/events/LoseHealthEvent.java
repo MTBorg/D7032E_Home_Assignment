@@ -1,8 +1,8 @@
-package src.events;
+package src.game.events;
 
 import java.util.ArrayList;
-import src.events.Event;
 import src.game.EventQueue;
+import src.game.events.Event;
 import src.game.Monster;
 
 public class LoseHealthEvent extends Event {

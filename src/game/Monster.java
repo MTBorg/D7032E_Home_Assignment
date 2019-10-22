@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import src.events.AttackEvent;
-import src.events.BuyEvent;
-import src.events.BuyRequestEvent;
-import src.events.Event;
 import src.game.cards.store.AlphaMonster;
 import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
+import src.game.events.AttackEvent;
+import src.game.events.BuyEvent;
+import src.game.events.BuyRequestEvent;
+import src.game.events.Event;
 import src.network.Stream;
 
 public class Monster {

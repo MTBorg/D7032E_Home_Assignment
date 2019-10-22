@@ -2,11 +2,11 @@ package src.game.cards.store;
 
 import java.util.Observable;
 import java.util.Observer;
-import src.events.AttackEvent;
-import src.events.Event;
 import src.game.cards.store.StoreCard;
 import src.game.Effect;
 import src.game.EventQueue;
+import src.game.events.AttackEvent;
+import src.game.events.Event;
 import src.server.KingTokyoPowerUpServer;
 
 public class ArmorPlating extends StoreCard implements Observer {

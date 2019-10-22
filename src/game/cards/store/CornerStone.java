@@ -2,7 +2,6 @@ package src.game.cards.store;
 
 import java.util.Observable;
 import java.util.Observer;
-import src.events.Event;
 import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.game.Monster;

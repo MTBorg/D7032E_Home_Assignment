@@ -1,4 +1,4 @@
-package src.events;
+package src.game.events;
 
 import src.game.EventQueue;
 
