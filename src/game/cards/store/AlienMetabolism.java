@@ -33,8 +33,8 @@ public class AlienMetabolism extends StoreCard implements Observer {
           "buyer " +
             buyRequestEvent.getBuyer().name +
             " does not have Alien Metabolism"
-        );
-      }
+        ); //TODO: Remove this eventually
+      } 
     }
   }
 }

@@ -8,17 +8,17 @@ import src.game.EventQueue;
 import src.game.Monster;
 import src.server.KingTokyoPowerUpServer;
 
-public class ApartmentBuilding extends StoreCard implements Observer {
+public class ApartmentBuilding extends DiscardCard implements Observer {
 
   public ApartmentBuilding() {
-    super("Apartment Building", 5, true);
+    super("Apartment Building", 5);
   }
 
   @Override
   public void update(Observable queue, Object event) {}
 
   @Override
-  public void execute(Monster monster) {
+  protected void effect(Monster monster) {
     KingTokyoPowerUpServer.sendOneWayMessage(
       monster.stream,
       "Message: You used the card " +
@@ -26,7 +26,5 @@ public class ApartmentBuilding extends StoreCard implements Observer {
         " and were rewarded three stars!\n"
     ); //TODO: Remove this eventually
     monster.stars += 3;
-
-    monster.removeCard(this);
   }
 }

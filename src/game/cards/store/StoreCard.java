@@ -21,7 +21,7 @@ public abstract class StoreCard extends Card {
       ", Cost " +
       cost +
       ", " +
-      (discard ? "DISCARD" : "KEEP") +
+      (this.discard ? "DISCARD" : "KEEP") +
       ", Effect "
     );
   }
