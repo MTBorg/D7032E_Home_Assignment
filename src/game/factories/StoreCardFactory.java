@@ -18,7 +18,8 @@ public class StoreCardFactory {
     "Armor Plating",
     "Apartment Building",
     "Commuter Train",
-    "Corner Stone"
+    "Corner Stone",
+    "Complete Destruction"
   };
 
   public StoreCard getCard(String name) throws Exception {
