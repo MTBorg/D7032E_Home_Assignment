@@ -235,7 +235,7 @@ public class Game {
 
               if (deck.store[buy].discard) {
                 //7a. Play "DISCARD" cards immediately
-                // currentMonster.stars += deck.store[buy].effect.stars;
+                // currentMonster.stars += deck.store[buy].effect.stars; //TODO: Remove this eventually
                 //TODO: This should take in the entire game state
                 deck.store[buy].execute(currentMonster);
               }
