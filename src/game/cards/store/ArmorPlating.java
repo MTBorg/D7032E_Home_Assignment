@@ -20,15 +20,17 @@ public class ArmorPlating extends StoreCard implements Observer {
     Event e = (Event) event;
     if (e instanceof AttackEvent) {
       AttackEvent attackEvent = (AttackEvent) e;
-      if (attackEvent.getAttacked().hasCard(this.name)) {
+      if (attackEvent.getAttacked().hasCard(this.getName())) {
         System.out.println(
-          attackEvent.getAttacked().name + " Applied card: " + this.name
+          attackEvent.getAttacked().getName() +
+            " Applied card: " +
+            this.getName()
         ); //TODO: Remove this eventually
         attackEvent.damage -= 1; //Ignore damage of 1.
       } else {
         System.out.println(
           "attacked " +
-            attackEvent.getAttacked().name +
+            attackEvent.getAttacked().getName() +
             " does not have Armor Plating"
         ); //TODO: Remove this eventually
       }

@@ -15,7 +15,7 @@ public class AlienScourge extends EvolutionCard {
     System.out.println("Played " + this.getName());
     int alienoid = 0;
     for (int i = 0; i < monsters.size(); i++) {
-      if (monsters.get(i).name == this.getMonster()) {
+      if (monsters.get(i).getName() == this.getMonster()) {
         alienoid = i;
         break;
       }

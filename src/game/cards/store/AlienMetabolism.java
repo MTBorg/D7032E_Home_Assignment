@@ -20,15 +20,17 @@ public class AlienMetabolism extends StoreCard implements Observer {
     Event e = (Event) event;
     if (e instanceof BuyRequestEvent) {
       BuyRequestEvent buyRequestEvent = (BuyRequestEvent) e;
-      if (buyRequestEvent.getBuyer().hasCard(this.name)) {
+      if (buyRequestEvent.getBuyer().hasCard(this.getName())) {
         System.out.println(
-          buyRequestEvent.getBuyer().name + " Applied card: " + this.name
+          buyRequestEvent.getBuyer().getName() +
+            " Applied card: " +
+            this.getName()
         ); //TODO: Remove this eventually
         buyRequestEvent.cost -= 1; //Buying cards costs you 1 less [Energy].
       } else {
         System.out.println(
           "buyer " +
-            buyRequestEvent.getBuyer().name +
+            buyRequestEvent.getBuyer().getName() +
             " does not have Alien Metabolism"
         ); //TODO: Remove this eventually
       }

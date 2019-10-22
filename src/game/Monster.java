@@ -16,7 +16,7 @@ import src.network.Stream;
 public class Monster {
   public int maxHealth = 10;
   public int currentHealth = 10;
-  public String name;
+  private final String name;
   public int energy = 0;
   public int stars = 0;
   public boolean inTokyo = false;
@@ -94,4 +94,8 @@ public class Monster {
     buyRequestEvent.execute();
     return eventQueue.get(eventQueue.size() - 1) instanceof BuyEvent;
   }
+
+	public String getName(){
+		return this.name;
+	}
 }

@@ -19,7 +19,7 @@ public class RadioactiveWaste extends EvolutionCard {
     System.out.println("Played radioactive waste");
     int gigazaur_index = 0;
     for (int i = 0; i < monsters.size(); i++) {
-      if (monsters.get(i).name == this.getMonster()) {
+      if (monsters.get(i).getName() == this.getMonster()) {
         gigazaur_index = i;
         break;
       }

@@ -29,9 +29,9 @@ public class CompleteDestruction extends StoreCard implements Observer {
       }
       if (correctInput) {
         System.out.println(
-          rollEvent.getRoller().name +
+          rollEvent.getRoller().getName() +
             " applied card " +
-            this.name +
+            this.getName() +
             " and was awarded 9 stars"
         );
         rollEvent.getRoller().stars += 9;

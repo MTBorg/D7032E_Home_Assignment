@@ -26,8 +26,11 @@ public class BuyEvent extends Event {
         "\" for " +
         this.cost +
         " energy\n";
-    Server.broadCastMessage("Player " + this.buyer.name + message, this.buyer); // Send to other players
-    System.out.println("Player " + this.buyer.name + message); // Print on server
+    Server.broadCastMessage(
+      "Player " + this.buyer.getName() + message,
+      this.buyer
+    ); // Send to other players
+    System.out.println("Player " + this.buyer.getName() + message); // Print on server
     Server.sendOneWayMessage(this.buyer.stream, "You " + message); // Send to buyer
 
     this.buyer.giveCard(card);

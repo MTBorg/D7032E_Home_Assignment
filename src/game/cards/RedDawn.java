@@ -15,7 +15,7 @@ public class RedDawn extends EvolutionCard {
     System.out.println("Played red dawn");
     int kong = 0;
     for (int i = 0; i < monsters.size(); i++) {
-      if (monsters.get(i).name == this.getMonster()) {
+      if (monsters.get(i).getName() == this.getMonster()) {
         kong = i;
         break;
       }

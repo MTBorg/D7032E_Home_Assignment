@@ -2,12 +2,12 @@ package src.game.cards.store;
 
 import java.util.Observable;
 import java.util.Observer;
-import src.game.events.AttackEvent;
-import src.game.events.Event;
-import src.game.events.LoseHealthEvent;
 import src.game.cards.store.StoreCard;
 import src.game.Effect;
 import src.game.EventQueue;
+import src.game.events.AttackEvent;
+import src.game.events.Event;
+import src.game.events.LoseHealthEvent;
 import src.server.Server;
 
 public class AlphaMonster extends StoreCard implements Observer {
@@ -22,15 +22,17 @@ public class AlphaMonster extends StoreCard implements Observer {
     Event e = (Event) event;
     if (e instanceof AttackEvent) {
       AttackEvent attackEvent = (AttackEvent) e;
-      if (attackEvent.getAttacker().hasCard(this.name)) {
+      if (attackEvent.getAttacker().hasCard(this.getName())) {
         System.out.println(
-          attackEvent.getAttacker().name + " Applied card: " + this.name
+          attackEvent.getAttacker().getName() +
+            " Applied card: " +
+            this.getName()
         ); //TODO: Remove this eventually
         attackEvent.getAttacker().stars++; //Gain 1[Star] when you attack.
       } else {
         System.out.println(
           "Attacker " +
-            attackEvent.getAttacker().name +
+            attackEvent.getAttacker().getName() +
             " does not have AlphaMonster"
         );
       }

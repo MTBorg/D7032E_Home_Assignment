@@ -20,7 +20,7 @@ public class BuyRequestEvent extends Event {
 
   public void execute() {
     System.out.println(
-      this.buyer.name +
+      this.buyer.getName() +
         " wants to buy card " +
         this.card.getName() +
         " for " +

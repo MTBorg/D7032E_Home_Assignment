@@ -76,11 +76,13 @@ public class Server {
       Stream stream = new Stream(connectionSocket);
 
       stream.writeBytes(
-        " You are the monster: " + monsters.get(onlineClient).name + "\n"
+        " You are the monster: " + monsters.get(onlineClient).getName() + "\n"
       );
       monsters.get(onlineClient).stream = stream;
 
-      System.out.println("Connected to " + monsters.get(onlineClient).name);
+      System.out.println(
+        "Connected to " + monsters.get(onlineClient).getName()
+      );
     }
   }
 

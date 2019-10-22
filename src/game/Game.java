@@ -120,7 +120,7 @@ public class Game {
             //Add support for keeping it secret until played
             EvolutionCardFactory factory = new EvolutionCardFactory();
             String card = "";
-            switch (currentMonster.name) {
+            switch (currentMonster.getName()) {
               case "Kong":
                 card = "Red Dawn";
                 break;
@@ -268,47 +268,6 @@ public class Game {
               );
               validInput = false;
             }
-          //if (
-          //  (
-          //    currentMonster.energy >=
-          //    (
-          //      deck.store[buy].cost -
-          //      currentMonster.cardEffect("cardsCostLess")
-          //    )
-          //  )
-          //) {
-          //  System.out.println(
-          //    "Alien Metabolism " + currentMonster.cardEffect("cardsCostLess")
-          //  );
-          //  //Alien Metabolism
-          //  if (deck.store[buy].discard) {
-          //    //7a. Play "DISCARD" cards immediately
-          //  // currentMonster.stars += deck.store[buy].effect.stars;
-          //  } else {
-          //    Card card = deck.store[buy];
-          //    currentMonster.cards.add(card);
-          //    eventQueue.addObserver(card);
-          //  }
-          //  //Deduct the cost of the card from energy
-          //  currentMonster.energy += -(
-          //      deck.store[buy].cost -
-          //      currentMonster.cardEffect("cardsCostLess")
-          //    ); //Alient Metabolism
-          //  //Draw a new card from the deck to replace the card that was bought
-          //  if (deck.deck.size() != 0) {
-          //    deck.store[buy] = deck.deck.remove(0);
-          //  } else {
-          //    //TODO: This should not happen
-          //    System.out.println("Out of cards");
-          //  // System.exit(0);
-          //  }
-          //  validInput = true;
-          //} else {
-          //  Server.sendOneWayMessage(
-          //    currentMonster.stream,
-          //    "You cannot afford that item \n"
-          //  );
-          //}
           } else if (buy > 2) {
             Server.sendOneWayMessage(
               currentMonster.stream,
@@ -343,7 +302,7 @@ public class Game {
               String victoryByStars = Server.sendMessage(
                 this.state.monsters.get(victory).stream,
                 "Victory: " +
-                  this.state.monsters.get(mon).name +
+                  this.state.monsters.get(mon).getName() +
                   " has won by stars\n"
               );
             }
@@ -351,7 +310,7 @@ public class Game {
           }
           if (this.state.monsters.get(mon).currentHealth > 0) {
             alive++;
-            aliveMonster = this.state.monsters.get(mon).name;
+            aliveMonster = this.state.monsters.get(mon).getName();
           }
         }
         if (alive == 1) {
@@ -415,7 +374,7 @@ public class Game {
     //8. Check victory conditions
     for (int mon = 0; mon < monsters.size(); mon++) {
       if (monsters.get(mon).stars >= VICTORY_STARS) {
-        return monsters.get(mon).name;
+        return monsters.get(mon).getName();
       }
     }
     return "";
@@ -426,11 +385,13 @@ public class Game {
     ArrayList<Monster> monsters
   ) {
     String statusUpdate =
-      "You are " + recipient.name + " and it is your turn. Here are the stats";
+      "You are " +
+        recipient.getName() +
+        " and it is your turn. Here are the stats";
     for (int count = 0; count < 3; count++) {
       statusUpdate +=
         ":" +
-          this.state.monsters.get(count).name +
+          this.state.monsters.get(count).getName() +
           (
             this.state.monsters.get(count).inTokyo ? " is in Tokyo "
               : " is not in Tokyo "
@@ -455,7 +416,7 @@ public class Game {
     for (int mon = 0; mon < monsters.size(); mon++) {
       if (monsters.get(mon).currentHealth > 0) {
         alive++;
-        aliveMonster = monsters.get(mon).name;
+        aliveMonster = monsters.get(mon).getName();
       }
     }
     return alive == 1 ? aliveMonster : "";
