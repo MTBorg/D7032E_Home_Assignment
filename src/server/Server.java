@@ -30,7 +30,7 @@ public class Server {
   }
 
   private static ArrayList<Monster> monsters = new ArrayList<Monster>();
-  private static final int PLAYER_AMOUNT = 2; //TODO: Change this back to two
+  private static final int PLAYER_AMOUNT = 2;
   private static final int SERVER_SOCKET = 2048;
 
   public static void start() {

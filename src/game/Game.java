@@ -109,9 +109,6 @@ public class Game {
         // 6d. claws = attack (if in Tokyo attack everyone, else attack monster in Tokyo)
         Dice aClaw = new Dice(Dice.CLAWS);
         if (result.containsKey(aClaw)) {
-          // TODO: Remove this comment once card mechanism has been fixed
-          // currentMonster.stars +=
-          //   currentMonster.cardEffect("starsWhenAttacking"); //Alpha Monster
           if (currentMonster.inTokyo) {
             for (int mon = 0; mon < this.state.monsters.size(); mon++) {
               // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
@@ -201,8 +198,6 @@ public class Game {
 
               if (this.state.deck.store[buy].discard) {
                 //7a. Play "DISCARD" cards immediately
-                // currentMonster.stars += deck.store[buy].effect.stars; //TODO: Remove this eventually
-                //TODO: This should take in the entire game state
                 this.state.deck.store[buy].execute(currentMonster, this.state);
               }
 

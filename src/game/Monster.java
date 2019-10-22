@@ -23,14 +23,8 @@ public class Monster {
   ArrayList<Card> cards = new ArrayList<Card>();
   public Stream stream;
 
-  // public Socket connection = null;
-  // public BufferedReader inFromClient = null;
-  // public DataOutputStream outToClient = null;
   public Monster(String name) {
     this.name = name;
-  // Always give the player an alphamonster card
-  // TODO: Remove this once card buying functionality has been implemented
-  // cards.add(new AlphaMonster());
   }
 
   // search all available cards and return the effect value of an effect
