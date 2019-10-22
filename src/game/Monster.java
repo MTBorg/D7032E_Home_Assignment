@@ -108,6 +108,6 @@ public class Monster {
   }
 
   public void setCurrentHealth(int amount) {
-    this.currentHealth = amount;
+    this.currentHealth = amount > this.maxHealth ? this.maxHealth : amount;
   }
 }
