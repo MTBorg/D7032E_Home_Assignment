@@ -101,53 +101,7 @@ public class Game {
         );
 
         // 6a. Hearts = health (max 10 unless a cord increases it)
-        Dice aHeart = new Dice(Dice.HEART);
-        if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
-          // TODO: Maybe a gain health event shouldn't be added if already at max health
-          this.state.eventQueue.add(
-              new GainHealthEvent(
-                this.state.eventQueue,
-                currentMonster,
-                result.get(aHeart).intValue()
-              )
-            );
-          this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
-
-          // 6b. 3 hearts = power-up
-          if (result.get(aHeart).intValue() >= 3) {
-            // Deal a power-up card to the currentMonster
-            //Todo: Add support for more cards.
-            //Current support is only for the Red Dawn card
-            //Add support for keeping it secret until played
-            EvolutionCardFactory factory = new EvolutionCardFactory();
-            String card = "";
-            switch (currentMonster.getName()) {
-              case "Kong":
-                card = "Red Dawn";
-                break;
-              case "Gigazaur":
-                card = "Radioactive Waste";
-                break;
-              case "Alienoid":
-                card = "Alien Scourge";
-                break;
-            }
-
-            // Get a card from the factory and execute it's effect
-            EvolutionCard powerUpCard = null;
-            try {
-              powerUpCard = factory.getCard(card);
-            } catch (Exception e) {
-              System.out.println(e);
-              System.exit(0);
-            }
-            if (
-              powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary
-            ) {
-              powerUpCard.executeEffect(this.state, currentMonster);
-            }
-          }
-        }
+        countHearts(currentMonster, result);
 
         // 6c. 3 of a number = victory points
         this.countVictoryPoints(currentMonster, result);
@@ -368,6 +322,55 @@ public class Game {
       if (result.containsKey(new Dice(num))) if (
         result.get(new Dice(num)).intValue() >= 3
       ) monster.stars += num + (result.get(new Dice(num)).intValue() - 3);
+    }
+  }
+
+  private void countHearts(Monster monster, HashMap<Dice, Integer> result) {
+    // 6a. Hearts = health (max 10 unless a cord increases it)
+    Dice aHeart = new Dice(Dice.HEART);
+    if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
+      // TODO: Maybe a gain health event shouldn't be added if already at max health
+      this.state.eventQueue.add(
+          new GainHealthEvent(
+            this.state.eventQueue,
+            monster,
+            result.get(aHeart).intValue()
+          )
+        );
+      this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
+
+      // 6b. 3 hearts = power-up
+      if (result.get(aHeart).intValue() >= 3) {
+        // Deal a power-up card to the currentMonster
+        //Todo: Add support for more cards.
+        //Current support is only for the Red Dawn card
+        //Add support for keeping it secret until played
+        EvolutionCardFactory factory = new EvolutionCardFactory();
+        String card = "";
+        switch (monster.getName()) {
+          case "Kong":
+            card = "Red Dawn";
+            break;
+          case "Gigazaur":
+            card = "Radioactive Waste";
+            break;
+          case "Alienoid":
+            card = "Alien Scourge";
+            break;
+        }
+
+        // Get a card from the factory and execute it's effect
+        EvolutionCard powerUpCard = null;
+        try {
+          powerUpCard = factory.getCard(card);
+        } catch (Exception e) {
+          System.out.println(e);
+          System.exit(0);
+        }
+        if (powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary) {
+          powerUpCard.executeEffect(this.state, monster);
+        }
+      }
     }
   }
 
