@@ -8,6 +8,7 @@ import src.game.cards.*;
 import src.game.Deck;
 import src.game.EventQueue;
 import src.game.events.AttackEvent;
+import src.game.events.DiceRollEvent;
 import src.game.events.Event;
 import src.game.factories.EvolutionCardFactory;
 import src.game.Monster;
@@ -62,18 +63,30 @@ public class Game {
         // 1. Roll 6 dices
         ArrayList<Dice> dices = new ArrayList<Dice>();
         dices = Dice.diceRoll(6);
+        this.state.eventQueue.add(
+            new DiceRollEvent(this.state.eventQueue, currentMonster, dices)
+          );
+        this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
 
         // 2. Decide which dice to keep
         keepDices(dices, currentMonster);
 
         // 3. Reroll remaining dice
         dices.addAll(Dice.diceRoll(6 - dices.size()));
+        this.state.eventQueue.add(
+            new DiceRollEvent(this.state.eventQueue, currentMonster, dices)
+          );
+        this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
 
         // 4. Decide which dice to keep
         keepDices(dices, currentMonster);
 
         // 5. Reroll remaining dice
         dices.addAll(Dice.diceRoll(6 - dices.size()));
+        this.state.eventQueue.add(
+            new DiceRollEvent(this.state.eventQueue, currentMonster, dices)
+          );
+        this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
 
         // 6. Sum up totals
         Collections.sort(dices);
