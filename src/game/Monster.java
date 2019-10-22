@@ -102,4 +102,12 @@ public class Monster {
   public int getMaxHealth() {
     return this.maxHealth;
   }
+
+  public int getCurrentHealth() {
+    return this.currentHealth;
+  }
+
+  public void setCurrentHealth(int amount) {
+    this.currentHealth = amount;
+  }
 }
