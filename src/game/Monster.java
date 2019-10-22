@@ -78,6 +78,16 @@ public class Monster {
     this.cards.add(card);
   }
 
+  //TODO: This should maybe return a bool instead
+  // (if the monster does not have the card)
+  public void removeCard(Card card) {
+    for (int i = 0; i < this.cards.size(); i++) {
+      if (this.cards.get(i) == card) {
+        this.cards.remove(i);
+      }
+    }
+  }
+
   public boolean buyCard(EventQueue eventQueue, StoreCard card) {
     Event buyRequestEvent = new BuyRequestEvent(eventQueue, this, card);
     eventQueue.add(buyRequestEvent);
