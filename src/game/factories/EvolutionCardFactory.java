@@ -1,4 +1,4 @@
-package src.factories;
+package src.game.factories;
 
 import java.lang.Exception;
 import src.game.cards.*;

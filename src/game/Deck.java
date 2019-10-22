@@ -2,8 +2,8 @@ package src.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import src.factories.StoreCardFactory;
 import src.game.cards.store.StoreCard;
+import src.game.factories.StoreCardFactory;
 
 class Deck {
   public ArrayList<StoreCard> deck = new ArrayList<StoreCard>();
