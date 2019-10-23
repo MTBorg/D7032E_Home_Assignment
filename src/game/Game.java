@@ -64,6 +64,7 @@ public class Game {
         if (currentMonster.inTokyo) {
           currentMonster.stars += 1;
         }
+        sendStatusMessage(currentMonster, this.state.monsters);
 
         // 1. Roll 6 dices
         ArrayList<Dice> dices = new ArrayList<Dice>();
@@ -396,7 +397,7 @@ public class Game {
       "You are " +
         recipient.getName() +
         " and it is your turn. Here are the stats";
-    for (int count = 0; count < 3; count++) {
+    for (int count = 0; count < monsters.size(); count++) {
       statusUpdate +=
         ":" +
           this.state.monsters.get(count).getName() +
