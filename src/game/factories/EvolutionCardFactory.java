@@ -1,7 +1,9 @@
 package src.game.factories;
 
 import java.lang.Exception;
+import java.util.ArrayList;
 import src.game.cards.evolution.EvolutionCard;
+import src.game.Monster;
 
 public class EvolutionCardFactory {
   static private final String CARD_PATH = "src.game.cards.evolution.";
@@ -32,5 +34,25 @@ public class EvolutionCardFactory {
       }
     }
     throw new Exception("Unimplemented card");
+  }
+
+  public ArrayList<EvolutionCard> getMonsterCards(String monsterName)
+    throws Exception {
+    ArrayList<EvolutionCard> cards = new ArrayList<EvolutionCard>();
+    for (String card : EvolutionCardFactory.cards) {
+      try {
+        //Append the name of the card (stripped of whitespaces) to the CARD_PATH
+        //of the and look for that java file.
+        EvolutionCard evolutionCard = (EvolutionCard) Class
+          .forName(CARD_PATH + card.replaceAll("\\s", ""))
+          .newInstance();
+        if (evolutionCard.getMonster() == monsterName) {
+          cards.add(evolutionCard);
+        }
+      } catch (Exception e) {
+        throw e;
+      }
+    }
+    return cards;
   }
 }

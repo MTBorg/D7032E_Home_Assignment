@@ -341,30 +341,38 @@ public class Game {
         //Todo: Add support for more cards.
         //Current support is only for the Red Dawn card
         //Add support for keeping it secret until played
-        EvolutionCardFactory factory = new EvolutionCardFactory();
-        String card = "";
-        switch (monster.getName()) {
-          case "Kong":
-            card = "Red Dawn";
-            break;
-          case "Gigazaur":
-            card = "Radioactive Waste";
-            break;
-          case "Alienoid":
-            card = "Alien Scourge";
-            break;
-        }
+        // EvolutionCardFactory factory = new EvolutionCardFactory();
+        // String card = "";
+        // switch (monster.getName()) {
+        //   case "Kong":
+        //     card = "Red Dawn";
+        //     break;
+        //   case "Gigazaur":
+        //     card = "Radioactive Waste";
+        //     break;
+        //   case "Alienoid":
+        //     card = "Alien Scourge";
+        //     break;
+        // }
+        // Draw from player's evolution deck
+        EvolutionCard powerUpCard =
+          this.state.deck.evolutionCards.get(monster.getName()).remove(0);
 
         // Get a card from the factory and execute it's effect
-        EvolutionCard powerUpCard = null;
-        try {
-          powerUpCard = factory.getCard(card);
-        } catch (Exception e) {
-          System.out.println(e);
-          System.exit(0);
-        }
+        // EvolutionCard powerUpCard = null;
+        // try {
+        //   powerUpCard = factory.getCard(card);
+        // } catch (Exception e) {
+        //   System.out.println(e);
+        //   System.exit(0);
+        // }
         if (powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary) {
           powerUpCard.executeEffect(this.state, monster);
+
+					// TODO: Placing the card back in the deck should be handled by card
+					// execution itself
+          this.state.deck.evolutionCards.get(monster.getName())
+            .add(powerUpCard);
         }
       }
     }

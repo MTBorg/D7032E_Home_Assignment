@@ -12,7 +12,7 @@ public class GameState {
 
   public GameState(ArrayList<Monster> monsters) {
     this.monsters = monsters;
-    this.deck = new Deck();
+    this.deck = new Deck(monsters);
     this.eventQueue = new EventQueue();
   }
 }

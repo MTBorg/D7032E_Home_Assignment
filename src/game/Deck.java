@@ -2,16 +2,34 @@ package src.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import src.game.cards.evolution.EvolutionCard;
 import src.game.cards.store.StoreCard;
+import src.game.factories.EvolutionCardFactory;
 import src.game.factories.StoreCardFactory;
 
 public class Deck {
   public ArrayList<StoreCard> deck = new ArrayList<StoreCard>();
   public StoreCard[] store = new StoreCard[3];
+  public HashMap<String, ArrayList<EvolutionCard>> evolutionCards;
   private static final int FACEUP_CARDS = 3;
 
-  public Deck() {
+  public Deck(ArrayList<Monster> monsters) {
     this.deck = new StoreCardFactory().getAllCards();
+    EvolutionCardFactory evolutionCardFactory = new EvolutionCardFactory();
+    evolutionCards = new HashMap<String, ArrayList<EvolutionCard>>();
+
+    for (Monster monster : monsters) {
+      try {
+        evolutionCards.put(
+          monster.getName(),
+          evolutionCardFactory.getMonsterCards(monster.getName())
+        );
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
     Collections.shuffle(deck);
 
     // Start the game with 3 cards face up in the store
