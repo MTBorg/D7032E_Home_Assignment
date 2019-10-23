@@ -20,15 +20,6 @@ public class BuyRequestEvent extends Event {
   }
 
   public void execute(GameState gameState) {
-    System.out.println(
-      this.buyer.getName() +
-        " wants to buy card " +
-        this.card.getName() +
-        " for " +
-        this.cost +
-        " energy"
-    ); //TODO: Remove this eventually
-
     if (buyer.energy >= card.cost) {
       this.queue.add(
           new BuyEvent(this.queue, buyer, card, this.cost),

@@ -213,8 +213,6 @@ public class Game {
                 this.state
               )
             ) {
-              System.out.println("Successfully bought card");
-
               if (this.state.deck.store[buy].isDiscardCard()) {
                 //7a. Play "DISCARD" cards immediately
                 ((DiscardCard) this.state.deck.store[buy]).execute(currentMonster, this.state);
