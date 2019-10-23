@@ -29,12 +29,6 @@ public class AlphaMonster extends StoreCard implements Observer {
             this.getName()
         ); //TODO: Remove this eventually
         attackEvent.getAttacker().stars++; //Gain 1[Star] when you attack.
-      } else {
-        System.out.println(
-          "Attacker " +
-            attackEvent.getAttacker().getName() +
-            " does not have AlphaMonster"
-        );
       }
     }
   }

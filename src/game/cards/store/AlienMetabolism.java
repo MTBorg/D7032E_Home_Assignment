@@ -27,12 +27,6 @@ public class AlienMetabolism extends StoreCard implements Observer {
             this.getName()
         ); //TODO: Remove this eventually
         buyRequestEvent.cost -= 1; //Buying cards costs you 1 less [Energy].
-      } else {
-        System.out.println(
-          "buyer " +
-            buyRequestEvent.getBuyer().getName() +
-            " does not have Alien Metabolism"
-        ); //TODO: Remove this eventually
       }
     }
   }

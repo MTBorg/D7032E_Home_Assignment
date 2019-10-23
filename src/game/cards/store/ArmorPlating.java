@@ -27,12 +27,6 @@ public class ArmorPlating extends StoreCard implements Observer {
             this.getName()
         ); //TODO: Remove this eventually
         attackEvent.damage -= 1; //Ignore damage of 1.
-      } else {
-        System.out.println(
-          "attacked " +
-            attackEvent.getAttacked().getName() +
-            " does not have Armor Plating"
-        ); //TODO: Remove this eventually
       }
     }
   }
