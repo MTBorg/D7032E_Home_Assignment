@@ -15,9 +15,10 @@ public class ArmorPlating extends KeepCard implements Observer {
   }
 
   @Override
-  public void update(Observable queue, Object event) {
+  public void update(Observable queue, Object notification) {
     EventQueue eventQueue = (EventQueue) queue;
-    Event e = (Event) event;
+    EventQueue.EventNotification eventNotification = (EventQueue.EventNotification) notification;
+    Event e = eventNotification.event;
     if (e instanceof AttackEvent) {
       AttackEvent attackEvent = (AttackEvent) e;
       if (attackEvent.getAttacked().hasCard(this.getName())) {

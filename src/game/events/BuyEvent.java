@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.game.events.Event;
+import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
@@ -19,7 +20,7 @@ public class BuyEvent extends Event {
     this.cost = cost;
   }
 
-  public void execute() {
+  public void execute(GameState gameState) {
     String message =
       "bought card \"" +
         this.card.getName() +

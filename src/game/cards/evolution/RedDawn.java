@@ -33,9 +33,12 @@ public class RedDawn extends TemporaryEvolutionCard {
             gameState.eventQueue,
             gameState.monsters.get(mon),
             2
-          )
+          ),
+          gameState
         );
-        gameState.eventQueue.get(gameState.eventQueue.size() - 1).execute();
+        gameState
+          .eventQueue.get(gameState.eventQueue.size() - 1)
+          .execute(gameState);
       // gameState.monsters.get(mon).currentHealth += -2;
       }
     }

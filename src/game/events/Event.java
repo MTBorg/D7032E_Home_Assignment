@@ -1,6 +1,7 @@
 package src.game.events;
 
 import src.game.EventQueue;
+import src.game.GameState;
 
 public abstract class Event {
   protected EventQueue queue;
@@ -10,5 +11,5 @@ public abstract class Event {
     this.queue = queue;
   }
 
-  public abstract void execute();
+  public abstract void execute(GameState gameState);
 }

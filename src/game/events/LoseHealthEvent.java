@@ -3,6 +3,7 @@ package src.game.events;
 import java.util.ArrayList;
 import src.game.EventQueue;
 import src.game.events.Event;
+import src.game.GameState;
 import src.game.Monster;
 
 public class LoseHealthEvent extends Event {
@@ -15,7 +16,7 @@ public class LoseHealthEvent extends Event {
     this.loss = loss;
   }
 
-  public void execute() {
+  public void execute(GameState gameState) {
     monster.setCurrentHealth(monster.getCurrentHealth() - loss);
   }
 }

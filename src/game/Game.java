@@ -68,9 +68,11 @@ public class Game {
         ArrayList<Dice> dices = new ArrayList<Dice>();
         dices = Dice.diceRoll(6);
         this.state.eventQueue.add(
-            new DiceRollEvent(this.state.eventQueue, currentMonster, dices)
+            new DiceRollEvent(this.state.eventQueue, currentMonster, dices),
+            this.state
           );
-        this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
+        this.state.eventQueue.get(this.state.eventQueue.size() - 1)
+          .execute(this.state);
 
         // 2. Decide which dice to keep
         keepDices(dices, currentMonster);
@@ -78,9 +80,11 @@ public class Game {
         // 3. Reroll remaining dice
         dices.addAll(Dice.diceRoll(6 - dices.size()));
         this.state.eventQueue.add(
-            new DiceRollEvent(this.state.eventQueue, currentMonster, dices)
+            new DiceRollEvent(this.state.eventQueue, currentMonster, dices),
+            this.state
           );
-        this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
+        this.state.eventQueue.get(this.state.eventQueue.size() - 1)
+          .execute(this.state);
 
         // 4. Decide which dice to keep
         keepDices(dices, currentMonster);
@@ -88,9 +92,11 @@ public class Game {
         // 5. Reroll remaining dice
         dices.addAll(Dice.diceRoll(6 - dices.size()));
         this.state.eventQueue.add(
-            new DiceRollEvent(this.state.eventQueue, currentMonster, dices)
+            new DiceRollEvent(this.state.eventQueue, currentMonster, dices),
+            this.state
           );
-        this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
+        this.state.eventQueue.get(this.state.eventQueue.size() - 1)
+          .execute(this.state);
 
         // 6. Sum up totals
         Collections.sort(dices);
@@ -124,7 +130,8 @@ public class Game {
                 currentMonster.attackMonster(
                   this.state.monsters.get(mon),
                   totalDamage,
-                  this.state.eventQueue
+                  this.state.eventQueue,
+                  this.state
                 );
               }
             }
@@ -143,10 +150,11 @@ public class Game {
                   currentMonster.attackMonster(
                     this.state.monsters.get(mon),
                     totalDamage,
-                    this.state.eventQueue
+                    this.state.eventQueue,
+                    this.state
                   );
                   this.state.eventQueue.get(this.state.eventQueue.size() - 1)
-                    .execute();
+                    .execute(this.state);
                 // this.state.monsters.get(mon).getCurrentHealth() += -totalDamage; //Armor Plating
                 }
 
@@ -194,7 +202,8 @@ public class Game {
             if (
               currentMonster.buyCard(
                 this.state.eventQueue,
-                this.state.deck.store[buy]
+                this.state.deck.store[buy],
+                this.state
               )
             ) {
               System.out.println("Successfully bought card");
@@ -333,9 +342,11 @@ public class Game {
             this.state.eventQueue,
             monster,
             result.get(aHeart).intValue()
-          )
+          ),
+          this.state
         );
-      this.state.eventQueue.get(this.state.eventQueue.size() - 1).execute();
+      this.state.eventQueue.get(this.state.eventQueue.size() - 1)
+        .execute(this.state);
 
       // 6b. 3 hearts = power-up
       if (result.get(aHeart).intValue() >= 3) {

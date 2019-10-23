@@ -34,8 +34,11 @@ public class RadioactiveWaste extends TemporaryEvolutionCard {
         gameState.eventQueue,
         executor,
         gigazaur.getCurrentHealth() + 1
-      )
+      ),
+      gameState
     );
-    gameState.eventQueue.get(gameState.eventQueue.size() - 1).execute();
+    gameState
+      .eventQueue.get(gameState.eventQueue.size() - 1)
+      .execute(gameState);
   }
 }

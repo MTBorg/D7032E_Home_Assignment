@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.game.events.Event;
+import src.game.GameState;
 import src.game.Monster;
 
 public class BuyRequestEvent extends Event {
@@ -18,7 +19,7 @@ public class BuyRequestEvent extends Event {
     this.cost = card.cost;
   }
 
-  public void execute() {
+  public void execute(GameState gameState) {
     System.out.println(
       this.buyer.getName() +
         " wants to buy card " +
@@ -29,8 +30,11 @@ public class BuyRequestEvent extends Event {
     ); //TODO: Remove this eventually
 
     if (buyer.energy >= card.cost) {
-      this.queue.add(new BuyEvent(this.queue, buyer, card, this.cost));
-      this.queue.get(this.queue.size() - 1).execute();
+      this.queue.add(
+          new BuyEvent(this.queue, buyer, card, this.cost),
+          gameState
+        );
+      this.queue.get(this.queue.size() - 1).execute(gameState);
     }
   }
 

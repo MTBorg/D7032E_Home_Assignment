@@ -53,10 +53,14 @@ public class Monster {
   public void attackMonster(
     Monster attacked,
     int damage,
-    EventQueue eventQueue
+    EventQueue eventQueue,
+    GameState gameState
   ) {
-    eventQueue.add(new AttackEvent(eventQueue, this, attacked, damage));
-    eventQueue.get(eventQueue.size() - 1).execute();
+    eventQueue.add(
+      new AttackEvent(eventQueue, this, attacked, damage),
+      gameState
+    );
+    eventQueue.get(eventQueue.size() - 1).execute(gameState);
   }
 
   public boolean hasCard(String cardName) {
@@ -82,10 +86,14 @@ public class Monster {
     }
   }
 
-  public boolean buyCard(EventQueue eventQueue, StoreCard card) {
+  public boolean buyCard(
+    EventQueue eventQueue,
+    StoreCard card,
+    GameState gameState
+  ) {
     Event buyRequestEvent = new BuyRequestEvent(eventQueue, this, card);
-    eventQueue.add(buyRequestEvent);
-    buyRequestEvent.execute();
+    eventQueue.add(buyRequestEvent, gameState);
+    buyRequestEvent.execute(gameState);
     return eventQueue.get(eventQueue.size() - 1) instanceof BuyEvent;
   }
 

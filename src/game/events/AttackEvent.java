@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import src.game.EventQueue;
 import src.game.events.Event;
 import src.game.events.LoseHealthEvent;
+import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
@@ -24,7 +25,7 @@ public class AttackEvent extends Event {
     this.damage = damage;
   }
 
-  public void execute() {
+  public void execute(GameState gameState) {
     Server.sendOneWayMessage(
       attacker.stream,
       "You attacked " + attacked.getName() + " for " + damage + " damage\n"
@@ -37,8 +38,11 @@ public class AttackEvent extends Event {
         damage +
         " damage\n"
     );
-    this.queue.add(new LoseHealthEvent(this.queue, attacked, damage));
-    this.queue.get(this.queue.size() - 1).execute();
+    this.queue.add(
+        new LoseHealthEvent(this.queue, attacked, damage),
+        gameState
+      );
+    this.queue.get(this.queue.size() - 1).execute(gameState);
   }
 
   public Monster getAttacker() {
