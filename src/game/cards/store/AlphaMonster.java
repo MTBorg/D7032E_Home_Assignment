@@ -13,7 +13,7 @@ import src.server.Server;
 public class AlphaMonster extends StoreCard implements Observer {
 
   public AlphaMonster() {
-    super("Alpha Monster", 1, false);
+    super("Alpha Monster", 1);
   }
 
   @Override

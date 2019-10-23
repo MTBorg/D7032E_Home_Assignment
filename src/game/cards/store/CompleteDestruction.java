@@ -14,7 +14,7 @@ import src.server.Server;
 public class CompleteDestruction extends StoreCard implements Observer {
 
   public CompleteDestruction() {
-    super("Complete Destruction", 1, false);
+    super("Complete Destruction", 1);
   }
 
   @Override

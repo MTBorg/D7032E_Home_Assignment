@@ -11,7 +11,7 @@ import src.game.events.Event;
 public class AlienMetabolism extends StoreCard implements Observer {
 
   public AlienMetabolism() {
-    super("Alien Metabolism", 1, false);
+    super("Alien Metabolism", 1);
   }
 
   @Override

@@ -8,10 +8,9 @@ import src.server.Server;
 abstract public class DiscardCard extends StoreCard {
 
   public DiscardCard(String name, int cost) {
-    super(name, cost, true);
+    super(name, cost);
   }
 
-  @Override
   public void execute(Monster executor, GameState gameState) {
     Server.broadCastMessage(
       executor.getName() + " played card " + this.name + "\n",

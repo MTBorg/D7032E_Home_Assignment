@@ -11,7 +11,7 @@ import src.game.events.Event;
 public class ArmorPlating extends StoreCard implements Observer {
 
   public ArmorPlating() {
-    super("Armor Plating", 1, false);
+    super("Armor Plating", 1);
   }
 
   @Override

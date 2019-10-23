@@ -2,17 +2,16 @@ package src.game.cards.store;
 
 import java.util.Observer;
 import src.game.Card;
+import src.game.cards.store.DiscardCard;
 import src.game.GameState;
 import src.game.Monster;
 
 public abstract class StoreCard extends Card {
   public int cost;
-  public boolean discard;
 
-  public StoreCard(String name, int cost, boolean discard) {
+  public StoreCard(String name, int cost) {
     super(name);
     this.cost = cost;
-    this.discard = discard;
   }
 
   public String toString() {
@@ -22,11 +21,12 @@ public abstract class StoreCard extends Card {
       ", Cost " +
       cost +
       ", " +
-      (this.discard ? "DISCARD" : "KEEP") +
+      (this.isDiscardCard() ? "DISCARD" : "KEEP") +
       ", Effect "
     );
   }
 
-  //Override this if the card should be executable (discard type)
-  public void execute(Monster executor, GameState gameState) {}
+  public boolean isDiscardCard() {
+    return this instanceof DiscardCard;
+  }
 }

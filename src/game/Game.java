@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import src.game.cards.*;
 import src.game.cards.evolution.EvolutionCard;
+import src.game.cards.store.DiscardCard;
 import src.game.Deck;
 import src.game.EventQueue;
 import src.game.events.AttackEvent;
@@ -197,9 +198,9 @@ public class Game {
             ) {
               System.out.println("Successfully bought card");
 
-              if (this.state.deck.store[buy].discard) {
+              if (this.state.deck.store[buy].isDiscardCard()) {
                 //7a. Play "DISCARD" cards immediately
-                this.state.deck.store[buy].execute(currentMonster, this.state);
+                ((DiscardCard) this.state.deck.store[buy]).execute(currentMonster, this.state);
               }
 
               //Draw a new card from the deck to replace the card that was bought
@@ -369,10 +370,11 @@ public class Game {
         if (powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary) {
           powerUpCard.executeEffect(this.state, monster);
 
-					// TODO: Placing the card back in the deck should be handled by card
-					// execution itself
-          this.state.deck.evolutionCards.get(monster.getName())
-            .add(powerUpCard);
+          // TODO: Placing the card back in the deck should be handled by card
+          // execution itself
+          this.state.deck.evolutionCards.get(
+              monster.getName()
+            ).add(powerUpCard);
         }
       }
     }
