@@ -21,10 +21,11 @@ public class Deck {
 
     for (Monster monster : monsters) {
       try {
-        evolutionCards.put(
-          monster.getName(),
-          evolutionCardFactory.getMonsterCards(monster.getName())
+        ArrayList<EvolutionCard> cards = evolutionCardFactory.getMonsterCards(
+          monster.getName()
         );
+        Collections.shuffle(cards);
+        evolutionCards.put(monster.getName(), cards);
       } catch (Exception e) {
         e.printStackTrace();
       }
