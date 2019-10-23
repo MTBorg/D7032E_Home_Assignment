@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import src.game.cards.*;
 import src.game.cards.evolution.EvolutionCard;
+import src.game.cards.evolution.TemporaryEvolutionCard;
 import src.game.cards.store.DiscardCard;
 import src.game.Deck;
 import src.game.EventQueue;
@@ -367,8 +368,9 @@ public class Game {
         //   System.out.println(e);
         //   System.exit(0);
         // }
-        if (powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary) {
-          powerUpCard.executeEffect(this.state, monster);
+        // if (powerUpCard.getDuration() == EvolutionCard.CardDuration.Temporary) {
+        if (powerUpCard instanceof TemporaryEvolutionCard) {
+          ((TemporaryEvolutionCard) powerUpCard).execute(monster, this.state);
 
           // TODO: Placing the card back in the deck should be handled by card
           // execution itself

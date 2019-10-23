@@ -1,19 +1,19 @@
 package src.game.cards.evolution;
 
 import java.util.ArrayList;
-import src.game.cards.evolution.EvolutionCard;
+import src.game.cards.evolution.TemporaryEvolutionCard;
 import src.game.events.LoseHealthEvent;
 import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
-public class RedDawn extends EvolutionCard {
+public class RedDawn extends TemporaryEvolutionCard {
 
   public RedDawn() {
-    super("Red Dawn", "Kong", EvolutionCard.CardDuration.Permanent);
+    super("Red Dawn", "Kong");
   }
 
-  public void executeEffect(GameState gameState, Monster executor) {
+  public void effect(Monster executor, GameState gameState) {
     System.out.println("Played red dawn");
     int kong = 0;
     for (int i = 0; i < gameState.monsters.size(); i++) {

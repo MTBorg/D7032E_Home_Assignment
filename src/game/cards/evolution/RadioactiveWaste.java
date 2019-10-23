@@ -7,17 +7,13 @@ import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
-public class RadioactiveWaste extends EvolutionCard {
+public class RadioactiveWaste extends TemporaryEvolutionCard {
 
   public RadioactiveWaste() {
-    super(
-      "Radioactive Waste",
-      "Gigazaur",
-      EvolutionCard.CardDuration.Temporary
-    );
+    super("Radioactive Waste", "Gigazaur");
   }
 
-  public void executeEffect(GameState gameState, Monster executor) {
+  public void effect(Monster executor, GameState gameState) {
     System.out.println("Played radioactive waste");
     int gigazaur_index = 0;
     for (int i = 0; i < gameState.monsters.size(); i++) {
