@@ -16,7 +16,8 @@ public class EvolutionCardFactory {
   static private final String[] cards = {
     "Red Dawn",
     "Radioactive Waste",
-    "Alien Scourge"
+    "Alien Scourge",
+    "Funny Looking But Dangerous"
   };
 
   public EvolutionCard getCard(String name) throws Exception {

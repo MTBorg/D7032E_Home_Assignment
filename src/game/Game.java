@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import src.game.cards.*;
 import src.game.cards.evolution.EvolutionCard;
+import src.game.cards.evolution.PermanentEvolutionCard;
 import src.game.cards.evolution.TemporaryEvolutionCard;
 import src.game.cards.store.DiscardCard;
 import src.game.Deck;
@@ -370,6 +371,16 @@ public class Game {
         // Draw from player's evolution deck
         EvolutionCard powerUpCard =
           this.state.deck.evolutionCards.get(monster.getName()).remove(0);
+        if (powerUpCard instanceof PermanentEvolutionCard) {
+          this.state.eventQueue.addObserver(powerUpCard);
+          monster.giveCard(powerUpCard);
+        }
+        Server.sendOneWayMessage(
+          monster.stream,
+          "You rolled three hearts and received the card " +
+            powerUpCard.getName() +
+            "\n"
+        );
 
         // Get a card from the factory and execute it's effect
         // EvolutionCard powerUpCard = null;
