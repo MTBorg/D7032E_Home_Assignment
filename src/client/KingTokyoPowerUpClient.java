@@ -35,13 +35,7 @@ public class KingTokyoPowerUpClient {
     Random rnd = ThreadLocalRandom.current();
     while (true) {
       String[] message = stream.readLine().split(":");
-      for (int i = 0; i < message.length; i++) {
-        // Don't print message tag
-        // TODO: This is pretty hacky
-        if (i != 0 || !message[0].equalsIgnoreCase("MESSAGE")) {
-          System.out.println(message[i].toString());
-        }
-      }
+      printMessage(message);
       switch (message[0].toUpperCase()) {
         case "VICTORY":
           stream.writeBytes("Bye!\n");
@@ -73,13 +67,7 @@ public class KingTokyoPowerUpClient {
     Random rnd = ThreadLocalRandom.current();
     while (true) {
       String[] message = stream.readLine().split(":");
-      for (int i = 0; i < message.length; i++) {
-        // Don't print message tag
-        // TODO: This is pretty hacky
-        if (i != 0 || !message[0].equalsIgnoreCase("MESSAGE")) {
-          System.out.println(message[i].toString());
-        }
-      }
+      printMessage(message);
       switch (message[0].toUpperCase()) {
         case "VICTORY":
           stream.writeBytes("Bye!\n");
@@ -98,6 +86,16 @@ public class KingTokyoPowerUpClient {
           break;
       }
       System.out.println("\n");
+    }
+  }
+
+  private void printMessage(String[] message) {
+    for (int i = 0; i < message.length; i++) {
+      // Don't print message tag
+      // TODO: This is pretty hacky
+      if (i != 0 || !message[0].equalsIgnoreCase("MESSAGE")) {
+        System.out.println(message[i].toString());
+      }
     }
   }
 
