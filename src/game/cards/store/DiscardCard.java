@@ -12,6 +12,7 @@ abstract public class DiscardCard extends StoreCard {
   }
 
   public void execute(Monster executor, GameState gameState) {
+    // Announce play
     Server.broadCastMessage(
       executor.getName() + " played card " + this.name + "\n",
       executor
@@ -20,10 +21,12 @@ abstract public class DiscardCard extends StoreCard {
       executor.stream,
       "You played card " + this.name + "\n"
     );
-    effect(executor, gameState);
-    executor.removeCard(this);
+    System.out.println(executor.getName() + " played card " + this.name + "\n");
 
-    // Place back in deck
+    effect(executor, gameState); // Play card
+
+    // Remove card from player and place back in deck
+    executor.removeCard(this);
     gameState.deck.deck.add(this);
   }
 
