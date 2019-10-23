@@ -8,7 +8,7 @@ import src.game.EventQueue;
 import src.game.events.AttackEvent;
 import src.game.events.Event;
 
-public class ArmorPlating extends StoreCard implements Observer {
+public class ArmorPlating extends KeepCard implements Observer {
 
   public ArmorPlating() {
     super("Armor Plating", 1);

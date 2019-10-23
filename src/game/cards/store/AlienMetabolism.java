@@ -2,13 +2,13 @@ package src.game.cards.store;
 
 import java.util.Observable;
 import java.util.Observer;
-import src.game.cards.store.StoreCard;
+import src.game.cards.store.KeepCard;
 import src.game.Effect;
 import src.game.EventQueue;
 import src.game.events.BuyRequestEvent;
 import src.game.events.Event;
 
-public class AlienMetabolism extends StoreCard implements Observer {
+public class AlienMetabolism extends KeepCard implements Observer {
 
   public AlienMetabolism() {
     super("Alien Metabolism", 1);
