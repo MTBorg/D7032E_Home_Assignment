@@ -55,9 +55,11 @@ public class Game {
               7a. Play "DISCARD" cards immediately
             8. Check victory conditions
         */
+    System.out.println("Game started!");
     while (true) {
       for (int i = 0; i < this.state.monsters.size(); i++) {
         Monster currentMonster = this.state.monsters.get(i);
+        System.out.println("It is " + currentMonster.getName() + "'s turn");
         if (currentMonster.getCurrentHealth() <= 0) {
           currentMonster.inTokyo = false;
           continue;
