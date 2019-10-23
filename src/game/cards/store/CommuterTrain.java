@@ -20,12 +20,6 @@ public class CommuterTrain extends DiscardCard implements Observer {
 
   @Override
   protected void effect(Monster monster, GameState gameState) {
-    Server.sendOneWayMessage(
-      monster.stream,
-      "Message: You used the card " +
-        this.name +
-        " and were rewarded two stars!\n"
-    ); //TODO: Remove this eventually
     monster.stars += 2;
   }
 }
