@@ -1,7 +1,7 @@
-package src.game.cards;
+package src.game.cards.evolution;
 
 import java.util.ArrayList;
-import src.game.cards.EvolutionCard;
+import src.game.cards.evolution.EvolutionCard;
 import src.game.events.GainHealthEvent;
 import src.game.GameState;
 import src.game.Monster;

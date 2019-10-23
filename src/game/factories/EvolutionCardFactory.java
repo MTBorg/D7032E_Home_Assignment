@@ -1,10 +1,10 @@
 package src.game.factories;
 
 import java.lang.Exception;
-import src.game.cards.*;
+import src.game.cards.evolution.EvolutionCard;
 
 public class EvolutionCardFactory {
-  static private final String CARD_PATH = "src.game.cards.";
+  static private final String CARD_PATH = "src.game.cards.evolution.";
 
   // Select what cards to be available in the game by entering their name in
   // this array. Make sure that the names (case sensitive and stripped of whitespaces)

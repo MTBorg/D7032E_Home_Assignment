@@ -1,4 +1,4 @@
-package src.game.cards;
+package src.game.cards.evolution;
 
 import java.util.ArrayList;
 import src.game.Card;
