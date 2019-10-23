@@ -90,6 +90,7 @@ public class KingTokyoPowerUpClient {
   }
 
   private void printMessage(String[] message) {
+    System.out.print("- ");
     for (int i = 0; i < message.length; i++) {
       // Don't print message tag
       // TODO: This is pretty hacky
