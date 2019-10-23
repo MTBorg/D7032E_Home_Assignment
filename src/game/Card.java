@@ -3,7 +3,7 @@ package src.game;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class Card implements Observer {
+public abstract class Card {
   protected final String name;
 
   // public String description; //TODO: Add back eventually
@@ -27,7 +27,4 @@ public abstract class Card implements Observer {
   public String getName() {
     return this.name;
   }
-
-  // Override this if the card needs to receive updates about the event queue
-  public void update(Observable o, Object arg) {}
 }

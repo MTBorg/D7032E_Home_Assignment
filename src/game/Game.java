@@ -9,6 +9,7 @@ import src.game.cards.evolution.EvolutionCard;
 import src.game.cards.evolution.PermanentEvolutionCard;
 import src.game.cards.evolution.TemporaryEvolutionCard;
 import src.game.cards.store.DiscardCard;
+import src.game.cards.store.KeepCard;
 import src.game.Deck;
 import src.game.EventQueue;
 import src.game.events.AttackEvent;
@@ -27,7 +28,9 @@ public class Game {
     this.state = new GameState(monsters);
     for (Monster monster : this.state.monsters) {
       for (Card card : monster.cards) {
-        this.state.eventQueue.addObserver(card);
+        if (card instanceof KeepCard) {
+          this.state.eventQueue.addObserver((KeepCard) card);
+        }
       }
     }
   }
@@ -360,7 +363,9 @@ public class Game {
           this.state.deck.evolutionCards.get(monster.getName()).remove(0);
 
         if (powerUpCard instanceof PermanentEvolutionCard) {
-          this.state.eventQueue.addObserver(powerUpCard);
+          this.state.eventQueue.addObserver(
+              (PermanentEvolutionCard) powerUpCard
+            );
           monster.giveCard(powerUpCard);
         }
 

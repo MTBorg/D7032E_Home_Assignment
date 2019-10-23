@@ -1,6 +1,7 @@
 package src.game.events;
 
 import java.util.ArrayList;
+import src.game.cards.store.KeepCard;
 import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
 import src.game.events.Event;
@@ -35,7 +36,7 @@ public class BuyEvent extends Event {
     Server.sendOneWayMessage(this.buyer.stream, "You " + message); // Send to buyer
 
     this.buyer.giveCard(card);
-    this.queue.addObserver(card);
+    if (card instanceof KeepCard) this.queue.addObserver((KeepCard) card);
     this.buyer.energy -= this.cost;
   }
 }
