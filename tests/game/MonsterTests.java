@@ -64,4 +64,16 @@ public class MonsterTests {
     monster.buyCard(armorPlating, gameState);
     assertTrue(monster.hasCard(armorPlating.getName()));
   }
+
+  @Test
+  public void startWithNoStars() {
+    Monster monster = new Monster("Test Monster");
+    assertEquals(monster.stars, 0);
+  }
+
+  @Test
+  public void startWith10Health() {
+    Monster monster = new Monster("Test Monster");
+    assertEquals(monster.getCurrentHealth(), 10);
+  }
 }
