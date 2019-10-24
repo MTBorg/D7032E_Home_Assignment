@@ -11,12 +11,8 @@ public class DiceRollEvent extends Event {
   public Monster roller;
   public ArrayList<Dice> dices = new ArrayList<Dice>();
 
-  public DiceRollEvent(
-    EventQueue queue,
-    Monster roller,
-    ArrayList<Dice> dices
-  ) {
-    super(queue);
+  public DiceRollEvent(Monster roller, ArrayList<Dice> dices) {
+    super(null);
     this.roller = roller;
     this.dices = dices;
   }

@@ -13,13 +13,8 @@ public class AttackEvent extends Event {
   Monster attacked;
   public int damage;
 
-  public AttackEvent(
-    EventQueue queue,
-    Monster attacker,
-    Monster attacked,
-    int damage
-  ) {
-    super(queue);
+  public AttackEvent(Monster attacker, Monster attacked, int damage) {
+    super(null);
     this.attacker = attacker;
     this.attacked = attacked;
     this.damage = damage;
@@ -38,11 +33,7 @@ public class AttackEvent extends Event {
         damage +
         " damage\n"
     );
-    this.queue.add(
-        new LoseHealthEvent(this.queue, attacked, damage),
-        gameState
-      );
-    this.queue.get(this.queue.size() - 1).execute(gameState);
+    gameState.pushEvent(new LoseHealthEvent(attacked, damage));
   }
 
   public Monster getAttacker() {

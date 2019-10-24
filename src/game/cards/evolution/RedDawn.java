@@ -28,17 +28,9 @@ public class RedDawn extends TemporaryEvolutionCard {
     );
     for (int mon = 0; mon < gameState.monsters.size(); mon++) {
       if (mon != kong) {
-        gameState.eventQueue.add(
-          new LoseHealthEvent(
-            gameState.eventQueue,
-            gameState.monsters.get(mon),
-            2
-          ),
-          gameState
+        gameState.pushEvent(
+          new LoseHealthEvent(gameState.monsters.get(mon), 2)
         );
-        gameState
-          .eventQueue.get(gameState.eventQueue.size() - 1)
-          .execute(gameState);
       // gameState.monsters.get(mon).currentHealth += -2;
       }
     }

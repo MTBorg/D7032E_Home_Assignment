@@ -51,13 +51,7 @@ public class Monster {
   }
 
   public void attackMonster(Monster attacked, int damage, GameState gameState) {
-    gameState.eventQueue.add(
-      new AttackEvent(gameState.eventQueue, this, attacked, damage),
-      gameState
-    );
-    gameState
-      .eventQueue.get(gameState.eventQueue.size() - 1)
-      .execute(gameState);
+    gameState.pushEvent(new AttackEvent(this, attacked, damage));
   }
 
   public boolean hasCard(String cardName) {
@@ -84,18 +78,8 @@ public class Monster {
   }
 
   public boolean buyCard(StoreCard card, GameState gameState) {
-    Event buyRequestEvent = new BuyRequestEvent(
-      gameState.eventQueue,
-      this,
-      card
-    );
-    gameState.eventQueue.add(buyRequestEvent, gameState);
-    buyRequestEvent.execute(gameState);
-    return (
-      gameState.eventQueue.get(
-        gameState.eventQueue.size() - 1
-      ) instanceof BuyEvent
-    );
+    gameState.pushEvent(new BuyRequestEvent(this, card));
+    return (gameState.peekEventQueue() instanceof BuyEvent);
   }
 
   public String getName() {

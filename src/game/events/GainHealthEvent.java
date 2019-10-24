@@ -9,8 +9,8 @@ public class GainHealthEvent extends Event {
   public final Monster monster;
   public int amount;
 
-  public GainHealthEvent(EventQueue queue, Monster monster, int amount) {
-    super(queue);
+  public GainHealthEvent(Monster monster, int amount) {
+    super(null);
     this.monster = monster;
     this.amount = amount;
   }

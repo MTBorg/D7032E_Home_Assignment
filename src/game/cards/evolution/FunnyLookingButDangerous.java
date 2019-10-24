@@ -40,13 +40,9 @@ public class FunnyLookingButDangerous extends PermanentEvolutionCard {
 
         for (Monster monster : eventNotification.gameState.monsters) {
           if (monster != rollEvent.getRoller()) {
-            eventQueue.add(
-              new LoseHealthEvent(eventQueue, monster, 1),
-              eventNotification.gameState
+            eventNotification.gameState.pushEvent(
+              new LoseHealthEvent(monster, 1)
             );
-            eventQueue
-              .get(eventQueue.size() - 1)
-              .execute(eventNotification.gameState);
           }
         }
       }

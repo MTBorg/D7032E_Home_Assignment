@@ -29,16 +29,8 @@ public class RadioactiveWaste extends TemporaryEvolutionCard {
       "POWERUP:Receive 2 energy and 1 health\n"
     );
     gigazaur.energy += 2;
-    gameState.eventQueue.add(
-      new GainHealthEvent(
-        gameState.eventQueue,
-        executor,
-        gigazaur.getCurrentHealth() + 1
-      ),
-      gameState
+    gameState.pushEvent(
+      new GainHealthEvent(executor, gigazaur.getCurrentHealth() + 1)
     );
-    gameState
-      .eventQueue.get(gameState.eventQueue.size() - 1)
-      .execute(gameState);
   }
 }

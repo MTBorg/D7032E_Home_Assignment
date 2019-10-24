@@ -29,7 +29,7 @@ public class Game {
     for (Monster monster : this.state.monsters) {
       for (Card card : monster.cards) {
         if (card instanceof KeepCard) {
-          this.state.eventQueue.addObserver((KeepCard) card);
+          this.state.addEventObserver(card);
         }
       }
     }
@@ -74,36 +74,21 @@ public class Game {
         // 1. Roll 6 dices
         ArrayList<Dice> dices = new ArrayList<Dice>();
         dices = Dice.diceRoll(6);
-        this.state.eventQueue.add(
-            new DiceRollEvent(this.state.eventQueue, currentMonster, dices),
-            this.state
-          );
-        this.state.eventQueue.get(this.state.eventQueue.size() - 1)
-          .execute(this.state);
+        this.state.pushEvent(new DiceRollEvent(currentMonster, dices));
 
         // 2. Decide which dice to keep
         keepDices(dices, currentMonster);
 
         // 3. Reroll remaining dice
         dices.addAll(Dice.diceRoll(6 - dices.size()));
-        this.state.eventQueue.add(
-            new DiceRollEvent(this.state.eventQueue, currentMonster, dices),
-            this.state
-          );
-        this.state.eventQueue.get(this.state.eventQueue.size() - 1)
-          .execute(this.state);
+        this.state.pushEvent(new DiceRollEvent(currentMonster, dices));
 
         // 4. Decide which dice to keep
         keepDices(dices, currentMonster);
 
         // 5. Reroll remaining dice
         dices.addAll(Dice.diceRoll(6 - dices.size()));
-        this.state.eventQueue.add(
-            new DiceRollEvent(this.state.eventQueue, currentMonster, dices),
-            this.state
-          );
-        this.state.eventQueue.get(this.state.eventQueue.size() - 1)
-          .execute(this.state);
+        this.state.pushEvent(new DiceRollEvent(currentMonster, dices));
 
         // 6. Sum up totals
         Collections.sort(dices);
@@ -158,8 +143,6 @@ public class Game {
                     totalDamage,
                     this.state
                   );
-                  this.state.eventQueue.get(this.state.eventQueue.size() - 1)
-                    .execute(this.state);
                 // this.state.monsters.get(mon).getCurrentHealth() += -totalDamage; //Armor Plating
                 }
 
@@ -336,16 +319,9 @@ public class Game {
     Dice aHeart = new Dice(Dice.HEART);
     if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
       // TODO: Maybe a gain health event shouldn't be added if already at max health
-      this.state.eventQueue.add(
-          new GainHealthEvent(
-            this.state.eventQueue,
-            monster,
-            result.get(aHeart).intValue()
-          ),
-          this.state
+      this.state.pushEvent(
+          new GainHealthEvent(monster, result.get(aHeart).intValue())
         );
-      this.state.eventQueue.get(this.state.eventQueue.size() - 1)
-        .execute(this.state);
 
       // 6b. 3 hearts = power-up
       if (result.get(aHeart).intValue() >= 3) {
@@ -357,9 +333,7 @@ public class Game {
           this.state.deck.evolutionCards.get(monster.getName()).remove(0);
 
         if (powerUpCard instanceof PermanentEvolutionCard) {
-          this.state.eventQueue.addObserver(
-              (PermanentEvolutionCard) powerUpCard
-            );
+          this.state.addEventObserver(powerUpCard);
           monster.giveCard(powerUpCard);
         }
 

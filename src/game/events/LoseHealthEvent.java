@@ -10,8 +10,8 @@ public class LoseHealthEvent extends Event {
   private Monster monster;
   private int loss;
 
-  public LoseHealthEvent(EventQueue queue, Monster monster, int loss) {
-    super(queue);
+  public LoseHealthEvent(Monster monster, int loss) {
+    super(null);
     this.monster = monster;
     this.loss = loss;
   }

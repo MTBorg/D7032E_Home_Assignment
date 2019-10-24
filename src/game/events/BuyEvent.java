@@ -14,8 +14,8 @@ public class BuyEvent extends Event {
   private int cost;
   private StoreCard card;
 
-  public BuyEvent(EventQueue queue, Monster buyer, StoreCard card, int cost) {
-    super(queue);
+  public BuyEvent(Monster buyer, StoreCard card, int cost) {
+    super(null);
     this.buyer = buyer;
     this.card = card;
     this.cost = cost;
@@ -32,7 +32,7 @@ public class BuyEvent extends Event {
     Server.sendOneWayMessage(this.buyer.stream, "You" + message); // Send to buyer
 
     this.buyer.giveCard(card);
-    if (card instanceof KeepCard) this.queue.addObserver((KeepCard) card);
+    if (card instanceof KeepCard) gameState.addEventObserver(card);
     this.buyer.energy -= this.cost;
   }
 }
