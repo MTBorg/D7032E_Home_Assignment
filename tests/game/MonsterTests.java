@@ -7,6 +7,7 @@ import org.junit.Test;
 import src.game.Card;
 import src.game.cards.store.ArmorPlating;
 import src.game.cards.store.StoreCard;
+import src.game.events.BuyEvent;
 import src.game.GameState;
 import src.game.Monster;
 
@@ -53,7 +54,7 @@ public class MonsterTests {
   }
 
   @Test
-  public void buyCard() {
+  public void buyCardSuccessful() {
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -63,6 +64,23 @@ public class MonsterTests {
     assertFalse(monster.hasCard(armorPlating.getName()));
     monster.buyCard(armorPlating, gameState);
     assertTrue(monster.hasCard(armorPlating.getName()));
+  }
+
+  @Test
+  public void cannotAffordCard() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    StoreCard armorPlating = new ArmorPlating();
+    monster.energy = armorPlating.getCost() - 1;
+    GameState gameState = new GameState(monsters);
+
+    assertFalse(monster.hasCard(armorPlating.getName()));
+
+    monster.buyCard(armorPlating, gameState);
+
+    assertFalse(gameState.peekEventQueue() instanceof BuyEvent);
+    assertFalse(monster.hasCard(armorPlating.getName()));
   }
 
   @Test
