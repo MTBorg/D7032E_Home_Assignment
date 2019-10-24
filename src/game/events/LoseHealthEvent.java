@@ -6,12 +6,11 @@ import src.game.events.Event;
 import src.game.GameState;
 import src.game.Monster;
 
-public class LoseHealthEvent extends Event {
+public class LoseHealthEvent implements Event {
   private Monster monster;
   private int loss;
 
   public LoseHealthEvent(Monster monster, int loss) {
-    super(null);
     this.monster = monster;
     this.loss = loss;
   }

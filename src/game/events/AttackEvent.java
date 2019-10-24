@@ -8,13 +8,12 @@ import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
-public class AttackEvent extends Event {
+public class AttackEvent implements Event {
   private Monster attacker;
   Monster attacked;
   public int damage;
 
   public AttackEvent(Monster attacker, Monster attacked, int damage) {
-    super(null);
     this.attacker = attacker;
     this.attacked = attacked;
     this.damage = damage;

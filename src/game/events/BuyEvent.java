@@ -9,13 +9,12 @@ import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
 
-public class BuyEvent extends Event {
+public class BuyEvent implements Event {
   private Monster buyer;
   private int cost;
   private StoreCard card;
 
   public BuyEvent(Monster buyer, StoreCard card, int cost) {
-    super(null);
     this.buyer = buyer;
     this.card = card;
     this.cost = cost;

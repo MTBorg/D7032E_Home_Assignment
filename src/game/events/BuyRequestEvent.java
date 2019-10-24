@@ -7,13 +7,12 @@ import src.game.events.Event;
 import src.game.GameState;
 import src.game.Monster;
 
-public class BuyRequestEvent extends Event {
+public class BuyRequestEvent implements Event {
   private Monster buyer;
   public int cost;
   private StoreCard card;
 
   public BuyRequestEvent(Monster buyer, StoreCard card) {
-    super(null);
     this.buyer = buyer;
     this.card = card;
     this.cost = card.getCost();

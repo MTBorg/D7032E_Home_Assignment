@@ -7,12 +7,11 @@ import src.game.events.Event;
 import src.game.GameState;
 import src.game.Monster;
 
-public class DiceRollEvent extends Event {
+public class DiceRollEvent implements Event {
   public Monster roller;
   public ArrayList<Dice> dices = new ArrayList<Dice>();
 
   public DiceRollEvent(Monster roller, ArrayList<Dice> dices) {
-    super(null);
     this.roller = roller;
     this.dices = dices;
   }
