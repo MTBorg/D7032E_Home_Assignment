@@ -22,10 +22,8 @@ public abstract class EvolutionCard extends Card {
     //TODO: This should print the card description as well
     return (
       this.name +
-      ", Cost " +
-      this.cost +
       ", " +
-      (this instanceof TemporaryEvolutionCard ? "DISCARD" : "KEEP") +
+      (this instanceof TemporaryEvolutionCard ? "Temporary" : "Permanent") +
       ", Effect "
     );
   }
