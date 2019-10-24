@@ -58,7 +58,7 @@ public class MonsterTests {
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
     StoreCard armorPlating = new ArmorPlating();
-    monster.energy = armorPlating.cost;
+    monster.energy = armorPlating.getCost();
     GameState gameState = new GameState(monsters);
     assertFalse(monster.hasCard(armorPlating.getName()));
     monster.buyCard(armorPlating, gameState);

@@ -16,11 +16,11 @@ public class BuyRequestEvent extends Event {
     super(queue);
     this.buyer = buyer;
     this.card = card;
-    this.cost = card.cost;
+    this.cost = card.getCost();
   }
 
   public void execute(GameState gameState) {
-    if (buyer.energy >= card.cost) {
+    if (buyer.energy >= card.getCost()) { //TODO: This should probably use this.cose instead?
       this.queue.add(
           new BuyEvent(this.queue, buyer, card, this.cost),
           gameState

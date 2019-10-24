@@ -7,7 +7,7 @@ import src.game.GameState;
 import src.game.Monster;
 
 public abstract class StoreCard extends Card {
-  public int cost;
+  private final int cost;
 
   public StoreCard(String name, int cost) {
     super(name);
@@ -28,5 +28,9 @@ public abstract class StoreCard extends Card {
 
   public boolean isDiscardCard() {
     return this instanceof DiscardCard;
+  }
+
+  public int getCost() {
+    return this.cost;
   }
 }
