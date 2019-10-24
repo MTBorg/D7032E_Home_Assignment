@@ -84,7 +84,7 @@ public class Game {
         GameSteps.countVictoryPoints(currentMonster, result);
 
         // 6d. claws = attack (if in Tokyo attack everyone, else attack monster in Tokyo)
-        GameSteps.countHearts(currentMonster, result, this.state);
+        GameSteps.countClaws(currentMonster, result, this.state);
 
         // 6f. energy = energy tokens
         Dice anEnergy = new Dice(Dice.ENERGY);
