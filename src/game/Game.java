@@ -17,6 +17,7 @@ import src.game.events.DiceRollEvent;
 import src.game.events.Event;
 import src.game.events.GainHealthEvent;
 import src.game.factories.EvolutionCardFactory;
+import src.game.GameSteps;
 import src.game.Monster;
 import src.server.Server;
 
@@ -71,100 +72,19 @@ public class Game {
         }
         sendStatusMessage(currentMonster, this.state.monsters);
 
-        // 1. Roll 6 dices
-        ArrayList<Dice> dices = new ArrayList<Dice>();
-        dices = Dice.diceRoll(6);
-        this.state.pushEvent(new DiceRollEvent(currentMonster, dices));
-
-        // 2. Decide which dice to keep
-        keepDices(dices, currentMonster);
-
-        // 3. Reroll remaining dice
-        dices.addAll(Dice.diceRoll(6 - dices.size()));
-        this.state.pushEvent(new DiceRollEvent(currentMonster, dices));
-
-        // 4. Decide which dice to keep
-        keepDices(dices, currentMonster);
-
-        // 5. Reroll remaining dice
-        dices.addAll(Dice.diceRoll(6 - dices.size()));
-        this.state.pushEvent(new DiceRollEvent(currentMonster, dices));
-
-        // 6. Sum up totals
-        Collections.sort(dices);
-        HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
-        for (Dice unique : new HashSet<Dice>(dices)) {
-          result.put(unique, Collections.frequency(dices, unique));
-        }
-        String ok = Server.sendMessage(
-          this.state.monsters.get(i).stream,
-          "ROLLED:You rolled " + result + " Press [ENTER]\n"
+        HashMap<Dice, Integer> result = GameSteps.diceRoll(
+          this.state,
+          currentMonster
         );
 
         // 6a. Hearts = health (max 10 unless a cord increases it)
-        countHearts(currentMonster, result);
+        GameSteps.countHearts(currentMonster, result, this.state);
 
         // 6c. 3 of a number = victory points
-        this.countVictoryPoints(currentMonster, result);
+        GameSteps.countVictoryPoints(currentMonster, result);
 
         // 6d. claws = attack (if in Tokyo attack everyone, else attack monster in Tokyo)
-        Dice aClaw = new Dice(Dice.CLAWS);
-        if (result.containsKey(aClaw)) {
-          if (currentMonster.inTokyo) {
-            for (int mon = 0; mon < this.state.monsters.size(); mon++) {
-              // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
-              int moreDamage = 0;
-              int totalDamage = result.get(aClaw).intValue() + moreDamage;
-              if (
-                mon != i &&
-                totalDamage > this.state.monsters.get(mon).cardEffect("armor")
-              ) { //Armor Plating
-                currentMonster.attackMonster(
-                  this.state.monsters.get(mon),
-                  totalDamage,
-                  this.state
-                );
-              }
-            }
-          } else {
-            boolean monsterInTokyo = false;
-            for (int mon = 0; mon < this.state.monsters.size(); mon++) {
-              if (this.state.monsters.get(mon).inTokyo) {
-                monsterInTokyo = true;
-
-                // int moreDamage = currentMonster.cardEffect("moreDamage"); //Acid Attack
-                int moreDamage = 0;
-                int totalDamage = result.get(aClaw).intValue() + moreDamage;
-                if (
-                  totalDamage > this.state.monsters.get(mon).cardEffect("armor")
-                ) {
-                  currentMonster.attackMonster(
-                    this.state.monsters.get(mon),
-                    totalDamage,
-                    this.state
-                  );
-                // this.state.monsters.get(mon).getCurrentHealth() += -totalDamage; //Armor Plating
-                }
-
-                // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
-                String answer = Server.sendMessage(
-                  this.state.monsters.get(mon).stream,
-                  "ATTACKED:You have " +
-                    this.state.monsters.get(mon).getCurrentHealth() +
-                    " health left. Do you wish to leave Tokyo? [YES/NO]\n"
-                );
-                if (answer.equalsIgnoreCase("YES")) {
-                  this.state.monsters.get(mon).inTokyo = false;
-                  monsterInTokyo = false;
-                }
-              }
-            }
-            if (!monsterInTokyo) {
-              currentMonster.inTokyo = true;
-              currentMonster.stars += 1;
-            }
-          }
-        }
+        GameSteps.countHearts(currentMonster, result, this.state);
 
         // 6f. energy = energy tokens
         Dice anEnergy = new Dice(Dice.ENERGY);
@@ -268,85 +188,6 @@ public class Game {
             );
           }
           System.exit(0);
-        }
-      }
-    }
-  }
-
-  private void keepDices(ArrayList<Dice> dices, Monster monster) {
-    String rolledDice = "ROLLED:You rolled:\t[1]\t[2]\t[3]\t[4]\t[5]\t[6]:";
-    for (int allDice = 0; allDice < dices.size(); allDice++) {
-      rolledDice += "\t[" + dices.get(allDice) + "]";
-    }
-    String choices =
-      ":Choose which dices to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
-    String[] reroll = Server
-      .sendMessage(monster.stream, rolledDice + choices)
-      .split(",");
-    while (true) {
-      try {
-        if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
-          reroll.length; j++) {
-          dices.remove(Integer.parseInt(reroll[j]) - 1);
-        }
-        break;
-      } catch (NumberFormatException e) {
-        reroll =
-          Server
-            .sendMessage(
-              monster.stream,
-              "Please enter a valid number! \n" + choices
-            )
-            .split(",");
-      }
-    }
-  }
-
-  private void countVictoryPoints(
-    Monster monster,
-    HashMap<Dice, Integer> result
-  ) {
-    // 6c. 3 of a number = victory points
-    for (int num = 1; num < 4; num++) {
-      if (result.containsKey(new Dice(num))) if (
-        result.get(new Dice(num)).intValue() >= 3
-      ) monster.stars += num + (result.get(new Dice(num)).intValue() - 3);
-    }
-  }
-
-  private void countHearts(Monster monster, HashMap<Dice, Integer> result) {
-    // 6a. Hearts = health (max 10 unless a cord increases it)
-    Dice aHeart = new Dice(Dice.HEART);
-    if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
-      // TODO: Maybe a gain health event shouldn't be added if already at max health
-      this.state.pushEvent(
-          new GainHealthEvent(monster, result.get(aHeart).intValue())
-        );
-
-      // 6b. 3 hearts = power-up
-      if (result.get(aHeart).intValue() >= 3) {
-        // Deal a power-up card to the currentMonster
-        // TODO: Add support for more cards.
-        // TODO: Add support for keeping it secret until played
-        // Draw from player's evolution deck
-        EvolutionCard powerUpCard =
-          this.state.deck.evolutionCards.get(monster.getName()).remove(0);
-
-        if (powerUpCard instanceof PermanentEvolutionCard) {
-          this.state.addEventObserver(powerUpCard);
-          monster.giveCard(powerUpCard);
-        }
-
-        Server.sendOneWayMessage(
-          monster.stream,
-          "You rolled three hearts and received the card " +
-            powerUpCard.getName() +
-            "\n"
-        );
-
-        // Get a card from the factory and execute it's effect
-        if (powerUpCard instanceof TemporaryEvolutionCard) {
-          ((TemporaryEvolutionCard) powerUpCard).execute(monster, this.state);
         }
       }
     }
