@@ -30,7 +30,7 @@ public class Game {
     for (Monster monster : this.state.monsters) {
       for (Card card : monster.cards) {
         if (card instanceof KeepCard) {
-          this.state.addEventObserver(card);
+          this.state.addEventObserver((KeepCard) card);
         }
       }
     }

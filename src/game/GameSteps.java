@@ -108,7 +108,7 @@ public class GameSteps {
           .remove(0);
 
         if (powerUpCard instanceof PermanentEvolutionCard) {
-          gameState.addEventObserver(powerUpCard);
+          gameState.addEventObserver((PermanentEvolutionCard) powerUpCard);
           monster.giveCard(powerUpCard);
         }
 

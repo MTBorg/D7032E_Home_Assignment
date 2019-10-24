@@ -22,11 +22,7 @@ public class ArmorPlating extends KeepCard implements Observer {
     if (e instanceof AttackEvent) {
       AttackEvent attackEvent = (AttackEvent) e;
       if (attackEvent.getAttacked().hasCard(this.getName())) {
-        System.out.println(
-          attackEvent.getAttacked().getName() +
-            " Applied card: " +
-            this.getName()
-        ); //TODO: Remove this eventually
+        announcePlayed(attackEvent.getAttacked());
         attackEvent.damage -= 1; //Ignore damage of 1.
       }
     }

@@ -24,11 +24,7 @@ public class AlphaMonster extends KeepCard implements Observer {
     if (e instanceof AttackEvent) {
       AttackEvent attackEvent = (AttackEvent) e;
       if (attackEvent.getAttacker().hasCard(this.getName())) {
-        System.out.println(
-          attackEvent.getAttacker().getName() +
-            " Applied card: " +
-            this.getName()
-        ); //TODO: Remove this eventually
+        announcePlayed(attackEvent.getAttacker());
         attackEvent.getAttacker().stars++; //Gain 1[Star] when you attack.
       }
     }

@@ -22,11 +22,7 @@ public class AlienMetabolism extends KeepCard implements Observer {
     if (e instanceof BuyRequestEvent) {
       BuyRequestEvent buyRequestEvent = (BuyRequestEvent) e;
       if (buyRequestEvent.getBuyer().hasCard(this.getName())) {
-        System.out.println(
-          buyRequestEvent.getBuyer().getName() +
-            " Applied card: " +
-            this.getName()
-        ); //TODO: Remove this eventually
+        announcePlayed(buyRequestEvent.getBuyer());
         buyRequestEvent.cost -= 1; //Buying cards costs you 1 less [Energy].
       }
     }

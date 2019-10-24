@@ -14,7 +14,6 @@ public class RedDawn extends TemporaryEvolutionCard {
   }
 
   public void effect(Monster executor, GameState gameState) {
-    System.out.println("Played red dawn");
     int kong = 0;
     for (int i = 0; i < gameState.monsters.size(); i++) {
       if (gameState.monsters.get(i).getName() == this.getMonster()) {

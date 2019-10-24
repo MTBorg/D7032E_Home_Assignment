@@ -31,7 +31,7 @@ public class BuyEvent implements Event {
     Server.sendOneWayMessage(this.buyer.stream, "You" + message + "\n"); // Send to buyer
 
     this.buyer.giveCard(card);
-    if (card instanceof KeepCard) gameState.addEventObserver(card);
+    if (card instanceof KeepCard) gameState.addEventObserver((KeepCard) card);
     this.buyer.energy -= this.cost;
   }
 }

@@ -29,14 +29,7 @@ public class FunnyLookingButDangerous extends PermanentEvolutionCard {
         rollEvent.getRoller().hasCard(this.name) &&
         Collections.frequency(rollEvent.getDices(), new Dice(2)) >= 3
       ) {
-        Server.broadCastMessage(
-          rollEvent.getRoller().getName() + " played card " + this.name + "\n",
-          rollEvent.getRoller()
-        );
-        Server.sendOneWayMessage(
-          rollEvent.getRoller().stream,
-          "You played card " + this.name + "\n"
-        );
+        announcePlayed(rollEvent.getRoller());
 
         for (Monster monster : eventNotification.gameState.monsters) {
           if (monster != rollEvent.getRoller()) {

@@ -12,14 +12,7 @@ abstract public class TemporaryEvolutionCard extends EvolutionCard {
   }
 
   public void execute(Monster executor, GameState gameState) {
-    Server.broadCastMessage(
-      executor.getName() + " played card " + this.name + "\n",
-      executor
-    );
-    Server.sendOneWayMessage(
-      executor.stream,
-      "You played card " + this.name + "\n"
-    );
+    announcePlayed(executor);
     effect(executor, gameState);
     executor.removeCard(this);
 
