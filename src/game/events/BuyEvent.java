@@ -28,7 +28,7 @@ public class BuyEvent implements Event {
       this.buyer
     ); // Send to other players
     System.out.println("Player " + this.buyer.getName() + message); // Print on server
-    Server.sendOneWayMessage(this.buyer.stream, "You" + message); // Send to buyer
+    Server.sendOneWayMessage(this.buyer.stream, "You" + message + "\n"); // Send to buyer
 
     this.buyer.giveCard(card);
     if (card instanceof KeepCard) gameState.addEventObserver(card);
