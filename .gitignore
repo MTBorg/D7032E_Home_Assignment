@@ -6,3 +6,5 @@ bin
 
 out
 *.class
+
+jacoco.exec
