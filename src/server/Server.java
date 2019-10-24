@@ -89,13 +89,13 @@ public class Server {
   public static String sendMessage(Stream stream, String message) {
     Scanner sc = new Scanner(System.in);
     String response = "";
-    stream.writeBytes(message);
+    if (stream != null) stream.writeBytes(message);
     response = stream.readLine();
     return response;
   }
 
   public static void sendOneWayMessage(Stream stream, String message) {
-    stream.writeBytes("Message:" + message);
+    if (stream != null) stream.writeBytes("Message:" + message);
   }
 
   public static void broadCastMessage(String message, Monster exception) {
