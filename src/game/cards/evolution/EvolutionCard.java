@@ -18,6 +18,18 @@ public abstract class EvolutionCard extends Card {
     return this.monster;
   }
 
+  public String toString() {
+    //TODO: This should print the card description as well
+    return (
+      this.name +
+      ", Cost " +
+      this.cost +
+      ", " +
+      (this instanceof TemporaryEvolutionCard ? "DISCARD" : "KEEP") +
+      ", Effect "
+    );
+  }
+
   public boolean isTemporary() {
     return this instanceof TemporaryEvolutionCard;
   }
