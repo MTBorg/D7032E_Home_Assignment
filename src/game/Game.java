@@ -137,7 +137,6 @@ public class Game {
                 currentMonster.attackMonster(
                   this.state.monsters.get(mon),
                   totalDamage,
-                  this.state.eventQueue,
                   this.state
                 );
               }
@@ -157,7 +156,6 @@ public class Game {
                   currentMonster.attackMonster(
                     this.state.monsters.get(mon),
                     totalDamage,
-                    this.state.eventQueue,
                     this.state
                   );
                   this.state.eventQueue.get(this.state.eventQueue.size() - 1)
@@ -207,11 +205,7 @@ public class Game {
           if (buy >= 0 && buy <= 2) {
             //If card was bought Successfully
             if (
-              currentMonster.buyCard(
-                this.state.eventQueue,
-                this.state.deck.store[buy],
-                this.state
-              )
+              currentMonster.buyCard(this.state.deck.store[buy], this.state)
             ) {
               if (this.state.deck.store[buy].isDiscardCard()) {
                 //7a. Play "DISCARD" cards immediately

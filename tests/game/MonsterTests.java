@@ -48,7 +48,7 @@ public class MonsterTests {
     int damage = 3;
     GameState gameState = new GameState(monsters);
     assertEquals(monster.getCurrentHealth(), monster.getMaxHealth());
-    monster.attackMonster(monster, damage, gameState.eventQueue, gameState);
+    monster.attackMonster(monster, damage, gameState);
     assertEquals(monster.getCurrentHealth(), monster.getMaxHealth() - damage);
   }
 
@@ -61,7 +61,7 @@ public class MonsterTests {
     monster.energy = armorPlating.cost;
     GameState gameState = new GameState(monsters);
     assertFalse(monster.hasCard(armorPlating.getName()));
-    monster.buyCard(gameState.eventQueue, armorPlating, gameState);
+    monster.buyCard(armorPlating, gameState);
     assertTrue(monster.hasCard(armorPlating.getName()));
   }
 }
