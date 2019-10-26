@@ -306,4 +306,35 @@ public class GameSteps {
       }
     }
   }
+
+  public static void checkVictoryConditions(GameState gameState) {
+    int alive = 0;
+    String aliveMonster = "";
+    for (int mon = 0; mon < gameState.monsters.size(); mon++) {
+      if (gameState.monsters.get(mon).stars >= 20) {
+        for (int victory = 0; victory < gameState.monsters.size(); victory++) {
+          String victoryByStars = Server.sendMessage(
+            gameState.monsters.get(victory).stream,
+            "Victory: " +
+              gameState.monsters.get(mon).getName() +
+              " has won by stars\n"
+          );
+        }
+        System.exit(0);
+      }
+      if (gameState.monsters.get(mon).getCurrentHealth() > 0) {
+        alive++;
+        aliveMonster = gameState.monsters.get(mon).getName();
+      }
+    }
+    if (alive == 1) {
+      for (int victory = 0; victory < gameState.monsters.size(); victory++) {
+        String victoryByKills = Server.sendMessage(
+          gameState.monsters.get(victory).stream,
+          "Victory: " + aliveMonster + " has won by being the only one alive\n"
+        );
+      }
+      System.exit(0);
+    }
+  }
 }

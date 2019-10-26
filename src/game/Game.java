@@ -93,52 +93,21 @@ public class Game {
         GameSteps.buy(currentMonster, this.state);
 
         //8. Check victory conditions
-        // String winner = checkVictoryConditionsStar(this.state.monsters);
-        // if (winner != ""){
-        // for(int player=0; player<this.state.monsters.size(); player++) {
-        // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
-        // }
-        //     System.exit(0);
-        // }
-        // winner = checkVictoryConditionsAlive(this.state.monsters);
-        // if (winner != ""){
-        // for(int player=0; player<this.state.monsters.size(); player++) {
-        // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
-        // }
-        //     System.exit(0);
-        // }
-        int alive = 0;
-        String aliveMonster = "";
-        for (int mon = 0; mon < this.state.monsters.size(); mon++) {
-          if (this.state.monsters.get(mon).stars >= 20) {
-            for (int victory = 0; victory <
-              this.state.monsters.size(); victory++) {
-              String victoryByStars = Server.sendMessage(
-                this.state.monsters.get(victory).stream,
-                "Victory: " +
-                  this.state.monsters.get(mon).getName() +
-                  " has won by stars\n"
-              );
-            }
-            System.exit(0);
-          }
-          if (this.state.monsters.get(mon).getCurrentHealth() > 0) {
-            alive++;
-            aliveMonster = this.state.monsters.get(mon).getName();
-          }
-        }
-        if (alive == 1) {
-          for (int victory = 0; victory <
-            this.state.monsters.size(); victory++) {
-            String victoryByKills = Server.sendMessage(
-              this.state.monsters.get(victory).stream,
-              "Victory: " +
-                aliveMonster +
-                " has won by being the only one alive\n"
-            );
-          }
-          System.exit(0);
-        }
+        GameSteps.checkVictoryConditions(this.state);
+      // String winner = checkVictoryConditionsStar(this.state.monsters);
+      // if (winner != ""){
+      // for(int player=0; player<this.state.monsters.size(); player++) {
+      // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
+      // }
+      //     System.exit(0);
+      // }
+      // winner = checkVictoryConditionsAlive(this.state.monsters);
+      // if (winner != ""){
+      // for(int player=0; player<this.state.monsters.size(); player++) {
+      // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
+      // }
+      //     System.exit(0);
+      // }
       }
     }
   }
