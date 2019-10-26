@@ -87,10 +87,11 @@ public class Game {
         GameSteps.countClaws(currentMonster, result, this.state);
 
         // 6f. energy = energy tokens
-        Dice anEnergy = new Dice(Dice.ENERGY);
-        if (result.containsKey(anEnergy)) currentMonster.energy +=
-          result.get(anEnergy).intValue();
+        GameSteps.countEnergy(currentMonster, result);
 
+        // Dice anEnergy = new Dice(Dice.ENERGY);
+        // if (result.containsKey(anEnergy)) currentMonster.energy +=
+        //   result.get(anEnergy).intValue();
         // 7. Decide to buy things for energy
         String msg =
           "PURCHASE:Do you want to buy any of the cards from the store? (you have " +

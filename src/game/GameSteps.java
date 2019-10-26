@@ -250,4 +250,13 @@ public class GameSteps {
       }
     }
   }
+
+  static public void countEnergy(
+    Monster monster,
+    HashMap<Dice, Integer> result
+  ) {
+    Dice anEnergy = new Dice(Dice.ENERGY);
+    if (result.containsKey(anEnergy)) monster.energy +=
+      result.get(anEnergy).intValue();
+  }
 }
