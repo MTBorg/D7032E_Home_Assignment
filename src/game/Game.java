@@ -67,9 +67,8 @@ public class Game {
         }
 
         // pre: Award a monster in Tokyo 1 star
-        if (currentMonster.inTokyo) {
-          currentMonster.stars += 1;
-        }
+        GameSteps.checkIfInTokyo(currentMonster);
+
         sendStatusMessage(currentMonster, this.state.monsters);
 
         HashMap<Dice, Integer> result = GameSteps.diceRoll(

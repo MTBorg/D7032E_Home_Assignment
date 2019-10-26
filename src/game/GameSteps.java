@@ -338,4 +338,11 @@ public class GameSteps {
       System.exit(0);
     }
   }
+
+  public static void checkIfInTokyo(Monster monster) {
+    // pre: Award a monster in Tokyo 1 star
+    if (monster.inTokyo) {
+      monster.stars += 1;
+    }
+  }
 }
