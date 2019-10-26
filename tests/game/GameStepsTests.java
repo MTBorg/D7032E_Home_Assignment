@@ -100,4 +100,34 @@ public class GameStepsTests {
     GameSteps.countHearts(monster, diceRoll, gameState);
     assertFalse(monster.cardsToString().equals("[NO CARDS]"));
   }
+
+  @Test
+  public void checkIfInTokyoGiveStar() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+
+    monster.inTokyo = true;
+
+    //TODO: This is currently not possible to test
+    assertEquals(monster.stars, 0);
+    GameSteps.checkIfInTokyo(monster);
+    assertEquals(monster.stars, 1);
+  }
+
+  @Test
+  public void checkIfNotInTokyoNoStar() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+
+    monster.inTokyo = false;
+
+    //TODO: This is currently not possible to test
+    assertEquals(monster.stars, 0);
+    GameSteps.checkIfInTokyo(monster);
+    assertEquals(monster.stars, 0);
+  }
 }
