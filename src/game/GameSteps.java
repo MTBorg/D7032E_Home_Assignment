@@ -97,6 +97,7 @@ public class GameSteps {
         new GainHealthEvent(monster, result.get(aHeart).intValue())
       );
 
+      //TODO: Check if monster is in tokyo (should receive health then)
       // 6b. 3 hearts = power-up
       if (result.get(aHeart).intValue() >= 3) {
         // Deal a power-up card to the currentMonster

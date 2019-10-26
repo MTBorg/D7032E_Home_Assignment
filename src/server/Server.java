@@ -87,9 +87,10 @@ public class Server {
   }
 
   public static String sendMessage(Stream stream, String message) {
+    if (stream == null) return "";
     Scanner sc = new Scanner(System.in);
     String response = "";
-    if (stream != null) stream.writeBytes(message);
+    stream.writeBytes(message);
     response = stream.readLine();
     return response;
   }
