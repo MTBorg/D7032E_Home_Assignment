@@ -89,59 +89,8 @@ public class Game {
         // 6f. energy = energy tokens
         GameSteps.countEnergy(currentMonster, result);
 
-        // Dice anEnergy = new Dice(Dice.ENERGY);
-        // if (result.containsKey(anEnergy)) currentMonster.energy +=
-        //   result.get(anEnergy).intValue();
         // 7. Decide to buy things for energy
-        String msg =
-          "PURCHASE:Do you want to buy any of the cards from the store? (you have " +
-            currentMonster.energy +
-            " energy) [#/-1]:" +
-            this.state.deck +
-            "\n";
-        boolean validInput = false;
-        while (!validInput) {
-          String answer = Server.sendMessage(
-            this.state.monsters.get(i).stream,
-            msg
-          );
-          int buy = Integer.parseInt(answer);
-          if (buy >= 0 && buy <= 2) {
-            //If card was bought Successfully
-            if (
-              currentMonster.buyCard(this.state.deck.store[buy], this.state)
-            ) {
-              if (this.state.deck.store[buy].isDiscardCard()) {
-                //7a. Play "DISCARD" cards immediately
-                ((DiscardCard) this.state.deck.store[buy]).execute(currentMonster, this.state);
-              }
-
-              //Draw a new card from the deck to replace the card that was bought
-              this.state.deck.store[buy] =
-                null;
-              if (this.state.deck.deck.size() != 0) {
-                this.state.deck.store[buy] = this.state.deck.deck.remove(0);
-              } else {
-                //TODO: This should not happen
-                System.out.println("Out of cards");
-              }
-              validInput = true;
-            } else {
-              Server.sendOneWayMessage(
-                currentMonster.stream,
-                "You cannot afford that item\n"
-              );
-              validInput = false;
-            }
-          } else if (buy > 2) {
-            Server.sendOneWayMessage(
-              currentMonster.stream,
-              "Please enter a valid input\n"
-            );
-          } else if (buy <= -1) {
-            validInput = true;
-          }
-        }
+        GameSteps.buy(currentMonster, this.state);
 
         //8. Check victory conditions
         // String winner = checkVictoryConditionsStar(this.state.monsters);

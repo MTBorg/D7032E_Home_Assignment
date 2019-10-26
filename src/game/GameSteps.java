@@ -259,4 +259,51 @@ public class GameSteps {
     if (result.containsKey(anEnergy)) monster.energy +=
       result.get(anEnergy).intValue();
   }
+
+  static public void buy(Monster monster, GameState gameState) {
+    // 7. Decide to buy things for energy
+    String msg =
+      "PURCHASE:Do you want to buy any of the cards from the store? (you have " +
+        monster.energy +
+        " energy) [#/-1]:" +
+        gameState.deck +
+        "\n";
+    boolean validInput = false;
+    while (!validInput) {
+      String answer = Server.sendMessage(monster.stream, msg);
+      int buy = Integer.parseInt(answer);
+      if (buy >= 0 && buy <= 2) {
+        //If card was bought Successfully
+        if (monster.buyCard(gameState.deck.store[buy], gameState)) {
+          if (gameState.deck.store[buy].isDiscardCard()) {
+            //7a. Play "DISCARD" cards immediately
+            ((DiscardCard) gameState.deck.store[buy]).execute(monster, gameState);
+          }
+
+          //Draw a new card from the deck to replace the card that was bought
+          gameState.deck.store[buy] = null;
+          if (gameState.deck.deck.size() != 0) {
+            gameState.deck.store[buy] = gameState.deck.deck.remove(0);
+          } else {
+            //TODO: This should not happen
+            System.out.println("Out of cards");
+          }
+          validInput = true;
+        } else {
+          Server.sendOneWayMessage(
+            monster.stream,
+            "You cannot afford that item\n"
+          );
+          validInput = false;
+        }
+      } else if (buy > 2) {
+        Server.sendOneWayMessage(
+          monster.stream,
+          "Please enter a valid input\n"
+        );
+      } else if (buy <= -1) {
+        validInput = true;
+      }
+    }
+  }
 }
