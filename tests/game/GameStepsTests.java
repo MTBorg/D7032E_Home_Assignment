@@ -13,6 +13,7 @@ import src.game.cards.store.StoreCard;
 import src.game.Deck;
 import src.game.Dice;
 import src.game.events.BuyEvent;
+import src.game.Game;
 import src.game.GameState;
 import src.game.GameSteps;
 import src.game.Monster;
@@ -385,6 +386,7 @@ public class GameStepsTests {
     gameState.deck = deck;
     monster.energy = store[0].getCost();
 
+    //TODO: This seems to fail some times
     assertTrue(store[0] instanceof ArmorPlating);
     GameSteps.buy(monster, gameState, 0);
     assertFalse(store[0] instanceof ArmorPlating);
@@ -411,5 +413,58 @@ public class GameStepsTests {
     assertEquals(monster.stars, 0);
     GameSteps.buy(monster, gameState, 1);
     assertEquals(monster.stars, 2);
+  }
+
+  @Test
+  public void shouldWinWithEnoughStars() {
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    GameState gameState = new GameState(monsters);
+    monster1.stars = Game.VICTORY_STARS;
+
+    assertTrue(GameSteps.checkVictoryConditions(gameState));
+  }
+
+  @Test
+  public void shouldNotWinWithTooFewStars() {
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    GameState gameState = new GameState(monsters);
+    monster1.stars = Game.VICTORY_STARS - 1;
+
+    assertFalse(GameSteps.checkVictoryConditions(gameState));
+  }
+
+  @Test
+  public void shouldWinWhenOnlyOneMonsterIsAlive() {
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    GameState gameState = new GameState(monsters);
+    monster1.setCurrentHealth(0);
+
+    assertTrue(GameSteps.checkVictoryConditions(gameState));
+  }
+
+  @Test
+  public void shouldNotWinWhenTwoMonstersAreAlive() {
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    GameState gameState = new GameState(monsters);
+
+    assertTrue(monster1.getCurrentHealth() > 0);
+    assertTrue(monster2.getCurrentHealth() > 0);
+    assertFalse(GameSteps.checkVictoryConditions(gameState));
   }
 }
