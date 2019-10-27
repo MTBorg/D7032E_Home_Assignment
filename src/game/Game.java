@@ -17,15 +17,38 @@ import src.game.events.DiceRollEvent;
 import src.game.events.Event;
 import src.game.events.GainHealthEvent;
 import src.game.factories.EvolutionCardFactory;
+import src.game.factories.MonsterFactory;
 import src.game.GameSteps;
 import src.game.Monster;
+import src.network.Stream;
 import src.server.Server;
 
 public class Game {
   private GameState state;
   public static int VICTORY_STARS = 20;
 
-  public Game(ArrayList<Monster> monsters) {
+  public Game(ArrayList<Stream> connections) {
+    ArrayList<String> monsterNames = MonsterFactory.getMonsters(
+      connections.size()
+    );
+
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+
+    int i = 0;
+    for (String name : monsterNames) {
+      Monster monster = new Monster(name);
+      monster.stream = connections.get(i);
+      monsters.add(monster);
+      Server.sendOneWayMessage(
+        monster.stream,
+        "You were assigned monster " + monster.getName() + "\n"
+      );
+      i++;
+    }
+
+    // Shuffle the starting order
+    Collections.shuffle(monsters);
+
     this.state = new GameState(monsters);
     for (Monster monster : this.state.monsters) {
       for (Card card : monster.cards) {

@@ -29,38 +29,20 @@ public class Server {
     Server.start();
   }
 
-  private static ArrayList<Monster> monsters = new ArrayList<Monster>();
+  private static ArrayList<Stream> connections = new ArrayList<Stream>();
   private static final int PLAYER_AMOUNT = 2;
   private static final int SERVER_SOCKET = 2048;
 
   public static void start() {
     System.out.println("Server started");
 
-    List<String> monsterNames = Arrays.asList(
-      new String[] { "Kong", "Gigazaur", "Alienoid" }
-    );
-
-    //Shuffle which monsters will played (if not all)
-    Collections.shuffle(monsterNames);
-
-    for (int i = 0; i < PLAYER_AMOUNT; i++) {
-      monsters.add(new Monster(monsterNames.get(i)));
-    }
-
-    //Shuffle which player is which monster
-    Collections.shuffle(monsters);
-
-    //Server stuffs
     try {
       waitForPlayers();
     } catch (Exception e) {
       System.out.println(e);
     }
 
-    //Shuffle the starting order
-    Collections.shuffle(monsters);
-
-    Game game = new Game(monsters);
+    Game game = new Game(connections);
     game.loop();
   }
 
@@ -75,14 +57,10 @@ public class Server {
       Socket connectionSocket = aSocket.accept();
       Stream stream = new Stream(connectionSocket);
 
-      stream.writeBytes(
-        " You are the monster: " + monsters.get(onlineClient).getName() + "\n"
-      );
-      monsters.get(onlineClient).stream = stream;
+      stream.writeBytes("Connected to server\n");
 
-      System.out.println(
-        "Connected to " + monsters.get(onlineClient).getName()
-      );
+      connections.add(stream);
+      System.out.println("Connected to player");
     }
   }
 
@@ -100,13 +78,13 @@ public class Server {
   }
 
   public static void broadCastMessage(String message, Monster exception) {
-    for (Monster monster : Server.monsters) {
+    for (Stream stream : Server.connections) {
       if (exception != null) {
-        if (monster == exception) {
+        if (stream == exception.stream) {
           continue; //Don't write to the exception
         }
       }
-      sendOneWayMessage(monster.stream, message);
+      sendOneWayMessage(stream, message);
     }
   }
 }
