@@ -59,6 +59,7 @@ public class GameStepsTests {
 
   @Test
   public void countHeartsOneHeart() {
+    //Tests 12e,ii
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -73,6 +74,7 @@ public class GameStepsTests {
 
   @Test
   public void countHeartsZeroHearts() {
+    //Tests 12e,ii
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -87,6 +89,7 @@ public class GameStepsTests {
 
   @Test
   public void countHeartsDontExceedMaxHealth() {
+    //Tests 12e,ii
     Monster monster = new Monster("Alienoid");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -100,6 +103,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldNotGetHealthWhenInTokyo() {
+    //Tests 12e,i
     Monster monster = new Monster("Test Monster");
     monster.inTokyo = true;
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -115,6 +119,7 @@ public class GameStepsTests {
 
   @Test
   public void countHeartsThreeHeartsGivePowerUpCard() {
+    //Tests 12f
     Monster monster = new Monster("Alienoid");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -129,6 +134,7 @@ public class GameStepsTests {
 
   @Test
   public void checkIfInTokyoGiveStar() {
+    //Tests 7
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -143,6 +149,7 @@ public class GameStepsTests {
 
   @Test
   public void checkIfNotInTokyoNoStar() {
+    //Tests 7
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -157,6 +164,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsZeroOnes() {
+    //Tests 12a
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -170,6 +178,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsTwoOnes() {
+    //Tests 12a
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -183,6 +192,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsThreeOnes() {
+    //Tests 12a
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -196,6 +206,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsFourOnes() {
+    //Tests 12a
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -209,6 +220,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsZeroTwos() {
+    //Tests 12b
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -222,6 +234,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsTwoTwos() {
+    //Tests 12b
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -235,6 +248,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsThreeTwos() {
+    //Tests 12b
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -248,6 +262,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsFourTwos() {
+    //Tests 12b
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -261,6 +276,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsZeroThrees() {
+    //Tests 12c
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -274,6 +290,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsTwoThrees() {
+    //Tests 12c
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -287,6 +304,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsThreeThrees() {
+    //Tests 12c
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -300,6 +318,7 @@ public class GameStepsTests {
 
   @Test
   public void countVictoryPointsFourThrees() {
+    //Tests 12c
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -313,6 +332,7 @@ public class GameStepsTests {
 
   @Test
   public void countEnergy() {
+    //Tests 12d
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -330,6 +350,7 @@ public class GameStepsTests {
 
   @Test
   public void buyCannotAffordCard() {
+    //Tests 13
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -350,6 +371,7 @@ public class GameStepsTests {
 
   @Test
   public void buyCanAffordCard() {
+    //Tests 13
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -370,6 +392,7 @@ public class GameStepsTests {
 
   @Test
   public void buyStoreCardReplaced() {
+    //Tests 13
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -391,6 +414,7 @@ public class GameStepsTests {
 
   @Test
   public void buyDiscardCardPlayedImmediately() {
+    //Tests 13
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -414,6 +438,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldWinWithEnoughStars() {
+    //Tests 16
     Monster monster1 = new Monster("Test Monster1");
     Monster monster2 = new Monster("Test Monster2");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -427,6 +452,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldNotWinWithTooFewStars() {
+    //Tests 16
     Monster monster1 = new Monster("Test Monster1");
     Monster monster2 = new Monster("Test Monster2");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -440,6 +466,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldWinWhenOnlyOneMonsterIsAlive() {
+    //Tests 17
     Monster monster1 = new Monster("Test Monster1");
     Monster monster2 = new Monster("Test Monster2");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -453,6 +480,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldNotWinWhenTwoMonstersAreAlive() {
+    //Tests 16
     Monster monster1 = new Monster("Test Monster1");
     Monster monster2 = new Monster("Test Monster2");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -467,6 +495,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldRollSixDice() {
+    //Tests 8
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -481,6 +510,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldNotKeepSelectedDices() {
+    //Tests 9
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -504,6 +534,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldRerollDice() {
+    //Tests 10
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);
@@ -527,6 +558,7 @@ public class GameStepsTests {
 
   @Test
   public void shouldBeAbleToResetTheStore() {
+    // Tests 13b
     Monster monster = new Monster("Test Monster");
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     monsters.add(monster);

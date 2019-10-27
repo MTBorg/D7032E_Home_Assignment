@@ -85,12 +85,14 @@ public class MonsterTests {
 
   @Test
   public void startWithNoStars() {
+    //Tests 2
     Monster monster = new Monster("Test Monster");
     assertEquals(monster.stars, 0);
   }
 
   @Test
   public void startWith10Health() {
+    //Tests 3
     Monster monster = new Monster("Test Monster");
     assertEquals(monster.getCurrentHealth(), 10);
   }

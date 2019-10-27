@@ -18,6 +18,7 @@ public class GameTests {
 
   @Test
   public void allPlayersAreAssignedAMonster() throws Exception {
+    //Tests 1
     ArrayList<Stream> streams = new ArrayList<Stream>();
     streams.add(null);
     streams.add(null);
@@ -36,6 +37,7 @@ public class GameTests {
 
   @Test
   public void startGameWithThreeStoreCards() throws Exception {
+    //Tests 4a
     Game game = new Game(new ArrayList<Stream>());
 
     assertTrue(game.getState().deck.store[0] != null);
