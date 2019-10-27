@@ -11,6 +11,7 @@ import src.game.cards.store.DiscardCard;
 import src.game.Dice;
 import src.game.events.DiceRollEvent;
 import src.game.events.GainHealthEvent;
+import src.game.Game;
 import src.game.GameState;
 import src.game.Monster;
 import src.server.Server;
@@ -251,9 +252,11 @@ public class GameSteps {
 
   static public int shopPrompt(Monster monster, GameState gameState) {
     String msg =
-      "PURCHASE:Do you want to buy any of the cards from the store? (you have " +
+      "PURCHASE:Do you want to buy any of the cards from the store (enter -1 to skip and -2 to reset the store (Cost " +
+        Deck.RESET_COST +
+        "))? (you have " +
         monster.energy +
-        " energy) [#/-1]:" +
+        " energy) [#/-1,-2]:" +
         gameState.deck +
         "\n";
     while (true) {
@@ -266,8 +269,10 @@ public class GameSteps {
           monster.stream,
           "Please enter a valid input\n"
         );
-      } else if (buy <= -1) {
+      } else if (buy == -1) {
         return -1;
+      } else if (buy <= -2) {
+        return -2;
       }
     }
   }
@@ -295,6 +300,9 @@ public class GameSteps {
       } else {
         return false;
       }
+    } else if (item == -2) {
+      gameState.deck.resetStore(monster);
+      return true;
     } else {
       // TODO: Throw exception
       return false;

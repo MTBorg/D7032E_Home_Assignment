@@ -524,4 +524,24 @@ public class GameStepsTests {
       assertTrue(dices.get(i).value >= 0 && dices.get(i).value <= 5);
     }
   }
+
+  @Test
+  public void shouldBeAbleToResetTheStore() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+    monster.energy = 2;
+
+    int deckSize = gameState.deck.deck.size();
+    for (int i = 0; i < 3; i++) {
+      assertTrue(gameState.deck.store[i] != null);
+    }
+    GameSteps.buy(monster, gameState, -2);
+    assertEquals(monster.energy, 0);
+    for (int i = 0; i < 3; i++) {
+      assertTrue(gameState.deck.store[i] != null);
+    }
+    assertEquals(gameState.deck.deck.size(), deckSize); //Assert no cards were destroyed
+  }
 }
