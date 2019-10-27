@@ -313,7 +313,7 @@ public class GameSteps {
     }
   }
 
-  public static void checkVictoryConditions(GameState gameState) {
+  public static boolean checkVictoryConditions(GameState gameState) {
     int alive = 0;
     String aliveMonster = "";
     for (int mon = 0; mon < gameState.monsters.size(); mon++) {
@@ -326,7 +326,7 @@ public class GameSteps {
               " has won by stars\n"
           );
         }
-        System.exit(0);
+        return true;
       }
       if (gameState.monsters.get(mon).getCurrentHealth() > 0) {
         alive++;
@@ -340,8 +340,9 @@ public class GameSteps {
           "Victory: " + aliveMonster + " has won by being the only one alive\n"
         );
       }
-      System.exit(0);
+      return true;
     }
+    return false;
   }
 
   public static void checkIfInTokyo(Monster monster) {

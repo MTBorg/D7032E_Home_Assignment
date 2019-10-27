@@ -107,7 +107,9 @@ public class Game {
         } while (!buySuccess);
 
         //8. Check victory conditions
-        GameSteps.checkVictoryConditions(this.state);
+        if (GameSteps.checkVictoryConditions(this.state)) {
+          System.exit(0);
+        }
       // String winner = checkVictoryConditionsStar(this.state.monsters);
       // if (winner != ""){
       // for(int player=0; player<this.state.monsters.size(); player++) {
