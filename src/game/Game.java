@@ -202,4 +202,8 @@ public class Game {
     }
     return alive == 1 ? aliveMonster : "";
   }
+
+  public GameState getState() {
+    return this.state;
+  }
 }
