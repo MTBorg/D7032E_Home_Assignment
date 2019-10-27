@@ -326,4 +326,13 @@ public class GameStepsTests {
       assertEquals(monster.energy, i);
     }
   }
+
+  @Test
+  public void buy() {
+    // Monster monster = new Monster("Test Monster");
+  // ArrayList<Monster> monsters = new ArrayList<Monster>();
+  // monsters.add(monster);
+  // GameState gameState = new GameState(monsters);
+  // GameSteps.buy(monster, gameState);
+  }
 }

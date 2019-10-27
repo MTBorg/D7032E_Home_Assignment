@@ -89,7 +89,22 @@ public class Game {
         GameSteps.countEnergy(currentMonster, result);
 
         // 7. Decide to buy things for energy
-        GameSteps.buy(currentMonster, this.state);
+        boolean buySuccess = false;
+        do {
+          int itemToBuy = -1;
+          itemToBuy = GameSteps.shopPrompt(currentMonster, this.state);
+          if (itemToBuy == -1) {
+            buySuccess = true;
+          } else {
+            buySuccess = GameSteps.buy(currentMonster, this.state, itemToBuy);
+          }
+          if (!buySuccess) {
+            Server.sendOneWayMessage(
+              currentMonster.stream,
+              "You cannot afford that item\n"
+            );
+          }
+        } while (!buySuccess);
 
         //8. Check victory conditions
         GameSteps.checkVictoryConditions(this.state);
