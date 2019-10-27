@@ -13,6 +13,11 @@ import tests.game.MonsterTests;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-  { GameTests.class, MonsterTests.class, GameStepsTests.class }
+  {
+    GameTests.class,
+    MonsterTests.class,
+    GameStepsTests.class,
+    tests.game.events.AllTests.class
+  }
 )
 public final class AllTests {}
