@@ -33,4 +33,13 @@ public class GameTests {
       monster2 != null && monster2.getName() != null && monster2.getName() != ""
     );
   }
+
+  @Test
+  public void startGameWithThreeStoreCards() throws Exception {
+    Game game = new Game(new ArrayList<Stream>());
+
+    assertTrue(game.getState().deck.store[0] != null);
+    assertTrue(game.getState().deck.store[1] != null);
+    assertTrue(game.getState().deck.store[2] != null);
+  }
 }
