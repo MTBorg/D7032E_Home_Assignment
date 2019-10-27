@@ -464,4 +464,64 @@ public class GameStepsTests {
     assertTrue(monster2.getCurrentHealth() > 0);
     assertFalse(GameSteps.checkVictoryConditions(gameState));
   }
+
+  @Test
+  public void shouldRollSixDice() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+
+    ArrayList<Dice> dice = GameSteps.rollDices(gameState, monster);
+    assertEquals(dice.size(), 6);
+    for (int i = 0; i < 6; i++) {
+      assertTrue(dice.get(i).value >= 0 && dice.get(i).value <= 5);
+    }
+  }
+
+  @Test
+  public void shouldNotKeepSelectedDices() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+
+    ArrayList<Dice> dices = new ArrayList<Dice>();
+    for (int i = 0; i < 6; i++) {
+      dices.add(new Dice(i));
+    }
+
+    assertEquals(dices.size(), 6);
+
+    //Should  remove the first, second and fifth dice
+    GameSteps.keepDices("5,2,1", dices, monster);
+
+    assertEquals(dices.size(), 3);
+    assertEquals(dices.get(0).value, 2);
+    assertEquals(dices.get(1).value, 3);
+    assertEquals(dices.get(2).value, 5);
+  }
+
+  @Test
+  public void shouldRerollDice() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+
+    ArrayList<Dice> dices = new ArrayList<Dice>();
+    for (int i = 0; i < 6; i++) {
+      dices.add(new Dice(i));
+    }
+
+    assertEquals(dices.size(), 6);
+
+    GameSteps.keepDices("6,3", dices, monster);
+    GameSteps.rerollDices(dices, gameState, monster);
+
+    assertEquals(dices.size(), 6);
+    for (int i = 0; i < 6; i++) {
+      assertTrue(dices.get(i).value >= 0 && dices.get(i).value <= 5);
+    }
+  }
 }
