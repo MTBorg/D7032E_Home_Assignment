@@ -30,6 +30,17 @@ public class GameStepsTests {
     return result;
   }
 
+  private HashMap<Dice, Integer> generateDiceRollEnergy(int energy) {
+    HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
+    result.put(new Dice(0), 0); //Don't generate hearts in order to avoid powerups
+    result.put(new Dice(1), 6 - energy);
+    result.put(new Dice(2), 0);
+    result.put(new Dice(3), 0);
+    result.put(new Dice(4), energy);
+    result.put(new Dice(5), 0); //Don't generate energy in order to avoid damage
+    return result;
+  }
+
   private HashMap<Dice, Integer> generateDiceRollNumber(
     int number,
     int amount
@@ -297,5 +308,22 @@ public class GameStepsTests {
     assertEquals(monster.stars, 0);
     GameSteps.countVictoryPoints(monster, diceRoll);
     assertEquals(monster.stars, 4);
+  }
+
+  @Test
+  public void countEnergy() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+
+    //Assert that the amount of energy received is the same as energy dice rolled
+    for (int i = 0; i < 6; i++) {
+      monster.energy = 0;
+      assertEquals(monster.energy, 0);
+      HashMap<Dice, Integer> diceRoll = generateDiceRollEnergy(i);
+      GameSteps.countEnergy(monster, diceRoll);
+      assertEquals(monster.energy, i);
+    }
   }
 }
