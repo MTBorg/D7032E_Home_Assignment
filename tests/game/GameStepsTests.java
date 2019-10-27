@@ -108,7 +108,6 @@ public class GameStepsTests {
     HashMap<Dice, Integer> diceRoll = generateDiceRollHearts(1);
     monster.setCurrentHealth(1);
 
-    //TODO: This feature is not implemented
     assertEquals(monster.getCurrentHealth(), 1);
     GameSteps.countHearts(monster, diceRoll, gameState);
     assertEquals(monster.getCurrentHealth(), 1);

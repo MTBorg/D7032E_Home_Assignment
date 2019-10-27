@@ -89,6 +89,10 @@ public class GameSteps {
     HashMap<Dice, Integer> result,
     GameState gameState
   ) {
+    if (monster.inTokyo) {
+      return;
+    }
+
     // 6a. Hearts = health (max 10 unless a cord increases it)
     Dice aHeart = new Dice(Dice.HEART);
     if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
@@ -97,7 +101,6 @@ public class GameSteps {
         new GainHealthEvent(monster, result.get(aHeart).intValue())
       );
 
-      //TODO: Check if monster is in tokyo (should receive health then)
       // 6b. 3 hearts = power-up
       if (result.get(aHeart).intValue() >= 3) {
         // Deal a power-up card to the currentMonster
