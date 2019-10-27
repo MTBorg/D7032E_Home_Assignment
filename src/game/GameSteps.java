@@ -17,69 +17,54 @@ import src.server.Server;
 
 public class GameSteps {
 
-  public static HashMap<Dice, Integer> diceRoll(
+  public static ArrayList<Dice> rollDices(
     GameState gameState,
     Monster monster
   ) {
-    HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
-
-    // 1. Roll 6 dices
-    ArrayList<Dice> dices = new ArrayList<Dice>();
-    dices = Dice.diceRoll(6);
+    ArrayList<Dice> dices = Dice.diceRoll(6);
     gameState.pushEvent(new DiceRollEvent(monster, dices));
-
-    // 2. Decide which dice to keep
-    keepDices(dices, monster);
-
-    // 3. Reroll remaining dice
-    dices.addAll(Dice.diceRoll(6 - dices.size()));
-    gameState.pushEvent(new DiceRollEvent(monster, dices));
-
-    // 4. Decide which dice to keep
-    keepDices(dices, monster);
-
-    // 5. Reroll remaining dice
-    dices.addAll(Dice.diceRoll(6 - dices.size()));
-    gameState.pushEvent(new DiceRollEvent(monster, dices));
-
-    // 6. Sum up totals
-    Collections.sort(dices);
-    for (Dice unique : new HashSet<Dice>(dices)) {
-      result.put(unique, Collections.frequency(dices, unique));
-    }
-    String ok = Server.sendMessage(
-      monster.stream,
-      "ROLLED:You rolled " + result + " Press [ENTER]\n"
-    );
-
-    return result;
+    return dices;
   }
 
-  static private void keepDices(ArrayList<Dice> dices, Monster monster) {
+  public static void rerollDices(
+    ArrayList<Dice> dices,
+    GameState gameState,
+    Monster monster
+  ) {
+    dices.addAll(Dice.diceRoll(6 - dices.size()));
+    gameState.pushEvent(new DiceRollEvent(monster, dices));
+  }
+
+  static public String promptReroll(Monster monster, ArrayList<Dice> dices) {
     String rolledDice = "ROLLED:You rolled:\t[1]\t[2]\t[3]\t[4]\t[5]\t[6]:";
     for (int allDice = 0; allDice < dices.size(); allDice++) {
       rolledDice += "\t[" + dices.get(allDice) + "]";
     }
     String choices =
       ":Choose which dices to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
-    String[] reroll = Server
-      .sendMessage(monster.stream, rolledDice + choices)
-      .split(",");
+    String response = Server.sendMessage(monster.stream, rolledDice + choices);
+    return response;
+  }
+
+  static public boolean keepDices(
+    String input,
+    ArrayList<Dice> dices,
+    Monster monster
+  ) {
+    String[] reroll = input.split(",");
     while (true) {
       try {
         if (Integer.parseInt(reroll[0]) != 0) for (int j = 0; j <
           reroll.length; j++) {
           dices.remove(Integer.parseInt(reroll[j]) - 1);
         }
-        break;
+        return true;
       } catch (NumberFormatException e) {
-        reroll =
-          Server
-            .sendMessage(
-              monster.stream,
-              "Please enter a valid number! \n" + choices
-            )
-            .split(",");
+        Server.sendOneWayMessage(
+          monster.stream,
+          "Please enter a valid number! \n"
+        );
+        return false;
       }
     }
   }

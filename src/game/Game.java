@@ -94,9 +94,39 @@ public class Game {
 
         sendStatusMessage(currentMonster, this.state.monsters);
 
-        HashMap<Dice, Integer> result = GameSteps.diceRoll(
-          this.state,
-          currentMonster
+        // 1. Roll 6 dices
+        ArrayList<Dice> dices = new ArrayList<Dice>();
+        dices = GameSteps.rollDices(this.state, currentMonster);
+
+        // 2. Decide which dice to keep
+        boolean validInput = false;
+        do {
+          String reroll = GameSteps.promptReroll(currentMonster, dices);
+          validInput = GameSteps.keepDices(reroll, dices, currentMonster);
+        } while (!validInput);
+
+        // 3. Reroll remaining dice
+        GameSteps.rerollDices(dices, this.state, currentMonster);
+
+        // 4. Decide which dice to keep
+        validInput = false;
+        do {
+          String reroll = GameSteps.promptReroll(currentMonster, dices);
+          validInput = GameSteps.keepDices(reroll, dices, currentMonster);
+        } while (!validInput);
+
+        // 5. Reroll remaining dice
+        GameSteps.rerollDices(dices, this.state, currentMonster);
+
+        // 6. Sum up totals
+        HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
+        Collections.sort(dices);
+        for (Dice unique : new HashSet<Dice>(dices)) {
+          result.put(unique, Collections.frequency(dices, unique));
+        }
+        Server.sendMessage(
+          currentMonster.stream,
+          "ROLLED:You rolled " + result + " Press [ENTER]\n"
         );
 
         // 6a. Hearts = health (max 10 unless a cord increases it)
