@@ -23,7 +23,7 @@ import src.server.Server;
 
 public class Game {
   private GameState state;
-  private final int VICTORY_STARS = 20;
+  public static int VICTORY_STARS = 20;
 
   public Game(ArrayList<Monster> monsters) {
     this.state = new GameState(monsters);
