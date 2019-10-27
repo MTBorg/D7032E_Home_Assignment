@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.junit.Test;
 import src.game.Card;
+import src.game.cards.store.AlienMetabolism;
 import src.game.cards.store.ArmorPlating;
+import src.game.cards.store.CommuterTrain;
 import src.game.cards.store.StoreCard;
+import src.game.Deck;
 import src.game.Dice;
 import src.game.events.BuyEvent;
 import src.game.GameState;
@@ -328,11 +331,85 @@ public class GameStepsTests {
   }
 
   @Test
-  public void buy() {
-    // Monster monster = new Monster("Test Monster");
-  // ArrayList<Monster> monsters = new ArrayList<Monster>();
-  // monsters.add(monster);
-  // GameState gameState = new GameState(monsters);
-  // GameSteps.buy(monster, gameState);
+  public void buyCannotAffordCard() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+    StoreCard[] store = new StoreCard[3];
+    store[0] = new ArmorPlating();
+    store[1] = new CommuterTrain();
+    store[2] = new AlienMetabolism();
+    Deck deck = new Deck(monsters);
+    deck.store = store;
+    gameState.deck = deck;
+    monster.energy = 0;
+
+    assertFalse(monster.hasCard("Armor Plating"));
+    GameSteps.buy(monster, gameState, 0);
+    assertFalse(monster.hasCard("Armor Plating"));
+  }
+
+  @Test
+  public void buyCanAffordCard() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+    StoreCard[] store = new StoreCard[3];
+    store[0] = new ArmorPlating();
+    store[1] = new CommuterTrain();
+    store[2] = new AlienMetabolism();
+    Deck deck = new Deck(monsters);
+    deck.store = store;
+    gameState.deck = deck;
+    monster.energy = store[0].getCost();
+
+    assertFalse(monster.hasCard("Armor Plating"));
+    GameSteps.buy(monster, gameState, 0);
+    assertTrue(monster.hasCard("Armor Plating"));
+  }
+
+  @Test
+  public void buyStoreCardReplaced() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+    StoreCard[] store = new StoreCard[3];
+    store[0] = new ArmorPlating();
+    store[1] = new CommuterTrain();
+    store[2] = new AlienMetabolism();
+    Deck deck = new Deck(monsters);
+    deck.store = store;
+    gameState.deck = deck;
+    monster.energy = store[0].getCost();
+
+    assertTrue(store[0] instanceof ArmorPlating);
+    GameSteps.buy(monster, gameState, 0);
+    assertFalse(store[0] instanceof ArmorPlating);
+  }
+
+  @Test
+  public void buyDiscardCardPlayedImmediately() {
+    Monster monster = new Monster("Test Monster");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster);
+    GameState gameState = new GameState(monsters);
+    StoreCard[] store = new StoreCard[3];
+    store[0] = new ArmorPlating();
+    store[1] = new CommuterTrain();
+    store[2] = new AlienMetabolism();
+    Deck deck = new Deck(monsters);
+    deck.store = store;
+    gameState.deck = deck;
+    monster.energy = store[1].getCost();
+    monster.stars = 0;
+
+    // Buying the commuter train card should give the monster two stars when played
+    // TODO: This is a pretty hacky way of checking if the card was played
+    assertEquals(monster.stars, 0);
+    GameSteps.buy(monster, gameState, 1);
+    assertEquals(monster.stars, 2);
   }
 }
