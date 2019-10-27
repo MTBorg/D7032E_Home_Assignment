@@ -99,7 +99,7 @@ public class GameStepsTests {
   }
 
   @Test
-  public void countHeartsInTokyoNoHealth() {
+  public void shouldNotGetHealthWhenInTokyo() {
     Monster monster = new Monster("Test Monster");
     monster.inTokyo = true;
     ArrayList<Monster> monsters = new ArrayList<Monster>();
