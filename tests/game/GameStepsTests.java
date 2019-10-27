@@ -136,7 +136,6 @@ public class GameStepsTests {
 
     monster.inTokyo = true;
 
-    //TODO: This is currently not possible to test
     assertEquals(monster.stars, 0);
     GameSteps.checkIfInTokyo(monster);
     assertEquals(monster.stars, 1);
@@ -151,7 +150,6 @@ public class GameStepsTests {
 
     monster.inTokyo = false;
 
-    //TODO: This is currently not possible to test
     assertEquals(monster.stars, 0);
     GameSteps.checkIfInTokyo(monster);
     assertEquals(monster.stars, 0);
