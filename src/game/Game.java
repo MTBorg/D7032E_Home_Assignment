@@ -163,32 +163,8 @@ public class Game {
         if (GameSteps.checkVictoryConditions(this.state)) {
           System.exit(0);
         }
-      // String winner = checkVictoryConditionsStar(this.state.monsters);
-      // if (winner != ""){
-      // for(int player=0; player<this.state.monsters.size(); player++) {
-      // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
-      // }
-      //     System.exit(0);
-      // }
-      // winner = checkVictoryConditionsAlive(this.state.monsters);
-      // if (winner != ""){
-      // for(int player=0; player<this.state.monsters.size(); player++) {
-      // String victoryByStars = sendMessage(player, "Victory: " + winner + " has won by stars\n");
-      // }
-      //     System.exit(0);
-      // }
       }
     }
-  }
-
-  private String checkVictoryConditionsStar(ArrayList<Monster> monsters) {
-    //8. Check victory conditions
-    for (int mon = 0; mon < monsters.size(); mon++) {
-      if (monsters.get(mon).stars >= VICTORY_STARS) {
-        return monsters.get(mon).getName();
-      }
-    }
-    return "";
   }
 
   /**
@@ -225,18 +201,6 @@ public class Game {
       statusUpdate += this.state.monsters.get(count).cardsToString();
     }
     Server.sendMessage(recipient.stream, statusUpdate + "\n");
-  }
-
-  private String checkVictoryConditionsAlive(ArrayList<Monster> monsters) {
-    int alive = 0;
-    String aliveMonster = "";
-    for (int mon = 0; mon < monsters.size(); mon++) {
-      if (monsters.get(mon).getCurrentHealth() > 0) {
-        alive++;
-        aliveMonster = monsters.get(mon).getName();
-      }
-    }
-    return alive == 1 ? aliveMonster : "";
   }
 
   public GameState getState() {
