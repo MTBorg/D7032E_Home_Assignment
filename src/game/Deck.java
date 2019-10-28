@@ -51,6 +51,11 @@ public class Deck {
     return returnString;
   }
 
+  /**
+   * Reset the store.
+   *
+   * @param monster The monster who reset the store
+   */
   public void resetStore(Monster monster) {
     Server.broadCastMessage(monster.getName() + " reset the store\n", monster);
     Server.sendOneWayMessage(monster.stream, "You reset the store \n");

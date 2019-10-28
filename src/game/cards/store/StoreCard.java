@@ -26,10 +26,16 @@ public abstract class StoreCard extends Card {
     );
   }
 
+  /**
+   * Return whether or not the card is a discard card.
+   */
   public boolean isDiscardCard() {
     return this instanceof DiscardCard;
   }
 
+  /**
+   * Return the cost of the cards
+   */
   public int getCost() {
     return this.cost;
   }

@@ -29,6 +29,11 @@ public abstract class Card {
     return this.name;
   }
 
+  /**
+   * Announce that the card was played to all players and server.
+   *
+   * @param executor The monster who executed the card
+   */
   protected void announcePlayed(Monster executor) {
     Server.broadCastMessage(
       executor.getName() + " played card " + this.name + "\n",

@@ -27,6 +27,13 @@ public class GameSteps {
     return dices;
   }
 
+  /**
+   * Rerolls the missing dice of the dice set (a set contains six dices).
+   *
+   * @param dices the dice set to reroll
+   * @param the state of the game
+   * @param monster The monster to reroll the dice
+   */
   public static void rerollDices(
     ArrayList<Dice> dices,
     GameState gameState,
@@ -36,6 +43,12 @@ public class GameSteps {
     gameState.pushEvent(new DiceRollEvent(monster, dices));
   }
 
+  /**
+   * Prompt the player for which dice to reroll
+   *
+   * @param monster The player/monster to prompt
+   * @param dices The array of dices to reroll from.
+   */
   static public String promptReroll(Monster monster, ArrayList<Dice> dices) {
     String rolledDice = "ROLLED:You rolled:\t[1]\t[2]\t[3]\t[4]\t[5]\t[6]:";
     for (int allDice = 0; allDice < dices.size(); allDice++) {
@@ -47,6 +60,13 @@ public class GameSteps {
     return response;
   }
 
+  /**
+   * Keep the dice specified according to input.
+   *
+   * @param input String containing the input from the user
+   * @param dices The array of dice from which to keep
+   * @param monster The monster which will keep the dice
+   */
   static public boolean keepDices(
     String input,
     ArrayList<Dice> dices,
@@ -70,6 +90,13 @@ public class GameSteps {
     }
   }
 
+  /**
+   * Count hearts and assign health and power up cards.
+   *
+   * @param monster The monster who rolled the hearts.
+   * @param result The map between dice and the amount of said dice
+   * @param gameState The state of the game
+   */
   public static void countHearts(
     Monster monster,
     HashMap<Dice, Integer> result,
@@ -117,6 +144,12 @@ public class GameSteps {
     }
   }
 
+  /**
+   * Count ones, twos, and threes and assign stars.
+   *
+   * @param monster The monster to assign stars
+   * @param result The map between dice and the amount of said dice
+   */
   public static void countVictoryPoints(
     Monster monster,
     HashMap<Dice, Integer> result
@@ -129,6 +162,11 @@ public class GameSteps {
     }
   }
 
+  /** Count claws and attack
+   * @param monster The monster who rolled.
+   * @param result The map between dice and the amount of said dice.
+   * @param gameState The state of the game.
+   */
   public static void countClaws(
     Monster monster,
     HashMap<Dice, Integer> result,
@@ -192,6 +230,7 @@ public class GameSteps {
     }
   }
 
+  //TODO: Not used?
   public static void shop(Monster monster, GameState gameState) {
     // 7. Decide to buy things for energy
     String msg =
@@ -241,6 +280,12 @@ public class GameSteps {
     }
   }
 
+  /**
+   * Count and assign energy
+   *
+   * @param monster The monster who rolled the dices.
+   * @param result The map between dice and the amount of said dice.
+   */
   static public void countEnergy(
     Monster monster,
     HashMap<Dice, Integer> result
@@ -250,6 +295,12 @@ public class GameSteps {
       result.get(anEnergy).intValue();
   }
 
+  /**
+   * Prompt  a player to shop.
+   *
+   * @param monster The monster/player to prompt.
+   * @param gameState The state of the game.
+   */
   static public int shopPrompt(Monster monster, GameState gameState) {
     String msg =
       "PURCHASE:Do you want to buy any of the cards from the store (enter -1 to skip and -2 to reset the store (Cost " +
@@ -277,6 +328,13 @@ public class GameSteps {
     }
   }
 
+  /**
+   * Buy an item for a monster.
+   *
+   * @param monster The monster who buys the item.
+   * @param gameState The state of the game.
+   * @param item The store index of the item the monster wishes to buy.
+   */
   static public boolean buy(Monster monster, GameState gameState, int item) {
     // 7. Decide to buy things for energy
     if (item >= 0 && item <= 2) {

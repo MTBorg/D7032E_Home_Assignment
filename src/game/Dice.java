@@ -27,6 +27,11 @@ public class Dice implements Comparable<Dice> {
     return value < o.value ? -1 : value == o.value ? 0 : 1;
   }
 
+  /**
+   * Return whether or not the of the dice is equals to the value of another.
+   *
+   * @param o: The other dice.
+   */
   public boolean equals(Object o) {
     return value == ((Dice) o).value;
   }

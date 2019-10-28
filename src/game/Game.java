@@ -191,6 +191,12 @@ public class Game {
     return "";
   }
 
+  /**
+   * Sends a status message to the recipient.
+   *
+   * @param recipient The player/monster to receive the status message.
+   * @param monsters An array containing all monsters of the game.
+   */
   private void sendStatusMessage(
     Monster recipient,
     ArrayList<Monster> monsters
