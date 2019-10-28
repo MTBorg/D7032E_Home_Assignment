@@ -39,7 +39,7 @@ public class Game {
       Monster monster = new Monster(name);
       monster.stream = connections.get(i);
       monsters.add(monster);
-      Server.sendOneWayMessage(
+      Server.sendMessage(
         monster.stream,
         "You were assigned monster " + monster.getName() + "\n"
       );
@@ -152,7 +152,7 @@ public class Game {
             buySuccess = GameSteps.buy(currentMonster, this.state, itemToBuy);
           }
           if (!buySuccess) {
-            Server.sendOneWayMessage(
+            Server.sendMessage(
               currentMonster.stream,
               "You cannot afford that item\n"
             );

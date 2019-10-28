@@ -81,10 +81,7 @@ public class GameSteps {
         }
         return true;
       } catch (NumberFormatException e) {
-        Server.sendOneWayMessage(
-          monster.stream,
-          "Please enter a valid number! \n"
-        );
+        Server.sendMessage(monster.stream, "Please enter a valid number! \n");
         return false;
       }
     }
@@ -129,7 +126,7 @@ public class GameSteps {
           monster.giveCard(powerUpCard);
         }
 
-        Server.sendOneWayMessage(
+        Server.sendMessage(
           monster.stream,
           "You rolled three hearts and received the card " +
             powerUpCard.getName() +
@@ -263,17 +260,11 @@ public class GameSteps {
           }
           validInput = true;
         } else {
-          Server.sendOneWayMessage(
-            monster.stream,
-            "You cannot afford that item\n"
-          );
+          Server.sendMessage(monster.stream, "You cannot afford that item\n");
           validInput = false;
         }
       } else if (buy > 2) {
-        Server.sendOneWayMessage(
-          monster.stream,
-          "Please enter a valid input\n"
-        );
+        Server.sendMessage(monster.stream, "Please enter a valid input\n");
       } else if (buy <= -1) {
         validInput = true;
       }
@@ -316,10 +307,7 @@ public class GameSteps {
       if (buy >= 0 && buy <= 2) {
         return buy;
       } else if (buy > 2) {
-        Server.sendOneWayMessage(
-          monster.stream,
-          "Please enter a valid input\n"
-        );
+        Server.sendMessage(monster.stream, "Please enter a valid input\n");
       } else if (buy == -1) {
         return -1;
       } else if (buy <= -2) {

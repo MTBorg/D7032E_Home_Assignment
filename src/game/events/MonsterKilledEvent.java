@@ -18,7 +18,7 @@ public class MonsterKilledEvent implements Event {
       "Monster " + this.monster.getName() + " was killed\n",
       this.monster
     );
-    Server.sendOneWayMessage(this.monster.stream, "You died, Game over!");
+    Server.sendMessage(this.monster.stream, "You died, Game over!");
     System.out.println("Monster " + this.monster.getName() + " has died");
     gameState.monsters.remove(this.monster);
   }

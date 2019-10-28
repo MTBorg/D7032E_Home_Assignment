@@ -20,11 +20,11 @@ public class AttackEvent implements Event {
   }
 
   public void execute(GameState gameState) {
-    Server.sendOneWayMessage(
+    Server.sendMessage(
       attacker.stream,
       "You attacked " + attacked.getName() + " for " + damage + " damage\n"
     );
-    Server.sendOneWayMessage(
+    Server.sendMessage(
       attacked.stream,
       "You were attacked by " +
         attacker.getName() +

@@ -34,10 +34,7 @@ public abstract class Card {
       executor.getName() + " played card " + this.name + "\n",
       executor
     );
-    Server.sendOneWayMessage(
-      executor.stream,
-      "You played card " + this.name + "\n"
-    );
+    Server.sendMessage(executor.stream, "You played card " + this.name + "\n");
     System.out.println(executor.getName() + " played card " + this.name + "\n");
   }
 }

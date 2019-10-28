@@ -58,7 +58,7 @@ public class Deck {
    */
   public void resetStore(Monster monster) {
     Server.broadCastMessage(monster.getName() + " reset the store\n", monster);
-    Server.sendOneWayMessage(monster.stream, "You reset the store \n");
+    Server.sendMessage(monster.stream, "You reset the store \n");
     System.out.println(monster.getName() + " reset the store");
 
     // Place all store cards back in the deck

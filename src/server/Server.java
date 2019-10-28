@@ -73,7 +73,7 @@ public class Server {
     return response;
   }
 
-  public static void sendOneWayMessage(Stream stream, String message) {
+  public static void sendMessage(Stream stream, String message) {
     if (stream != null) stream.writeBytes("Message:" + message);
   }
 
@@ -84,7 +84,7 @@ public class Server {
           continue; //Don't write to the exception
         }
       }
-      sendOneWayMessage(stream, message);
+      sendMessage(stream, message);
     }
   }
 }
