@@ -9,7 +9,7 @@ import src.server.Server;
 public class AlienScourge extends TemporaryEvolutionCard {
 
   public AlienScourge() {
-    super("Alien Scourge", "Alienoid");
+    super("Alien Scourge", "Gain 2 STAR", "Alienoid");
   }
 
   public void effect(Monster executor, GameState gameState) {

@@ -11,8 +11,12 @@ abstract public class PermanentEvolutionCard
   extends EvolutionCard
   implements Observer {
 
-  public PermanentEvolutionCard(String name, String monster) {
-    super(name, monster);
+  public PermanentEvolutionCard(
+    String name,
+    String description,
+    String monster
+  ) {
+    super(name, description, monster);
   }
 
   abstract public void update(Observable queue, Object event);

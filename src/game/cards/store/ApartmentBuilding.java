@@ -12,7 +12,7 @@ import src.server.Server;
 public class ApartmentBuilding extends DiscardCard implements Observer {
 
   public ApartmentBuilding() {
-    super("Apartment Building", 5);
+    super("Apartment Building", "+ 3[Star]", 5);
   }
 
   @Override

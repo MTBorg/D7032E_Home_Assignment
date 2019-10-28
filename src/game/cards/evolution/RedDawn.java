@@ -10,7 +10,7 @@ import src.server.Server;
 public class RedDawn extends TemporaryEvolutionCard {
 
   public RedDawn() {
-    super("Red Dawn", "Kong");
+    super("Red Dawn", "All other Monsters lose 2 HEART", "Kong");
   }
 
   public void effect(Monster executor, GameState gameState) {

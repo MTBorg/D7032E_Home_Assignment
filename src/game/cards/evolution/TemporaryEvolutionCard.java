@@ -7,8 +7,12 @@ import src.server.Server;
 
 abstract public class TemporaryEvolutionCard extends EvolutionCard {
 
-  public TemporaryEvolutionCard(String name, String monster) {
-    super(name, monster);
+  public TemporaryEvolutionCard(
+    String name,
+    String description,
+    String monster
+  ) {
+    super(name, description, monster);
   }
 
   public void execute(Monster executor, GameState gameState) {

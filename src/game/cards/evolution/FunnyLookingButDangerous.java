@@ -16,7 +16,11 @@ import src.server.Server;
 public class FunnyLookingButDangerous extends PermanentEvolutionCard {
 
   public FunnyLookingButDangerous() {
-    super("Funny Looking But Dangerous", "Alienoid");
+    super(
+      "Funny Looking But Dangerous",
+      "If you roll at least TWO TWO TWO each other Monster loses 1 HEART",
+      "Alienoid"
+    );
   }
 
   public void update(Observable queue, Object notification) {

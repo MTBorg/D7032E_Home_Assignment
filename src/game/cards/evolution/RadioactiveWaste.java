@@ -10,7 +10,7 @@ import src.server.Server;
 public class RadioactiveWaste extends TemporaryEvolutionCard {
 
   public RadioactiveWaste() {
-    super("Radioactive Waste", "Gigazaur");
+    super("Radioactive Waste", "Gain 2 ENERGY and 1 HEART", "Gigazaur");
   }
 
   public void effect(Monster executor, GameState gameState) {

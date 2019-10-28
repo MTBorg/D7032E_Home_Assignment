@@ -9,8 +9,8 @@ import src.game.Monster;
 public abstract class EvolutionCard extends Card {
   private final String monster;
 
-  public EvolutionCard(String name, String monster) {
-    super(name);
+  public EvolutionCard(String name, String description, String monster) {
+    super(name, description);
     this.monster = monster;
   }
 
@@ -24,7 +24,8 @@ public abstract class EvolutionCard extends Card {
       this.name +
       ", " +
       (this instanceof TemporaryEvolutionCard ? "Temporary" : "Permanent") +
-      ", Effect "
+      ", Effect " +
+      this.description
     );
   }
 

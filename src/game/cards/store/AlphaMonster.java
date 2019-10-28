@@ -12,7 +12,7 @@ import src.server.Server;
 public class AlphaMonster extends KeepCard implements Observer {
 
   public AlphaMonster() {
-    super("Alpha Monster", 1);
+    super("Alpha Monster", "Gain 1[Star] when you attack", 1);
   }
 
   @Override

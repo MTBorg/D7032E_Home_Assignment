@@ -7,8 +7,8 @@ import src.server.Server;
 
 abstract public class DiscardCard extends StoreCard {
 
-  public DiscardCard(String name, int cost) {
-    super(name, cost);
+  public DiscardCard(String name, String description, int cost) {
+    super(name, description, cost);
   }
 
   public void execute(Monster executor, GameState gameState) {

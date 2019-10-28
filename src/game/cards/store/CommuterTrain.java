@@ -12,7 +12,7 @@ import src.server.Server;
 public class CommuterTrain extends DiscardCard implements Observer {
 
   public CommuterTrain() {
-    super("Commuter Train", 4);
+    super("Commuter Train", "+ 2[Star]", 4);
   }
 
   @Override

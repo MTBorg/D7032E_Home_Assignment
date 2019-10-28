@@ -7,11 +7,11 @@ import src.server.Server;
 
 public abstract class Card {
   protected final String name;
+  protected final String description;
 
-  // public String description; //TODO: Add back eventually
-  public Card(String name) {
+  public Card(String name, String description) {
     this.name = name;
-  // this.description = description;
+    this.description = description;
   }
 
   // public String toString() {
@@ -28,6 +28,10 @@ public abstract class Card {
   //
   public String getName() {
     return this.name;
+  }
+
+  public String getDescription() {
+    return this.description;
   }
 
   /**

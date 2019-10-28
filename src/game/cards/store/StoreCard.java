@@ -9,20 +9,21 @@ import src.game.Monster;
 public abstract class StoreCard extends Card {
   private final int cost;
 
-  public StoreCard(String name, int cost) {
-    super(name);
+  public StoreCard(String name, String description, int cost) {
+    super(name, description);
     this.cost = cost;
   }
 
   public String toString() {
     //TODO: This should print the card description as well
     return (
-      name +
+      this.name +
       ", Cost " +
       cost +
       ", " +
       (this.isDiscardCard() ? "DISCARD" : "KEEP") +
-      ", Effect "
+      ", Effect " +
+      this.description
     );
   }
 

@@ -9,8 +9,8 @@ import src.server.Server;
 
 abstract public class KeepCard extends StoreCard implements Observer {
 
-  public KeepCard(String name, int cost) {
-    super(name, cost);
+  public KeepCard(String name, String description, int cost) {
+    super(name, description, cost);
   }
 
   abstract public void update(Observable queue, Object event);
