@@ -14,18 +14,8 @@ public abstract class Card {
     this.description = description;
   }
 
-  // public String toString() {
-  //   return (
-  //     name +
-  //     ", Cost " +
-  //     cost +
-  //     ", " +
-  //     (discard ? "DISCARD" : "KEEP") +
-  //     ", Effect " +
-  //     description
-  //   );
-  // }
-  //
+  abstract public String toString();
+
   public String getName() {
     return this.name;
   }
