@@ -124,7 +124,7 @@ public class Game {
         for (Dice unique : new HashSet<Dice>(dices)) {
           result.put(unique, Collections.frequency(dices, unique));
         }
-        Server.sendMessage(
+        Server.sendQuestion(
           currentMonster.stream,
           "ROLLED:You rolled " + result + " Press [ENTER]\n"
         );
@@ -200,7 +200,7 @@ public class Game {
           " energy, and owns the following cards:";
       statusUpdate += this.state.monsters.get(count).cardsToString();
     }
-    Server.sendMessage(recipient.stream, statusUpdate + "\n");
+    Server.sendQuestion(recipient.stream, statusUpdate + "\n");
   }
 
   public GameState getState() {

@@ -64,7 +64,7 @@ public class Server {
     }
   }
 
-  public static String sendMessage(Stream stream, String message) {
+  public static String sendQuestion(Stream stream, String message) {
     if (stream == null) return "";
     Scanner sc = new Scanner(System.in);
     String response = "";

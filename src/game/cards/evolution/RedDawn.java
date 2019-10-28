@@ -21,7 +21,7 @@ public class RedDawn extends TemporaryEvolutionCard {
         break;
       }
     }
-    String power = Server.sendMessage(
+    String power = Server.sendQuestion(
       gameState.monsters.get(kong).stream,
       "POWERUP:Deal 2 damage to all others\n"
     );

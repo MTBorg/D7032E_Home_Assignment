@@ -23,7 +23,7 @@ public class RadioactiveWaste extends TemporaryEvolutionCard {
     }
 
     Monster gigazaur = gameState.monsters.get(gigazaur_index);
-    String power = Server.sendMessage(
+    String power = Server.sendQuestion(
       gigazaur.stream,
       "POWERUP:Receive 2 energy and 1 health\n"
     );

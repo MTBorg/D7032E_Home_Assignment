@@ -56,7 +56,7 @@ public class GameSteps {
     }
     String choices =
       ":Choose which dices to reroll, separate with comma and in decending order (e.g. 5,4,1   0 to skip)\n";
-    String response = Server.sendMessage(monster.stream, rolledDice + choices);
+    String response = Server.sendQuestion(monster.stream, rolledDice + choices);
     return response;
   }
 
@@ -210,7 +210,7 @@ public class GameSteps {
             }
 
             // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
-            String answer = Server.sendMessage(
+            String answer = Server.sendQuestion(
               gameState.monsters.get(mon).stream,
               "ATTACKED:You have " +
                 gameState.monsters.get(mon).getCurrentHealth() +
@@ -241,7 +241,7 @@ public class GameSteps {
         "\n";
     boolean validInput = false;
     while (!validInput) {
-      String answer = Server.sendMessage(monster.stream, msg);
+      String answer = Server.sendQuestion(monster.stream, msg);
       int buy = Integer.parseInt(answer);
       if (buy >= 0 && buy <= 2) {
         //If card was bought Successfully
@@ -311,7 +311,7 @@ public class GameSteps {
         gameState.deck +
         "\n";
     while (true) {
-      String answer = Server.sendMessage(monster.stream, msg);
+      String answer = Server.sendQuestion(monster.stream, msg);
       int buy = Integer.parseInt(answer);
       if (buy >= 0 && buy <= 2) {
         return buy;
@@ -373,7 +373,7 @@ public class GameSteps {
     for (int mon = 0; mon < gameState.monsters.size(); mon++) {
       if (gameState.monsters.get(mon).stars >= 20) {
         for (int victory = 0; victory < gameState.monsters.size(); victory++) {
-          String victoryByStars = Server.sendMessage(
+          String victoryByStars = Server.sendQuestion(
             gameState.monsters.get(victory).stream,
             "Victory: " +
               gameState.monsters.get(mon).getName() +
@@ -389,7 +389,7 @@ public class GameSteps {
     }
     if (alive == 1) {
       for (int victory = 0; victory < gameState.monsters.size(); victory++) {
-        String victoryByKills = Server.sendMessage(
+        String victoryByKills = Server.sendQuestion(
           gameState.monsters.get(victory).stream,
           "Victory: " + aliveMonster + " has won by being the only one alive\n"
         );

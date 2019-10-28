@@ -20,7 +20,7 @@ public class AlienScourge extends TemporaryEvolutionCard {
         break;
       }
     }
-    String power = Server.sendMessage(
+    String power = Server.sendQuestion(
       gameState.monsters.get(alienoid).stream,
       "POWERUP:Receive 2 stars\n"
     );
