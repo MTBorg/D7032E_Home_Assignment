@@ -34,6 +34,15 @@ public class GameStepsTests {
     return result;
   }
 
+  private HashMap<Dice, Integer> generateDiceRollClaws(int claws) {
+    HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
+    result.put(new Dice(5), claws);
+    for (int i = 0; i < 5; i++) {
+      result.put(new Dice(i), 0);
+    }
+    return result;
+  }
+
   private HashMap<Dice, Integer> generateDiceRollEnergy(int energy) {
     HashMap<Dice, Integer> result = new HashMap<Dice, Integer>();
     result.put(new Dice(0), 0); //Don't generate hearts in order to avoid powerups
@@ -582,5 +591,92 @@ public class GameStepsTests {
       assertTrue(gameState.deck.store[i] != null);
     }
     assertEquals(gameState.deck.deck.size(), deckSize); //Assert no cards were destroyed
+  }
+
+  @Test
+  public void shouldDealDamageToMonstersOutsideTokyo() {
+    // Tests 12g
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    Monster monster3 = new Monster("Test Monster3");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    monsters.add(monster3);
+    GameState gameState = new GameState(monsters);
+    monster1.inTokyo = true;
+    monster2.inTokyo = false;
+    monster3.inTokyo = false;
+    HashMap<Dice, Integer> diceRoll = generateDiceRollClaws(1);
+
+    assertEquals(monster2.getCurrentHealth(), monster2.getMaxHealth());
+    assertEquals(monster3.getCurrentHealth(), monster3.getMaxHealth());
+    GameSteps.countClaws(monster1, diceRoll, gameState);
+    assertEquals(monster2.getCurrentHealth(), monster2.getMaxHealth() - 1);
+    assertEquals(monster3.getCurrentHealth(), monster3.getMaxHealth() - 1);
+  }
+
+  @Test
+  public void shouldNotDealDamageToSelf() {
+    // Tests 12g,i
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    Monster monster3 = new Monster("Test Monster3");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    monsters.add(monster3);
+    GameState gameState = new GameState(monsters);
+    monster1.inTokyo = true;
+    monster2.inTokyo = false;
+    monster3.inTokyo = false;
+    HashMap<Dice, Integer> diceRoll = generateDiceRollClaws(1);
+
+    assertEquals(monster1.getCurrentHealth(), monster1.getMaxHealth());
+    GameSteps.countClaws(monster1, diceRoll, gameState);
+    assertEquals(monster1.getCurrentHealth(), monster1.getMaxHealth());
+  }
+
+  @Test
+  public void shouldMoveIntoTokyoWhenEmpty() {
+    // Tests 12g,ii,1
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    Monster monster3 = new Monster("Test Monster3");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    monsters.add(monster3);
+    GameState gameState = new GameState(monsters);
+    monster1.inTokyo = false;
+    monster2.inTokyo = false;
+    monster3.inTokyo = false;
+    HashMap<Dice, Integer> diceRoll = generateDiceRollClaws(1);
+
+    GameSteps.countClaws(monster1, diceRoll, gameState);
+    assertTrue(monster1.inTokyo);
+  }
+
+  @Test
+  public void shouldDealDamageToMonsterInTokyo() {
+    // Tests 12g,ii,2,a
+    Monster monster1 = new Monster("Test Monster1");
+    Monster monster2 = new Monster("Test Monster2");
+    Monster monster3 = new Monster("Test Monster3");
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    monsters.add(monster1);
+    monsters.add(monster2);
+    monsters.add(monster3);
+    GameState gameState = new GameState(monsters);
+    monster1.inTokyo = false;
+    monster2.inTokyo = true;
+    monster3.inTokyo = false;
+    HashMap<Dice, Integer> diceRoll = generateDiceRollClaws(1);
+
+    assertEquals(monster2.getCurrentHealth(), monster2.getMaxHealth());
+    assertEquals(monster3.getCurrentHealth(), monster3.getMaxHealth());
+    GameSteps.countClaws(monster1, diceRoll, gameState);
+    assertEquals(monster2.getCurrentHealth(), monster2.getMaxHealth() - 1);
+    assertEquals(monster3.getCurrentHealth(), monster3.getMaxHealth());
   }
 }
