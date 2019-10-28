@@ -99,17 +99,15 @@ public class GameSteps {
     HashMap<Dice, Integer> result,
     GameState gameState
   ) {
-    if (monster.inTokyo) {
-      return;
-    }
-
     // 6a. Hearts = health (max 10 unless a cord increases it)
     Dice aHeart = new Dice(Dice.HEART);
     if (result.containsKey(aHeart)) { //+1 currentHealth per heart, up to maxHealth
       // TODO: Maybe a gain health event shouldn't be added if already at max health
-      gameState.pushEvent(
-        new GainHealthEvent(monster, result.get(aHeart).intValue())
-      );
+      if (!monster.inTokyo) { //Only give health if in tokyo
+        gameState.pushEvent(
+          new GainHealthEvent(monster, result.get(aHeart).intValue())
+        );
+      }
 
       // 6b. 3 hearts = power-up
       if (result.get(aHeart).intValue() >= 3) {
