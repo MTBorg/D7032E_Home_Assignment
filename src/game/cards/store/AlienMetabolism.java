@@ -3,7 +3,6 @@ package src.game.cards.store;
 import java.util.Observable;
 import java.util.Observer;
 import src.game.cards.store.KeepCard;
-import src.game.Effect;
 import src.game.EventQueue;
 import src.game.events.BuyRequestEvent;
 import src.game.events.Event;
