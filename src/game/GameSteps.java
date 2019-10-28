@@ -174,16 +174,11 @@ public class GameSteps {
     if (result.containsKey(aClaw)) {
       if (monster.inTokyo) {
         for (int mon = 0; mon < gameState.monsters.size(); mon++) {
-          // int moreDamage = monster.cardEffect("moreDamage"); //Acid Attack
-          int moreDamage = 0;
-          int totalDamage = result.get(aClaw).intValue() + moreDamage;
-          if (
-            gameState.monsters.get(mon) != monster &&
-            totalDamage > gameState.monsters.get(mon).cardEffect("armor")
-          ) { //Armor Plating
+          int damage = result.get(aClaw).intValue();
+          if (gameState.monsters.get(mon) != monster) {
             monster.attackMonster(
               gameState.monsters.get(mon),
-              totalDamage,
+              damage,
               gameState
             );
           }
@@ -193,18 +188,12 @@ public class GameSteps {
         for (int mon = 0; mon < gameState.monsters.size(); mon++) {
           if (gameState.monsters.get(mon).inTokyo) {
             monsterInTokyo = true;
-
-            // int moreDamage = monster.cardEffect("moreDamage"); //Acid Attack
-            int moreDamage = 0;
-            int totalDamage = result.get(aClaw).intValue() + moreDamage;
-            if (totalDamage > gameState.monsters.get(mon).cardEffect("armor")) {
-              monster.attackMonster(
-                gameState.monsters.get(mon),
-                totalDamage,
-                gameState
-              );
-            // gameState.monsters.get(mon).getCurrentHealth() += -totalDamage; //Armor Plating
-            }
+            int damage = result.get(aClaw).intValue();
+            monster.attackMonster(
+              gameState.monsters.get(mon),
+              damage,
+              gameState
+            );
 
             // 6e. If you were outside, then the monster inside tokyo may decide to leave Tokyo
             String answer = Server.sendQuestion(
