@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.junit.Test;
-import src.game.Card;
+import src.game.cards.Card;
 import src.game.cards.store.AlienMetabolism;
 import src.game.cards.store.ArmorPlating;
 import src.game.cards.store.CommuterTrain;

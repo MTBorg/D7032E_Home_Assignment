@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import src.game.cards.Card;
 import src.game.cards.store.AlphaMonster;
 import src.game.cards.store.StoreCard;
 import src.game.EventQueue;
@@ -56,7 +57,7 @@ public class Monster {
 
   public boolean hasCard(String cardName) {
     for (Card card : this.cards) {
-      if (card.name == cardName) {
+      if (card.getName() == cardName) {
         return true;
       }
     }

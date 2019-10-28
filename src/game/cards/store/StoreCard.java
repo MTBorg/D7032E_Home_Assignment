@@ -1,7 +1,7 @@
 package src.game.cards.store;
 
 import java.util.Observer;
-import src.game.Card;
+import src.game.cards.Card;
 import src.game.cards.store.DiscardCard;
 import src.game.GameState;
 import src.game.Monster;

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import org.junit.Test;
-import src.game.Card;
+import src.game.cards.Card;
 import src.game.cards.store.ArmorPlating;
 import src.game.cards.store.StoreCard;
 import src.game.events.BuyEvent;

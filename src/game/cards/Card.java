@@ -1,7 +1,8 @@
-package src.game;
+package src.game.cards;
 
 import java.util.Observable;
 import java.util.Observer;
+import src.game.Monster;
 import src.server.Server;
 
 public abstract class Card {
