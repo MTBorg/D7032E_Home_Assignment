@@ -130,7 +130,32 @@ public class Game {
         );
 
         // 6a. Hearts = health (max 10 unless a cord increases it)
-        GameSteps.countHearts(currentMonster, result, this.state);
+        EvolutionCard powerUpCard = GameSteps.countHearts(
+          currentMonster,
+          result,
+          this.state
+        );
+        if (powerUpCard != null) {
+          if (powerUpCard instanceof PermanentEvolutionCard) {
+            this.state.addEventObserver((PermanentEvolutionCard) powerUpCard);
+            currentMonster.giveCard(powerUpCard);
+          }
+
+          Server.sendMessage(
+            currentMonster.stream,
+            "You rolled three hearts and received the card " +
+              powerUpCard.getName() +
+              "\n"
+          );
+
+          // Get a card from the factory and execute it's effect
+          if (powerUpCard instanceof TemporaryEvolutionCard) {
+            ((TemporaryEvolutionCard) powerUpCard).execute(
+                currentMonster,
+                this.state
+              );
+          }
+        }
 
         // 6c. 3 of a number = victory points
         GameSteps.countVictoryPoints(currentMonster, result);

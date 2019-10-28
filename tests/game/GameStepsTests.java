@@ -127,9 +127,16 @@ public class GameStepsTests {
     HashMap<Dice, Integer> diceRoll = generateDiceRollHearts(3);
 
     //TODO: This is currently not possible to test
-    assertEquals(monster.cardsToString(), "[NO CARDS]");
+    assertEquals(monster.cardsToString(), "[NO CARDS]:");
+    int evolutionCardsAmount = gameState
+      .deck.evolutionCards.get(monster.getName())
+      .size();
     GameSteps.countHearts(monster, diceRoll, gameState);
-    assertFalse(monster.cardsToString().equals("[NO CARDS]"));
+    assertEquals(
+      gameState.deck.evolutionCards.get(monster.getName()).size(),
+      evolutionCardsAmount - 1
+    );
+  // assert assertFalse(monster.cardsToString().equals("[NO CARDS]"));
   }
 
   @Test

@@ -93,8 +93,10 @@ public class GameSteps {
    * @param monster The monster who rolled the hearts.
    * @param result The map between dice and the amount of said dice
    * @param gameState The state of the game
+   *
+   * @return The evolution card drawn if the player had three hearts otherwise null
    */
-  public static void countHearts(
+  public static EvolutionCard countHearts(
     Monster monster,
     HashMap<Dice, Integer> result,
     GameState gameState
@@ -115,28 +117,10 @@ public class GameSteps {
         // TODO: Add support for more cards.
         // TODO: Add support for keeping it secret until played
         // Draw from player's evolution deck
-        EvolutionCard powerUpCard = gameState
-          .deck.evolutionCards.get(monster.getName())
-          .remove(0);
-
-        if (powerUpCard instanceof PermanentEvolutionCard) {
-          gameState.addEventObserver((PermanentEvolutionCard) powerUpCard);
-          monster.giveCard(powerUpCard);
-        }
-
-        Server.sendMessage(
-          monster.stream,
-          "You rolled three hearts and received the card " +
-            powerUpCard.getName() +
-            "\n"
-        );
-
-        // Get a card from the factory and execute it's effect
-        if (powerUpCard instanceof TemporaryEvolutionCard) {
-          ((TemporaryEvolutionCard) powerUpCard).execute(monster, gameState);
-        }
+        return gameState.deck.evolutionCards.get(monster.getName()).remove(0);
       }
     }
+    return null;
   }
 
   /**
