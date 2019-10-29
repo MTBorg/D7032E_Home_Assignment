@@ -281,8 +281,12 @@ public class GameSteps {
         return false;
       }
     } else if (item == -2) {
-      gameState.deck.resetStore(monster);
-      return true;
+      if (monster.energy >= Deck.RESET_COST) {
+        gameState.deck.resetStore(monster);
+        return true;
+      } else {
+        return false;
+      }
     } else {
       // TODO: Throw exception
       return false;
