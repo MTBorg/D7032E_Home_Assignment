@@ -22,6 +22,13 @@ public class StoreCardFactory {
     "Complete Destruction"
   };
 
+  /**
+   * Returns a store card defined in the array above.
+   *
+   * @param name The name of the card to retrieve
+   * @throws Exception When the card can't be found
+   * @return The class of the specifed store card.
+   * */
   public StoreCard getCard(String name) throws Exception {
     for (String card : StoreCardFactory.cards) {
       if (name.equalsIgnoreCase(card)) {
@@ -39,6 +46,11 @@ public class StoreCardFactory {
     throw new Exception("Unimplemented card");
   }
 
+  /**
+   * Returns all cards available in the factory
+   *
+   * @return An array containing all possible store cards.
+   */
   public ArrayList<StoreCard> getAllCards() {
     ArrayList<StoreCard> result = new ArrayList<StoreCard>();
     for (String card : StoreCardFactory.cards) {

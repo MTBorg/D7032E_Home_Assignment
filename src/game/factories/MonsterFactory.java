@@ -8,14 +8,19 @@ import java.util.Random;
 import src.game.Monster;
 
 public class MonsterFactory {
+  /**
+   * Add the monster names here in order to add them to the game
+   */
   public static final String[] monsterNames = {
     "Kong",
     "Gigazaur",
     "Alienoid"
   };
 
-  /*
-   * Returns a random subset of all possible monsters defined in the array above
+  /**
+   * Returns a random subset of all possible monsters defined in the array above.
+   *
+   * @param amount The amount of monsters to generate
    */
   public static ArrayList<String> getMonsters(int amount) {
     ArrayList<String> monsters = new ArrayList<String>();

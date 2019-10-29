@@ -18,6 +18,13 @@ import src.server.Server;
 
 public class GameSteps {
 
+  /**
+   * Rolls the dices.
+   *
+   * @param gameState The state of the game.
+   * @param monster  The monster to perform the dice roll.
+   * @return The array of dice rolled.
+   */
   public static ArrayList<Dice> rollDices(
     GameState gameState,
     Monster monster
@@ -282,6 +289,12 @@ public class GameSteps {
     }
   }
 
+  /**
+   * Check if any player has the required amount of stars or is the only player alive.
+   *
+   * @param gameState The state of the game.
+   * @return true if a player has won, otherwise false
+   */
   public static boolean checkVictoryConditions(GameState gameState) {
     int alive = 0;
     String aliveMonster = "";

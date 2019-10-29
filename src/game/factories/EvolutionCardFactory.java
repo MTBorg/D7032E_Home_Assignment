@@ -20,6 +20,13 @@ public class EvolutionCardFactory {
     "Funny Looking But Dangerous"
   };
 
+  /**
+   * Returns an evolution card defined in the array above.
+   *
+   * @param name The name of the card to retrieve
+   * @throws Exception When the card can't be found
+   * @return The class of the specifed evolution card.
+   * */
   public EvolutionCard getCard(String name) throws Exception {
     for (String card : EvolutionCardFactory.cards) {
       if (name.equalsIgnoreCase(card)) {
@@ -37,6 +44,11 @@ public class EvolutionCardFactory {
     throw new Exception("Unimplemented card");
   }
 
+  /**
+   * Returns all cards available in the factory
+   *
+   * @return An array containing all possible evolution cards.
+   */
   public ArrayList<EvolutionCard> getMonsterCards(String monsterName)
     throws Exception {
     ArrayList<EvolutionCard> cards = new ArrayList<EvolutionCard>();
