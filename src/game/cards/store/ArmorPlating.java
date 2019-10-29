@@ -10,7 +10,7 @@ import src.game.events.Event;
 public class ArmorPlating extends KeepCard implements Observer {
 
   public ArmorPlating() {
-    super("Armor Plating", "Ignore damage of 1", 1);
+    super("Armor Plating", "Ignore damage of 1", 4);
   }
 
   @Override

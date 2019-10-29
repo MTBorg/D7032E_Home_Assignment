@@ -10,7 +10,7 @@ import src.game.events.Event;
 public class AlienMetabolism extends KeepCard implements Observer {
 
   public AlienMetabolism() {
-    super("Alien Metabolism", "Buying cards costs you 1 less [Energy]", 1);
+    super("Alien Metabolism", "Buying cards costs you 1 less [Energy]", 3);
   }
 
   @Override

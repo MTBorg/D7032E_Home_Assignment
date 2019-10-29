@@ -11,7 +11,7 @@ import src.server.Server;
 public class CornerStone extends DiscardCard implements Observer {
 
   public CornerStone() {
-    super("Corner Stone", "+ 1[Star]", 4);
+    super("Corner Stone", "+ 1[Star]", 3);
   }
 
   @Override

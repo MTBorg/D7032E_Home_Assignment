@@ -16,7 +16,7 @@ public class CompleteDestruction extends StoreCard implements Observer {
     super(
       "Complete Destruction",
       "If you roll [1][2][3][Heart][Attack][Energy] gain 9[Star] in addition to the regular results.",
-      1
+      3
     );
   }
 
