@@ -28,6 +28,11 @@ public class GameState {
     this.eventQueue.get(this.eventQueue.size() - 1).execute(this);
   }
 
+  /*
+   * Add an observer to the event queue.
+   *
+   * @param observer The observer to add.
+   */
   public void addEventObserver(Observer observer) {
     this.eventQueue.addObserver(observer);
   }

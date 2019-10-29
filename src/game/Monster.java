@@ -28,6 +28,9 @@ public class Monster {
     this.name = name;
   }
 
+  /**
+   * Prints all the monster's cards.
+   */
   public String cardsToString() {
     String returnString = "";
     if (cards.size() == 0) return "[NO CARDS]:";
@@ -37,10 +40,25 @@ public class Monster {
     return returnString;
   }
 
+  /**
+   * Attack another monster using this monster.
+   *
+   * This adds an AttackEvent to the event queue.
+   *
+   * @param attacked The monster to attack.
+   * @param damage The amount of damage the attack does.
+   * @param gameState The state of the game.
+   */
   public void attackMonster(Monster attacked, int damage, GameState gameState) {
     gameState.pushEvent(new AttackEvent(this, attacked, damage));
   }
 
+  /**
+   * Returns whether or not the monster owns a card.
+   *
+   * @param cardName The card to search for.
+   * @return Whether or not the monster has the card.
+   */
   public boolean hasCard(String cardName) {
     for (Card card : this.cards) {
       if (card.getName() == cardName) {
@@ -50,12 +68,22 @@ public class Monster {
     return false;
   }
 
+  /**
+   * Give the monster a card.
+   *
+   * @param card The card to give.
+   */
   public void giveCard(Card card) {
     this.cards.add(card);
   }
 
-  //TODO: This should maybe return a bool instead
-  // (if the monster does not have the card)
+  /**
+   * Removes a card from the monster.
+   *
+   * Does nothing if the monster does not own the card.
+   *
+   * @param monster The card to remove.
+   */
   public void removeCard(Card card) {
     for (int i = 0; i < this.cards.size(); i++) {
       if (this.cards.get(i) == card) {
@@ -64,6 +92,14 @@ public class Monster {
     }
   }
 
+  /**
+   * Buys a card for the monster.
+   *
+   * This adds a BuyRequestEvent to the event queue.
+   *
+   * @param card The card to buy.
+   * @param gameState The state of the game
+   */
   public boolean buyCard(StoreCard card, GameState gameState) {
     gameState.pushEvent(new BuyRequestEvent(this, card));
     return (gameState.peekEventQueue() instanceof BuyEvent);
@@ -81,6 +117,12 @@ public class Monster {
     return this.currentHealth;
   }
 
+  /**
+   * Set the current health of the monster.
+   *
+   * If the amount exceeds the maximum health of the monster it sets the current
+   * health to the max healt.
+   */
   public void setCurrentHealth(int amount) {
     this.currentHealth = amount > this.maxHealth ? this.maxHealth : amount;
   }
