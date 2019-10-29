@@ -72,10 +72,17 @@ public class KingTokyoPowerUpClient {
         case "VICTORY":
           stream.writeBytes("Bye!\n");
           break;
-        case "ATTACKED":
         case "ROLLED":
-        case "PURCHASE":
           stream.writeBytes(sc.nextLine() + "\n");
+          break;
+        case "ATTACKED":
+        case "PURCHASE":
+          String input = sc.nextLine();
+          while (input.trim().length() == 0) {
+            System.out.println("Please enter a valid input");
+            input = sc.nextLine();
+          }
+          stream.writeBytes(input + "\n");
           break;
         case "MESSAGE":
           break;
